@@ -1,0 +1,89 @@
+{% filter markdown %}
+# Integrating with Gradient
+
+In order to start selling your products through Gradient and utilizing a sliding scale, you need to connect your store to Gradient. 
+
+## Pre-requisites
+Please make sure you have the following pre-requisites:
+
+- A Stripe account
+- A Gradient vendor account with your Stripe Keys and Re-direct URL configured
+
+For more information on the above, visit the [home page]({{ url_for('main.home') }}).
+
+## Overview
+
+Integrating Gradient into your store requires the following:
+
+1. Pass a cart object to Gradient to start the checkout process.
+2. Handle a transaction response from Gradient, notifying that the customer has either successfully completed the checkout process, or that the checkout has failed.
+
+## Starting a Gradient checkout
+
+On your checkout page, add the following to include the Gradient frontend library:
+
+```html
+<script src="https://www.gradient.care/assets/js/gradient.js"></script>
+```
+
+This provides a JavaScript function, `gradientCheckout`, that initiates the Gradient checkout process. It takes two arguments: your Gradient vendor ID ([available on your account page]({{ url_for('vendor.home') }})) and a list of products that the customer is purchasing (i.e. the cart).
+
+The items in the cart must be JavaScript object with at least the following keys: 
+
+- `id` - the product id
+- `min_price` - the minumum price of the product, in cents
+- `max_price` - the maximum price of the product, in cents
+- `sku` - the product's SKU
+
+You can optionally also include:
+
+- `image_url` - a url for a thunbnail to use for the checkout process (recommended size: 300px X 300px)
+- `name` - the fully qualified name of the product
+
+
+For example:
+
+```javascript
+const gradientVendorID = 1;
+
+document.getElementById('checkout-with-gradient').addEventListener('click', function() {
+    gradientCheckout(gradientVendorID, [{
+        id: 12,
+        max_price: 5000, // $50.00
+        min_price: 1000, // $10.00
+        sku: 'CM01-R',
+        name: 'Micky\'s Magnificant Chocolate Milkshake',
+        image_url: 'https://www.mickymilkshakes.com/images/chocolate_milkshake_thumbnail.jpg'
+    }, {
+        id: 16,
+        max_price: 6000, // $50.00
+        min_price: 2000, // $10.00
+        sku: 'XR02-B'
+        name: 'Micky\'s Magnificant Greentea Limited Edition Milkshake',
+        image_url: 'https://www.mickymilkshakes.com/images/greentea_milkshake_thumbnail.jpg
+    }]);
+});
+```
+
+This binds the `gradientCheckout` function a button with ID `checkout-with-gradient`.
+
+Once the user clicks on this button, the Gradient checkout process will begin.
+
+## Handling a completed Gradient transaction
+
+Once the customer finishes the Gradient checkout process, we will redirect them to the redirect URL you specified when signing up.
+
+Our JavaScript library provides an additional function, `completeGradientCheckout`, which should be called to verify that the Gradient transaction successfully completed and that the redirection for the transaction is authentic. This takes two arguments: an `onSuccess` callback and an `onFailure` callback.
+
+Your redirect page might include, for example:
+
+```javascript
+completeGradientCheckout(function() {
+    alert('Thank you for your purchase!');
+}, function() {
+    alert('Something went wrong during your checkout.');
+});
+```
+
+You might also want to communicate with your own system to record that transaction as completed so you can begin your fulfillment process.
+{% endfilter %}

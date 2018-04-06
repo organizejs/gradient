@@ -1,0 +1,37 @@
+<div id="purchases-module" class="content-pane active">
+  <div class="module">
+    <div class="module-content">
+      <div class="module-title"><h4>Completed Purchases</h4></div>
+    </div>
+    <div id="purchases-content" class="module-content">
+    {% if current_user.account.transactions and (current_user.account.transactions is defined) %} 
+      {% for transaction in current_user.account.transactions | reverse 
+         if (transaction.status == transaction.Status.SUCCESS) %}
+        <div class="transaction-grid {{ loop.cycle('odd', 'even') }}">
+          <div class="transaction-col datetime">
+            <div class="month">{{ transaction.updated_at.strftime('%b') }}</div>
+            <div class="date">{{ transaction.updated_at.strftime('%d') }}</div>
+          </div>
+          <div class="transaction-col vendor">
+            <div class="name">{{ transaction.products[0].vendor.company_name }}</div>
+            {# TODO: vendor should have a 'type' associated to it #}
+            <div class="sector">Publishing</div>
+          </div>
+          <div class="transaction-col product">
+            <div class="price">-{{ transaction.total | currencyformat('USD') }}</div>
+            <div class="skus">
+              {% for product in transaction.products %}
+              <span>{{ product.name }}</span> {% if not loop.last %},{% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>
+        You have no completed transactions
+      </p>
+    {% endif %}
+    </div>
+  </div>
+</div>

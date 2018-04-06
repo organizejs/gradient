@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% include "modules/_navigation.html" %}
+<div id="doc-content" class="contain">
+  <div id="doc-nav">
+    <li class="active">Getting started</li>    
+    <li>Shopify <em>(coming soon)</em></li>    
+  </div>
+  <div id="doc-md" class="md">
+    {% include "docs/getting_started.html" %}
+  </div>
+</div>
+{% endblock %}
+

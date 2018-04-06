@@ -1,0 +1,321 @@
+/**
+ ** Font Management 
+ **/ 
+
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,400i,600,600i,800,800i')
+@import url("https://fonts.googleapis.com/css?family=Abril+Fatface")
+
+$landing-page-title-font: 'Abril Fatface', 'Times', 'Helvetica', 'Arial', sans-serif
+$primary-font: 'Nunito', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif
+
+/**
+ ** Color Management
+ **/
+
+$red:           #ff4d4d
+$blue:          #0000ff
+$light-grey:    #f0f0f0
+$light-gray:    #f0f0f0
+$grey:          #cccccc
+$gray:          #cccccc
+$dark-grey:     #444444
+$dark-gray:     #444444
+$white:         #ffffff
+$black:         #111111
+
+$text:          #111111 
+$link:          #0000ff
+$error:         #ff0000 
+$shadow:        rgba(0,0,0,0.25)
+
+/**
+ ** Screen Size Management 
+ **/
+
+$screen-xs-min: 0px
+$screen-sm-min: 768px
+$screen-md-min: 992px
+$screen-lg-min: 1200px
+$mobile-threshold: 640px
+
+@mixin phone 
+  @media only screen and (max-width : $mobile-threshold)
+    @content
+    
+@mixin desktop
+  @media only screen and (min-width : $mobile-threshold)
+    @content
+
+*
+  box-sizing: border-box
+
+/**
+ ** div to indicate if screen is mobile (this is used in javascript)
+ **/
+ 
+// mobile
+@media only screen and (max-width : $mobile-threshold)
+  #mobile-indicator
+    display: block
+    
+// desktop
+@media only screen and (min-width : $mobile-threshold)
+  #mobile-indicator
+    display: none
+
+/**
+ ** Base Content 
+ **/
+
+html, 
+body
+  margin: 0
+  padding: 0
+  line-height: 1.2
+
+body
+  color: $text
+  font-family: $primary-font
+  background: $white
+
+body.customer,
+body.vendor
+  background-color: $light-gray
+  min-height: 100vh
+
+body.setup,
+body.register,
+body.vendor.integration
+  background-color: $white !important
+
+::selection
+  background: $black
+  color: $white
+
+::-moz-selection
+  background: $black
+  color: $white
+
+a, a:link, a:visited
+  color: $link
+  text-decoration: none
+  &:hover
+    text-decoration: underline
+
+.contain
+  margin: 0 auto
+  @include phone
+    padding: 5vw
+  @include desktop
+    padding: 1em
+  @media (min-width: $screen-xs-min)
+    width: 100%
+  @media (min-width: $screen-sm-min)
+    max-width: 786px
+  @media (min-width: $screen-md-min)
+    max-width: 992px
+  @media (min-width: $screen-lg-min)
+    max-width: 1200px
+
+main
+  margin: 0 auto
+
+h1
+  font-weight: 600
+  @include phone
+    font-size: 10vw
+  @include desktop
+    font-size: 3.0em
+h2
+  font-size: 1.8em
+  font-weight: 400
+h3
+  font-size: 1.4em
+  font-weight: 400
+h4
+  font-weight: 400
+  @include phone
+    font-size: 5vw
+  @include desktop
+    font-size: 1.2em
+h6
+  font-size: 0.8em
+  
+p
+  margin: 0 0 1em 0
+  &:last-child
+    margin-bottom: 0
+
+@mixin flex-content
+  @include desktop
+    display: flex
+    justify-content: space-between
+  @include phone
+    display: block
+    justify-content: center
+
+hr
+  border: 0
+  height: 1px
+  background-color: $grey
+
+/** 
+ ** Forms Elements
+ **/
+@mixin padded
+  padding: 0.5em 1.5em
+
+button, 
+input[type=submit]
+  font-size: 1em
+  font-family: $primary-font
+  background: $blue
+  color: $white
+  min-width: 8em
+  display: inline-block
+  border-radius: 2px
+  text-align: center
+  border: none
+  cursor: pointer
+  padding: 4px 12px
+
+input[type=text],
+input[type=number],
+input[type=password],
+select
+  display: block
+  margin: 0 0 0 0
+  font-family: $blue
+  border: 0px 
+  background-color: $light-grey
+  width: 100%
+  height: 3em
+  line-height: 2em
+  font-size: 1em
+  outline: none
+  @include padded
+  @include desktop
+    max-width: 20em
+
+select
+  -webkit-appearance: none
+  border-radius: 0
+  cursor: pointer
+
+input[type=text],
+input[type=password],
+  border: none
+  border-bottom: 1px solid $blue
+  outline: none
+
+label
+  cursor: pointer
+
+.errors
+  color: red
+  li
+    padding: 0.5em 0 0 0
+    display: block
+
+.form-field
+  label[for=subscribe]
+    display: inline-block
+    color: $blue
+  input
+    @include phone
+      display: inline-block
+  input::placeholder
+    color: $blue
+    opacity: 1
+  input:hover,
+  select:hover
+    background-color: $gray
+.form-field:first-of-type
+  margin: 0em 0 0.5em 0
+.form-field:not(:first-of-type)
+  margin: 1em 0 0.5em 0
+
+/** 
+ ** Misc
+ **/
+
+.flashes
+  li
+    padding: 1em
+    background: $blue
+    color: $white
+    text-align: center
+    border-bottom: 1px solid $white
+    &.error
+      background: $error
+
+.module
+  width: 100%
+  text-align: left
+  background-color: $white
+  color: $black
+  margin-bottom: 2em
+
+.module-content
+  padding: 1.25em
+  background-color: $white
+  color: $black
+  box-shadow: 2px 2px 10px $gray
+.module-content:first-of-type
+  border-top-left-radius: 4px
+  border-top-right-radius: 4px
+  border-bottom: 1px solid $grey
+.module-content:not(:first-of-type):not(:last-child)
+  border-bottom: 1px solid $grey
+.module-content:last-child
+  border-bottom-left-radius: 4px
+  border-bottom-right-radius: 4px
+
+.notice-module
+  padding: 1.25em
+  background-color: $gray
+  color: $dark-gray
+
+/** 
+ ** hamburger
+ **/
+
+.hamburger
+  display: inline-block
+  cursor: pointer
+
+.bar1, .bar2, .bar3 
+  width: 30px
+  height: 5px
+  background-color: #333
+  margin: 5px 0
+  transition: 0.4s
+  background-color: $blue
+
+.change .bar1 
+  -webkit-transform: rotate(-45deg) translate(-8px, 6px) 
+  transform: rotate(-45deg) translate(-8px, 6px) 
+
+.change .bar2 
+  opacity: 0
+
+.change .bar3 
+  -webkit-transform: rotate(45deg) translate(-8px, -7px)
+  transform: rotate(45deg) translate(-8px, -7px)
+
+/** 
+ ** Responsive Helpers
+ **/
+
+.mobile-only
+  @include desktop
+    display: none !important
+  @include phone
+    display: inherit !important
+
+.desktop-only
+  @include desktop
+    display: block !important
+  @include phone
+    display: none !important
+

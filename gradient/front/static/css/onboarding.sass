@@ -1,0 +1,168 @@
+#onboarding
+  display: grid
+  grid-template-columns:  1fr
+  grid-row-gap: 2em
+  grid-template-rows: auto auto
+  grid-template-areas: "title" "body"
+  @include desktop
+    margin-top: 1em
+
+  .onboard-title-container
+    grid-area: title
+    .onboard-title
+      margin-bottom: 0.5em
+    .onboard-subtitle
+      color: $blue
+  
+  .register-form
+    grid-area: body
+    
+    @include desktop
+      display: grid
+      grid-template-columns:  1fr 1fr
+      grid-template-rows: auto 
+      grid-template-areas: "form progress"
+    
+    form
+      grid-area: form
+      text-align: left
+               
+      .onboard-section-active
+        display: block !important
+      
+      .onboard-section
+        display: none
+        li
+          display: block
+          input
+            max-width: 20em
+            display: none
+            &:checked + label
+              background: $blue
+              border: 1px solid $blue
+              color: $white
+          label
+            text-align: center
+            padding: 0.5em 1em
+            margin: 0 0.5em 0 0
+            cursor: pointer
+            border: 1px solid $dark-grey
+            border-radius: 0.5em
+            font-size: 0.9em
+            min-width: 6em
+            display: inline-block
+            &:hover label
+              border: solid 1px $blue !important
+              background: $white
+       
+        .onboard-confirm-info
+          font-size: 1.2em
+      
+        .onboard-confirm-sig 
+          background-color: $light-grey
+          @include phone
+            width: 100%
+        
+        .onboard-field-wrapper.disabled
+          opacity: 0.2
+      
+        .onboard-confirm-row
+          margin: 1em 0 0.5em 0
+          .onboard-confirm-label,
+          .onboard-confirm-el
+            display: block
+          .onboard-confirm-el
+            padding: 1em
+            background-color: $light-gray
+            display: inline-block
+            min-width: 300px
+            opacity: 0.8
+            
+        .onboard-actions
+          margin: 2em 0 0 0
+          button, input[type=submit]
+            text-transform: lowercase
+            margin: 0 0 1em 0
+            color: $white
+            max-width: 15em   
+            
+      #onboard-signature-section 
+        .signature-wrapper
+          position: relative
+          canvas
+            @include phone
+              width: 100%
+              height: 100px
+            @include desktop
+              width: 500px
+              height: 100px
+            display: inline-block
+            border-bottom: 1px solid $blue
+            background-color: $light-grey
+          h1
+            position: absolute
+            left: 0.25em
+            bottom: 0.25em
+            display: inline-block
+            font-family: $primary-font
+            color: $blue
+            
+        .signature-about
+          color: $blue
+          
+        input[name=signature]
+          display: none
+    
+      
+    .onboard-progress
+      grid-area: progress
+      padding: 0 0 0 2em
+      color: $blue
+      @include desktop
+        justify-self: end
+        text-align: right
+      li
+        cursor: pointer
+        padding: 0 1em 1em 0
+        text-align: right
+        position: relative
+        &:last-child
+          padding-bottom: 0
+        &::after
+          content: ' '
+          display: inline-block
+          width: 12px
+          height: 12px
+          background: $gray
+          border-radius: 1em
+          position: absolute
+          top: 4px
+        &.onboard-progress-completed::after
+          background: $gray
+          font-size: 12px
+          line-height: 1.1
+        span
+          padding-right: 6px
+       
+      @include phone
+        padding: 1em 0 2em 0
+        text-align: center
+        span
+          display: none
+        li
+          padding: 0 0.5em
+          display: inline-block
+          border: none
+          &::after
+            right: 0
+            top: 0
+  
+    .onboard-progress-active
+      text-decoration: underline
+      &::after
+        background: $blue !important
+  
+
+  
+    
+  

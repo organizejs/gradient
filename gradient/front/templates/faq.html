@@ -1,0 +1,90 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+{% include "modules/_navigation.html" %}
+<div id="faq-splash">
+  <div id="faq-splash-content" class="contain">
+    <h1 id="faq-header">
+      New to Gradient? 
+    </h1>
+    <br>
+    <h4 id="faq-sub-header">
+      Let’s start with some of the basics of Gradient. 
+      <br>
+      <br>
+      If you have questions that aren’t answered in the below FAQ, please reach out to <a href="mailto:info@gradient.care">info@gradient.care</a>.
+    </h4>
+  </div>
+</div>
+<div id="faq">
+  <div class="contain">
+    <h3>
+      What is Gradient?
+    </h3>
+    <p>
+      Gradient is a way to pay for purchases made online. What distinguishes Gradient from other payment processors is its sliding scale pricing, which adjusts a product's price according to the customer.
+    </p>
+    <br>
+    <h3>
+      How does Gradient work?
+    </h3>
+    <p>
+      Users start by making a Gradient account and provide their income information and supporting qualifying data (such as number of dependents, marital status, etc). Gradient uses this information to determine how much to lower prices, on the basis of how much or little income a customer effectively makes.
+      <br><br>
+      Once the user has a Gradient account, she can start making purchases from vendors that support Gradient’s checkout system. 
+      <br><br>
+      By checking out with Gradient, Gradient will generate a discounted price suited to your income level. From there, you can complete your purchase through Gradient.  
+    </p>
+    <br>
+    <h3>
+      Won’t vendors make less money if their customers are paying on a sliding scale? (Especially if the scale only scales downwards from the original price point)
+    </h3>
+    <p>
+      Yes, that’s possible. However, depending on the nature of the good or commodity, it’s also very possible that vendors make even make more! For example, products like software goods or other such good with low marginal costs will allow vendors to reach a broader audience.
+      <br><br>
+      Using the vendor’s past sales data, Gradient’s model can be tailored to the best scale, striking the optimum balance between vendor revenue and customer accessibility.
+    </p>
+    <br>
+    <h3>
+      How will Gradient get data on user’s income information?
+    </h3>
+    <p>
+      Gradient is rooted in trust and community. Gradient will ask that users to self report their income accurately. In the future, we will continue to investigate strategies for income verification.
+    </p>
+    <br>
+    <h3>
+      I am fortunate to have a higher income than most people. Should I still use Gradient?
+    </h3>
+    <p>
+      Yes - it won’t increase your costs and you will be supporting greater equity for the larger Gradient community! 
+      <br><br>
+      Even if you may have a higher income than most, we model the scale for each product separately. So for products that are geared towards a higher-income audience, you may still find yourself paying less than the original price point.
+    </p>
+    <br>
+    <h3>
+      I’m a student, I don’t make any money, can I still use Gradient?
+    </h3>
+    <p>
+      Yes you can, the Gradient account creation process takes into account students and people who are currently claimed as dependents. 
+    </p>
+    <br>
+    <h3>
+      I think my income doesn’t match my financial status at all, can I create my account using a different metric?
+    </h3>
+    <p>
+      At the moment Gradient is only using adjusted income as the basis for adjusting prices. In the future we hope to make the process more holistic.
+    </p>
+    <br>
+    <h3>
+      Is the information that I declare in my Gradient account private?
+    </h3>
+    <p>
+      Yes. Your account information is used specifically and exclusively for price adjustment on Gradient’s sliding scale; Gradient will never share or sell any personally identifiable information about its users.
+    </p>
+    <br>
+    <br>
+  </div>  
+</div>
+
+{% include "modules/_footer.html" %}
+{% endblock %}

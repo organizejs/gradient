@@ -1,0 +1,60 @@
+body.checkout
+  #checkout-container
+    display: grid
+    @include desktop
+      grid-template-columns: 3fr 1fr
+      grid-template-rows: auto auto
+      grid-template-areas: "header header" "cart form"
+    @include phone
+      grid-template-columns: 1fr
+      grid-template-rows: auto auto auto
+      grid-template-areas: "header" "cart" "form"
+    
+    #checkout-header
+      grid-area: header
+      margin-bottom: 2em
+    
+    #checkout-cart
+      grid-area: cart
+      
+      .cart-item
+        display: grid
+        grid-template-columns: 1fr 2fr
+        margin-bottom: 2rem 
+        .cart-item-image
+          background: $blue
+          width: 14em
+          height: 14em
+          overflow: hidden
+          position: relative
+          img
+            width: 100%
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translateY(-50%) translateX(-50%)
+        .cart-item-meta
+          padding: 0 1.5em
+          .cart-item-title,
+          .cart-item-price
+            margin: 0 0 1em 0
+            line-height: 1.4
+            
+    #checkout-form
+      grid-area: form
+      @include desktop
+        text-align: right
+      @include phone
+        text-align: center
+      button
+        width: 10rem
+      .checkout-pay
+        width: 10em
+      .checkout-info
+        margin: 0 0 1em 0
+      .checkout-total
+        font-size: 1.6em
+        margin: 0.2em 0 0 0
+        border-bottom: 1px solid $black
+        display: inline-block
+        padding-bottom: 0.1em

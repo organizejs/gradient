@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% include "modules/_navigation.html" %}
+<div id="checkout-container" class="contain">
+  
+  <div id="checkout-header">
+    <h5>
+      You are making a purchase from:
+    </h5>
+    <h3>
+      {{ transaction.vendor.company_name }}
+    </h3>
+  </div>
+  
+  <div id="checkout-cart">
+    {% for gp in transaction.gradient_prices %}
+      <li class="cart-item">
+        <figure class="cart-item-image">
+          <img src="{{ gp.product.image_url }}">
+        </figure>
+        <div class="cart-item-meta">
+          <div class="cart-item-sku">SKU: {{ gp.product.sku }}</div>
+          <h4 class="cart-item-title">{{ gp.product.name }}</h4>
+          <div class="cart-item-quantity"></div>
+          <div class="cart-item-price">
+            <div>{{ (gp.price/100) | currencyformat('USD') }}</div>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </div>
+  
+  <div id="checkout-form">
+    <div class="checkout-info">
+      <h6>Your price:</h6>
+      <h1 class="checkout-total">{{ (transaction.total/100) | currencyformat('USD') }}</h1>
+    </div>
+    <button type="button" id="checkout-pay">Pay</button>
+  </div>
+  
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<script>
+  const key = '{{ config.STRIPE_PUBLIC_KEY }}';
+  const pay_url = '{{ url_for("checkout.pay") }}';
+  const transaction_id = '{{ transaction.id }}'; // should this be uuid?
+  const transaction_total = {{ transaction.total }};
+  const pay_selector = '#checkout-pay';
+
+  resize_images();
+
+  stripe_checkout(
+    key, 
+    pay_url, 
+    transaction_id, 
+    transaction_total, 
+    pay_selector);
+</script>
+{% endblock %}

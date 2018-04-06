@@ -1,0 +1,41 @@
+body.main.faq
+  // generic styling
+  color: $text
+  h1, h2
+    font-family: $landing-page-title-font
+  h3, h4, h6
+    font-family: $primary-font
+  button
+    background-color: $white
+    color: $blue
+
+  // splash section
+  #faq-splash
+    background-color: $black
+    background-image: url('/assets/images/faq-bg.png')
+    background-size: cover
+    background-position: center 
+  #faq-splash-content
+    color: $white
+    margin-bottom: 2em
+    display: grid
+    @include desktop
+      padding-top: 5em
+      padding-bottom: 5em
+      padding-right: 50%
+    @include phone
+      padding-top: 2.5em
+      padding-bottom: 2.5em
+    #faq-sub-header
+      width: 30em
+      a 
+        color: $white
+        text-decoration: underline
+      @include phone
+        width: inherit
+        
+  // FAQ section
+  #faq
+    h3
+      margin-bottom: 0.5em
+      font-weight: 600

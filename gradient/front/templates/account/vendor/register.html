@@ -1,0 +1,96 @@
+{% from "modules/_form_fields.html" import render_field_with_errors, render_field %}
+
+{% extends 'layout.html' %}
+{% block content %}
+{% include "modules/_messages.html" %}
+{% include "modules/_navigation.html" %}
+<div id="onboarding" class="contain">
+  
+  <div class="onboard-title-container">
+    <h3>
+      <div class="onboard-title">
+        {{ _('Signup for Gradient') }}
+      </div>
+    </h3>
+    <h5>
+      <div class="onboard-subtitle"></div>
+    </h5>
+  </div>
+
+  <div class="register-form">
+    <form action="{{ url_for('vendor.register') }}" method="POST" name="form">
+      {{ form.hidden_tag() }}
+
+      <section class="onboard-section" data-validate="{{ url_for('vendor.validate_user') }}" data-prompt="{{ _('Welcome') }}">
+        {{ render_field_with_errors(form.first_name) }}
+        {{ render_field_with_errors(form.last_name) }}
+        {{ render_field_with_errors(form.email) }}
+        {{ render_field_with_errors(form.password) }}
+        {% if form.password_confirm %}
+            {{ render_field_with_errors(form.password_confirm) }}
+        {% endif %}
+        <div class="onboard-actions">
+          <button class="onboard-next-section">Next</button>
+        </div>
+      </section>
+
+      <section class="onboard-section" data-validate="{{ url_for('vendor.validate_details') }}" data-prompt="{{ _('Please tell us about your company') }}">
+        {{ render_field_with_errors(form.company_name) }}
+        {{ render_field_with_errors(form.street) }}
+        {{ render_field_with_errors(form.city) }}
+        {{ render_field_with_errors(form.state_code) }}
+        {{ render_field_with_errors(form.zip_code) }}
+        <div class="onboard-actions">
+          <button class="onboard-next-section">Next</button>
+        </div>
+      </section>
+
+      <section class="onboard-section" data-prompt="{{ _('Please confirm your information') }}">
+        <div class="onboard-confirmation">
+          <div class="onboard-confirm-row">
+            <div class="onboard-confirm-label">First & Last Name:</div>
+            <div class="onboard-confirm-el" id="confirm_name">JS, Tan</div>
+          </div>
+          <div class="onboard-confirm-row">
+            <div class="onboard-confirm-label">Email:</div>
+            <div class="onboard-confirm-el" id="confirm_email">Lonely Apparel</div>
+          </div>
+          <div class="onboard-confirm-row">
+            <div class="onboard-confirm-label">Company Name:</div>
+            <div class="onboard-confirm-el" id="confirm_company_name">Lonely Apparel</div>
+          </div>
+          <div class="onboard-confirm-row">
+            <div class="onboard-confirm-label">Address:</div>
+            <div class="onboard-confirm-el">
+              <p id="confirm_address_street">4120 Brooklyn AVE, APT 305</p>
+              <p id="confirm_address_other">Seattle, 98105</p>
+            </div>
+          </div>
+        </div>
+        {{ render_field_with_errors(form.subscribe, label=True) }}
+        <div class="onboard-actions">
+          <input type="submit" value="Confirm and continue">
+          <p>
+            {{ _('By selecting \'confirm and continue\' you affirm that the information above is correct and accurate. Additionally you affirm that you have read and agree to the Gradient <a href="#">Terms of Use</a>, and give Gradient permission to contact you about your Gradient account or the information provided above via your primary email.') }}
+          </p>
+        </div>
+      </section>
+    </form>
+    <div class="onboard-progress">
+      <ol>
+        <li class="onboard-progress-active"><span>Account</span></li>
+        <li><span>Company Details</span></li>
+        <li><span>Confirmation</span></li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // called in /js/vendor_onboarding.js
+  vendor_register();
+</script>
+{% endblock %}

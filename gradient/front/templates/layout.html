@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  {# Global Site Tag (gtag.js) - Google Analytics #}
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-106509540-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments)};
+    gtag('js', new Date());
+
+    gtag('config', 'UA-106509540-1');
+  </script>
+
+  {# load default meta tags #}
+  <meta charset="utf-8">
+  <meta name="robots" content="Index,Follow">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+  <link rel="canonical" href="https://www.gradient.care">
+  <meta name="keywords" content="gradient, newinc, hello velocity, fintech, payments, sliding scale, equity, social practice, social justice, social good, equality" >
+  <meta name="description" content="Lower Prices For Those Who Need It: Buy with Gradient to get prices tailored to your financial need.">
+
+  {# load fb meta tags #}
+  <meta property="og:title" content="Gradient" >
+  <meta property="og:site_name" content="Gradient">
+  <meta property="og:url" content="https://www.gradient.care" >
+  <meta property="og:description" content="Lower Prices For Those Who Need It: Buy with Gradient to get prices tailored to your financial need." >
+  <meta property="og:image" content="{{ url_for('static', filename='images/share-image.png') }}" >
+  <meta property="og:type" content="website" >
+  <meta property="og:locale" content="en_US" >
+
+  {# load twitter meta tags #}
+  <meta property="twitter:card" content="summary_large_image" >
+  <meta property="twitter:title" content="Gradient" >
+  <meta property="twitter:description" content="Lower Prices For Those Who Need It: Buy with Gradient to get prices tailored to your financial need." >
+  <meta property="twitter:url" content="https://www.gradient.care" >
+  <meta property="twitter:image" content="{{ url_for('static', filename='images/share-image.png') }}" >
+
+  {# load css #}
+  {% for url in config.CSS_URLS() %}
+  <link rel="stylesheet" type="text/css" href="{{ url }}">
+  {% endfor %}
+
+  <title>Gradient</title>
+</head>
+
+<body class="{{ request.endpoint|replace('.', ' ') }}">
+  {% include "modules/_messages.html" %}
+
+  <main class="{{ request.endpoint|replace('.', ' ') }}">
+    {% block content %}
+    {% endblock %}
+  </main>
+  
+  {# mobile indicator - used in js to detect if mobile #}
+  <div id="mobile-indicator"></div>
+
+  {# load generic javascript libraries #}
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="{{url_for('static', filename='js/lib/jquery-3.2.1.slim.min.js') }}">\x3C/script>')</script>
+
+  {# load javascript #}
+  {% for url in config.JS_URLS() %}
+  <script src="{{ url }}"></script>
+  {% endfor %}
+
+  {# load inline javascript #}
+  {% block scripts %}
+  {% endblock %}
+</body>
+</html>

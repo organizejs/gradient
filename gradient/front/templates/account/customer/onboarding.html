@@ -1,0 +1,121 @@
+{% from "modules/_form_fields.html" import render_field_with_errors, render_field %}
+
+{% extends 'layout.html' %}
+{% block content %}
+{% include "modules/_navigation.html" %}
+<div id="onboarding" class="contain">
+
+  <div class="onboard-title-container">
+    <h3>
+      <di class="onboard-title">
+        {{ _('Get started with Gradient') }}
+      </di>
+    </h3>
+    <h5>
+      <div class="onboard-subtitle"></div>
+    </h5>
+  </div>
+
+  <div class="register-form">
+    <form action="{{ url_for('customer.onboarding') }}" method="POST" name="register_user_form">
+      {{ form.hidden_tag() }}
+
+      <!-- Section 1 -->
+      <section class="onboard-section" id="onboard-signature-section" data-validate="{{ url_for('customer.validate_signature') }}" data-prompt="{{ _('Hi {}, nice to meet you!'.format(current_user.first_name)) }}">
+        <div>
+          <p>{{ _('In order to create more equitable access for everyone in the community, it\'s important that all of our users are accurate and honest to the best of their ability when creating their Gradient accounts.') }}</p>
+          <p>{{ _('By signing below you affirm to the Gradient community that the account information you provide will be accurate and complete:') }}</p>
+        </div>
+        <br>
+        <div class="signature-wrapper">
+          <h1>X</h1><canvas id="signature-pad" width=500 height=100></canvas> </div>
+        <p class="signature-about">
+          {{ _('Please use your mouse to sign or mark on the line above.') }}
+        </p>
+        {{ render_field_with_errors(form.signature, label=False) }}
+        <div class="onboard-actions">
+          <button class="onboard-next-section">Next</button>
+        </div>
+      </section>
+
+      <!-- Section 2 -->
+      <section class="onboard-section" data-validate="{{ url_for('customer.validate_income') }}" data-prompt="{{ _('Tell us a bit about yourself') }}">
+        <div class="onboard-field-wrapper">
+          <p>{{ _('My martial status is...') }}</p>
+          {{ render_field_with_errors(form.marital_status) }}
+        </div>
+        <br>
+        <div class="onboard-field-wrapper">
+          <p>{{ _('The number of dependents I have...') }}</p>
+          {{ render_field_with_errors(form.dependents) }}
+        </div>
+        <br>
+        <div class="onboard-field-wrapper">
+          <p>{{ _('My annual income is...') }}</p>
+          {# TODO not rendering as input[type=number], but input[type=text] instead #}
+          {{ render_field_with_errors(form.individual_income, type='number', step=5000, min=0, max=1000000) }}
+        </div>
+        <br>
+        <div class="onboard-field-wrapper">
+          <p>{{ _('My household income is...') }}</p>
+          {{ render_field_with_errors(form.household_income, type='number', step=5000, min=0, max=1000000) }}
+        </div>
+        <div class="onboard-actions">
+          <button class="onboard-next-section">Next</button>
+        </div>
+      </section>
+
+      <!-- Section 3 -->
+      <section class="onboard-section" data-validate="{{ url_for('customer.validate_details') }}" data-prompt="{{ _('Where is your residence?') }}">
+        {{ render_field_with_errors(form.street) }}
+        {{ render_field_with_errors(form.city) }}
+        {{ render_field_with_errors(form.state_code) }}
+        {{ render_field_with_errors(form.zip_code) }}
+        <div class="onboard-actions">
+          <button class="onboard-next-section">Next</button>
+        </div>
+      </section>
+
+      <!-- Section 4 -->
+      <section class="onboard-section" data-prompt="{{ _('Let\'s confirm that this is correct:') }}">
+        <div>
+          <p class="onboard-confirm-info"></p>
+          <img class="onboard-confirm-sig"></img>
+        </div>
+        <br>
+        {{ render_field_with_errors(form.subscribe, label=True) }}
+        <div class="onboard-actions">
+          <input type="submit" value="Confirm and continue">
+          <p>
+            {{ _('By selecting \'confirm and continue\' you affirm that the information above is correct and accurate. Additionally you affirm that you have read and agree to the Gradient <a href="#">Terms of Use</a>, and give Gradient permission to contact you about your Gradient account or the information provided above via your primary email.') }}
+          </p>
+        </div>
+      </section>
+      
+    </form>
+  
+    <div class="onboard-progress">
+      <ol>
+        <li class="onboard-progress-active"><span>Affirmation</span></li>
+        <li><span>Personal Information</span></li>
+        <li><span>Address Information</span></li>
+        <li><span>Confirmation</span></li>
+      </ol>
+    </div>
+  
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+<script>
+    const first_name = '{{ current_user.first_name }}';
+    const last_name = '{{ current_user.last_name }}';
+
+    // called in /js/customer_onboarding.js
+    customer_onboarding(first_name, last_name);
+
+</script>
+{% endblock %}
+

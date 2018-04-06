@@ -1,0 +1,222 @@
+body.main.index,
+body.main.faq
+
+  // generic styling
+  color: $text
+  h1, h2
+    font-family: $landing-page-title-font
+    font-weight: 400
+  h2
+    letter-spacing: 0.025em
+  h3, h4, h6
+    font-family: $primary-font
+  button
+    background-color: $white
+    color: $blue
+
+  // Splash section
+  #splash
+    background-color: $blue
+    background-image: url('/assets/images/landing-bg.png') 
+    background-size: cover
+    color: $white
+    @include phone
+      height: 80vh 
+      max-height: 560px
+    @include desktop
+      height: 35em
+      display: grid
+    #splash-content
+      display: grid
+      height: 100%
+      @include desktop
+        padding-top: 5em
+        padding-bottom: 5em
+      @include phone
+        padding-top: 2.5em
+        padding-bottom: 2.5em
+      #splash-subscribe 
+        align-self: end
+
+  // Tagline Section
+  #tagline 
+    #tagline-content
+      text-align: center
+      @include desktop
+        background-color: $light-gray
+        height: 30em
+        padding: 7.5em 5em 10em 5em
+        margin: 5em auto
+      @include phone
+        background-color: $white
+        margin-top: 0
+        padding: 20vw 10vw
+        height: inherit
+        color: $blue
+        img
+          max-width: 80vw
+
+  // Philosophy Section
+  #philosophy
+    #philosophy-content
+      @include desktop
+        display: grid
+        grid-column-gap: 1em
+        grid-row-gap: 2em
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+        grid-template-rows: 1fr auto
+        grid-template-areas: "header header header header . . ." ". el1 el1 el2 el2 el3 el3"
+        
+      @include desktop
+        #philosophy-header
+          background-color: $white
+          grid-area: header
+        #philosophy-el-1
+          grid-area: el1
+        #philosophy-el-2
+          grid-area: el2
+        #philosophy-el-3
+          grid-area: el3
+          
+      .philosophy-el
+        .philosophy-el-img
+          text-align: center
+          img
+            width: 80%
+            margin-bottom: 1em
+        .philosophy-el-header
+          margin-bottom: 1em
+        .philosophy-el-text
+          width: 100%
+          
+      @include phone
+        background-color: $light-grey
+        #philosophy-header
+          margin-bottom: 2em
+        .philosophy-el
+          background-color: $white
+          padding: 5vw
+          margin-top: 1.25em
+          margin-bottom: 1.25em
+          .philosophy-el-img
+            text-align: center
+            img
+              width: 60vw
+       
+  // Explainer section
+  #explainer
+    color: $blue
+    display: grid
+    @include desktop
+      min-height: 35em
+      padding: 6em 5em
+      margin: 5em auto 0 auto
+      grid-template-rows: auto auto
+      grid-template-areas: "slides" "nav"
+      background-color: $light-grey
+    @include phone
+      margin-bottom: 0em
+      padding: 2.5em 1.25em
+      
+    #explainer-content
+      #explainer-nav
+        @include desktop
+          grid-area: nav
+        @include phone
+          margin-top: 10vw
+          margin-bottom: 2.5vw
+          text-align: center
+        .explainer-nav-el
+          cursor: pointer
+          border-radius: 100% 
+          background-color: $white
+          color: $blue
+          display: inline-block
+          width: 1.75em
+          height: 1.75em
+          line-height: calc(1.75em - 2px)
+          text-align: center
+          margin: 0 0.5em 
+          font-size: 1em
+          @include phone
+            font-size: 7vw
+            background-color: $light-gray
+        .explainer-nav-el.active
+          color: #fff
+          background-color: $blue
+          
+      #explainer-slides-container
+        @include desktop
+          grid-area: slides
+          
+        .explainer-slide
+          display: none
+          .explanation-number
+            grid-area: num
+            @extend h2
+            border-radius: 100% 
+            color: $white
+            display: inline-block
+            width: 1.5em
+            height: 1.5em
+            line-height: 1.5em
+            text-align: center
+            background-color: $blue
+          .explanation-header
+            grid-area: title
+            @extend h2
+          .explanation-desc
+            grid-area: desc
+            color: $black
+            @extend h5
+          .explanation-img
+            grid-area: img
+            box-shadow: 5px 5px 12px $shadow
+            img
+              width: 100%
+        .explainer-slide.active
+          display: grid
+          @include desktop
+            grid-column-gap: 2em
+            grid-template-columns: 1fr 1fr 1fr
+            grid-template-rows: auto auto auto auto
+            grid-template-areas: "num img img img" "title img img img" "desc img img img" "desc img img img"
+          @include phone
+            grid-template-columns: 1fr
+            grid-template-rows: 1fr 1fr 4fr 
+            grid-template-areas: "title" "desc" "img"
+
+  // Subscribe Form
+  .subscribe-form
+    margin: 1em 0
+    input[type='text']
+      background-color: $white
+      vertical-align: middle
+      border: 0
+      height: inherit
+      padding: 0.6em 1em
+      display: inline-block
+      border-radius: 0px
+      line-height: inherit
+      @include phone
+        width: 70vw
+        margin-bottom: 3vw
+      @include desktop
+        width: 16em
+    input[type='submit']
+      background-color: $red
+      vertical-align: middle
+      color: $white
+      border-radius: 0px
+      display: inline-block
+      padding: 0.5em
+      @include phone
+        width: 25vw
+        margin-left: 0px
+      @include desktop
+        width: inherit
+        min-width: 7.5em 
+        margin-left: 0.25em 
+    .subscribe-form-feedback
+      height: 1.0em
+

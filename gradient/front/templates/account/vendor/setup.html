@@ -1,0 +1,23 @@
+{% from "modules/_form_fields.html" import render_field_with_errors, render_field %}
+
+{% extends 'layout.html' %}
+{% block content %}
+<div class="contain">
+
+    <div class="header">
+        <h3>Setup your vendor account</h3>
+        <br>
+        <h5>Hi {{ current_user.account.name }}. Please setup your account!</h5>
+    </div>
+
+    <div class="setup-form">
+        <form action="{{ url_for('vendor.setup') }}" method="POST" name="setup_form">
+            {{ setup_form.hidden_tag() }}
+            {{ render_field_with_errors(setup_form.stripe_sk) }}
+            {{ render_field_with_errors(setup_form.stripe_pk) }}
+            {{ render_field_with_errors(setup_form.redirect_url) }}
+            {{ render_field(setup_form.submit, value='Setup Account') }}
+        </form>
+    </div>
+</div>
+{% endblock %}

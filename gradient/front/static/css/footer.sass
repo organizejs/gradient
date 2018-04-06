@@ -1,0 +1,63 @@
+#footer
+  background-color: $blue
+  color: $white
+  #footer-content
+    display: grid
+    padding-top: 2.5em
+    padding-bottom: 2.5em
+    @include desktop
+      grid-template-columns: 1fr 1fr
+      grid-template-rows: auto auto 
+      grid-template-areas: "newsletter options" "footer-left footer-right"
+    @include phone
+      grid-template-columns: 1fr
+      grid-template-rows: auto auto auto auto
+      grid-template-areas: "newsletter" "options" "footer-left" "footer-right"
+    #footer-newsletter-container
+      grid-area: newsletter
+      text-align: left
+      justify-self: start
+      max-width: 25em
+      @include phone
+        text-align: center
+    #footer-options-container
+      grid-area: options
+      @include desktop
+        text-align: right
+        justify-self: end
+        img
+          width: 15em
+        #footer-options > a > div
+          color: white
+          margin: 1em auto
+      @include phone
+        text-align: center
+        margin-bottom: 2em
+        #footer-options 
+          display: grid
+          grid-template-columns: 1fr 1fr 1fr
+          justify-space: between
+          a > div
+            color: white
+            display: inline-block
+    #footer-bot-left
+      grid-area: footer-left
+      border-top: 1px solid $white
+      width: 100%
+      padding-top: 1em
+      @include desktop
+        justify-self: start
+        text-align: left
+      @include phone
+        text-align: center
+    #footer-bot-right
+      grid-area: footer-right
+      width: 100%
+      @include desktop
+        text-align: right
+        border-top: 1px solid $white
+        justify-self: end
+        padding-top: 1em
+      @include phone
+        text-align: center
+  

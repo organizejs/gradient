@@ -1,0 +1,18 @@
+{% from "modules/_form_fields.html" import render_field_with_errors, render_field %}
+
+{% extends 'layout.html' %}
+{% block content %}
+{% include "modules/_navigation.html" %}
+<div id="security-module">
+  <div class="module">
+    <div>{{ _('Resend confirmation instructions') }}</div>
+    <br>
+    <form action="{{ url_for_security('send_confirmation') }}" method="POST" name="send_confirmation_form">
+      {{ send_confirmation_form.hidden_tag() }}
+      {{ render_field_with_errors(send_confirmation_form.email) }}
+      {{ render_field(send_confirmation_form.submit) }}
+    </form>
+    {% include "modules/_security_menu.html" %}
+  </div>
+</div>
+{% endblock %}

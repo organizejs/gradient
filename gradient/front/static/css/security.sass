@@ -1,0 +1,41 @@
+body.security,
+body.onboarding
+  background-color: $light-grey !important
+  hr
+    margin-top: 1em
+    margin-bottom: 1em
+  #submit
+    width: 100%
+  #register-button
+    width: 100%
+    border: 1px solid $blue
+    background-color: $white
+    color: $blue
+  #security-module
+    display: inline-block
+    @include desktop
+      width: 25em
+      position: absolute
+      top: calc(50% - 1em)
+      left: 50%
+      transform: translate(-50%, -50%)
+    @include phone
+      position: relative
+      top: inherit
+      left: inherit
+      transform: inherit
+      width: 100vw
+      border-top: 1px solid #f0f0f0
+    .module
+      padding: 1.5em
+      background-color: $white
+      color: $black
+      padding: 3.0em
+      @include phone
+        border: 0px
+        border-radius: 0px
+  #login-logo
+    text-align: center
+    img 
+      width: 60%
+

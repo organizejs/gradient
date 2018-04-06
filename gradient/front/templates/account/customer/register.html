@@ -1,0 +1,41 @@
+{% from "modules/_form_fields.html" import render_field_with_errors, render_field %}
+
+{% extends 'layout.html' %}
+{% block content %}
+{% include "modules/_navigation.html" %}
+<div id="onboarding" class="contain">
+
+  <div class="onboard-title-container">
+    <h3>
+      <di class="onboard-title">
+        {{ _('Get started with Gradient') }}
+      </di>
+    </h3>
+    <h5>
+      <div class="onboard-subtitle">
+        {{ _('Lower prices according to your need') }}
+      </div>
+    </h5>
+  </div>
+
+  <div class="register-form">
+    <form action="{{ url_for('customer.register') }}" method="POST" name="register_user_form">
+      {{ register_user_form.hidden_tag() }}
+      
+      <section class="onboard-section onboard-section-active">
+        {{ render_field_with_errors(register_user_form.first_name) }}
+        {{ render_field_with_errors(register_user_form.last_name) }}
+        {{ render_field_with_errors(register_user_form.email) }}
+        {{ render_field_with_errors(register_user_form.password) }}
+        {% if register_user_form.password_confirm %}
+          {{ render_field_with_errors(register_user_form.password_confirm) }}
+        {% endif %}
+        <div class="onboard-actions">
+          <button class="onboard-next-section">Create account</button>
+        </div>
+      </section>
+      
+    </form>
+  </div>
+</div>
+{% endblock %}

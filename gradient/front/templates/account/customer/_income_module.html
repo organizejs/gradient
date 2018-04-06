@@ -1,0 +1,62 @@
+<div id="income-module" class="content-pane">
+  <div class="module">
+    <div class="module-content">
+      <div class="home-content-title"><h4>Income Information</h4></div>
+    </div>
+    <div class="module-content">
+      {% set customer = current_user.account %}
+      <div class="home-property">
+        {% if customer.individual_income %}
+        <div class="home-property-label">Individual Income:</div>
+        <div class="home-property-value-container">
+          <div class="home-property-value">
+            {{ customer.individual_income | currencyformat('USD') }}
+          </div>
+        </div>
+        {% endif %}
+        {% if current_user.account.household_income %} 
+        <div class="home-property-label">Household Income:</div>
+        <div class="home-property-value-container">
+          <div class="home-property-value">
+            {{ customer.household_income | currencyformat('USD') }}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      <div class="home-property">
+        <div class="home-property-label">Marital Status:</div>
+        <div class="home-property-value-container">
+          <div class="home-property-value">
+            {{ customer.marital_status._display(customer.marital_status.name) }}
+          </div>
+        </div>
+      </div>
+      <div class="home-property">
+        <div class="home-property-label">Number of Dependents:</div>
+        <div class="home-property-value-container">
+          <div class="home-property-value">
+            {{ customer.dependents }}
+          </div>
+        </div>
+      </div>
+      <div class="home-property">
+        <div class="home-property-label">Address:</div>
+        <div class="home-property-value-container">
+          <div class="home-property-value">
+            {{ current_user.address.street }}<br>
+            {{ current_user.address.city }}, {{ current_user.address.state_code }}, {{ current_user.address.zip_code }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-content">
+      <div class="home-footer">
+        <div class="home-action">
+          <a href="{{ url_for('customer.onboarding') }}">
+            <div class="home-button">Update</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

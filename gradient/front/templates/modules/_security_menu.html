@@ -1,0 +1,44 @@
+{% if security.registerable or security.recoverable or security.confirmable %}
+
+<div id="security-menu">
+  <div>
+  {# Display a priviledged 'register' button on login modal #}
+  {% if (current_user.is_authenticated == false) 
+    and ((request.url_rule.endpoint == 'security.login') 
+      or (request.url_rule.endpoint == 'vendor.login')) %}
+  <hr>
+  <a href="{{ url_for('customer.register') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">
+    <button id="register-button">{{ _('Register') }}</button>
+  </a>
+  <br><br>
+  {% endif %}
+  </div>
+
+  <ul>
+    {% if current_user.is_authenticated == false %}
+      {% if (request.url_rule.endpoint != 'security.login')
+        and (request.url_rule.endpoint != 'vendor.login') %}
+      <li><a href="{{ url_for_security('login') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Login') }}</a></li>
+      <li><a href="{{ url_for('customer.register') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Register') }}</a></li>
+      {% endif %}
+    {% endif %}
+
+    {% if request.url_rule.endpoint != 'security.forgot_password' %}
+      {% if security.recoverable %}
+      <li><a href="{{ url_for_security('forgot_password') }}">{{ _('Forgot password') }}</a><br/></li>
+      {% endif %}
+    {% endif %}
+
+    {% if request.url_rule.endpoint != 'security.send_confirmation' %}
+      {% if security.confirmable %}
+      <li><a href="{{ url_for_security('send_confirmation') }}">{{ _('Confirm account') }}</a></li>
+      {% endif %}
+    {% endif %}
+    
+    {% if current_user.is_authenticated == false %}
+    <li><a href="{{ url_for('vendor.register') }}{% if 'next' in request.args %}?next={{ request.args.next|urlencode }}{% endif %}">{{ _('Register as a vendor') }}</a><br/></li>
+    {% endif %}
+
+  </ul>
+</div>
+{% endif %}

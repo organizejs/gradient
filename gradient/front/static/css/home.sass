@@ -1,0 +1,188 @@
+body.customer,
+body.vendor
+
+  .header
+    @include desktop
+      padding-bottom: 1em
+    .user-greeting
+      @include phone
+        display: inline-block
+      .user-icon
+        display: inline-block
+        img
+          width: 36px
+          height: 36px
+          border-radius: 50%
+          background-color: $white
+          box-shadow: 3px 3px 3px $gray
+          border: 2px solid $white
+          vertical-align: top
+      .user-text
+        display: inline-block
+        vertical-align: top
+        margin-left: 1em
+        line-height: 36px 
+        #home-name
+          display: inline-block
+          color: $blue
+          text-transform: capitalize
+    .user-nav
+      float: right
+      position: relative
+      display: block
+      text-align: right
+      z-index: 101
+
+
+  .home-property:last-of-type
+    margin: 0
+  .home-property
+    display: grid
+    grid-template-columns: 1fr 1fr
+    margin: 0 0 1em 0
+    .home-property-label
+      display: inline-block
+      padding: 3px 0px
+    .home-property-value-container
+      text-align: right
+      line-height: 1.25em
+      .home-property-value
+        color: $blue
+        border-radius: 2px
+        padding: 3px 6px
+        display: inline-block
+        background-color: $light-gray
+
+  .home-footer
+    display: grid
+    .home-action
+      text-align: right
+    .home-button  
+      display: inline-block
+      color: white
+      background-color: $blue
+      padding: 4px 12px
+      border-radius: 2px
+
+  #home-content 
+    display: grid
+    @include desktop
+      grid-template-columns: 12rem 1fr
+      grid-gap: 2em
+    @include phone
+      grid-template-columns: 1fr
+      width: 100%
+      margin-top: 5vw
+
+    #home-side-pane
+      hr
+        margin-bottom: 0.75em
+        margin-top: 0
+      .side-el
+        padding: 4px 0
+        cursor: pointer
+        border-radius: 2px
+        margin: 0 0.75em 0.75em 0
+        color: blue
+        display: table
+      .side-el.active
+        background-color: $blue
+        color: $white 
+        margin-left: 0
+        padding: 4px 12px
+    @include phone
+      #home-side-pane
+        display: none
+        z-index: 100
+        padding: 1em
+        background-color: $white
+        width: 100vw
+        left: 0px
+        position: fixed
+        box-shadow: 3px 3px 3px $gray
+        top: 0px
+
+    #home-content-pane
+      @include phone
+        max-width: 90vw
+      #getting-started-module,
+      .content-pane
+        border-radius: 4px 
+      .content-pane.active
+        display: block
+      .content-pane
+        .home-content-title
+          text-align: left
+          display: inline-block
+          line-height: 24px
+
+    #purchases-module
+      #purchases-content
+        @include desktop
+          max-height: 70vh
+        @include phone
+          max-height: inherit 
+        overflow-y: scroll
+        .transaction-grid.odd
+          background-color: $light-gray
+        .transaction-grid
+          position: relative
+          .transaction-col
+            padding: 0.75em
+            div
+              padding: 0.25em
+            
+body.customer.purchases
+  .transaction-grid
+    display: grid
+    grid-template-columns: 1fr 2fr 5fr
+    .datetime
+      text-align: center
+      .month
+        text-transform: uppercase
+        font-size: 0.9em
+        font-weight: 600
+      .date
+        font-size: 1.1em
+        font-weight: 600
+    .vendor
+      text-transform: capitalize
+      .name
+        font-size: 1.1em
+        font-weight: 600
+      .sector
+        font-size: 0.9em
+    .product
+      text-align: right
+      .price
+        font-size: 1.1em
+        font-weight: 600
+      .skus
+        font-size: 0.9em
+
+body.vendor.purchases
+  .transaction-grid
+    display: grid
+    grid-template-columns: 1fr 6fr 1fr
+    .datetime
+      text-align: left  
+      .month
+        text-transform: uppercase
+        font-size: 0.9em
+        font-weight: 600
+      .date
+        font-size: 1.1em
+        font-weight: 600
+    .data
+      .products
+        display: grid
+        grid-template-columns: 2fr 1fr 1fr 1fr 
+        div 
+          padding: 0.5em
+          border: 1px solid $light-gray
+        div.even
+          background-color: $white
+        div.odd
+          background-color: $light-gray
+    .total-price
+      text-align: right

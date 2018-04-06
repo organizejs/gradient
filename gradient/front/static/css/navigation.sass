@@ -1,0 +1,30 @@
+header
+  background-color: $white
+  color: $blue
+  .nav-el
+    display: inline-block
+    img
+      height: 40px
+  @include desktop
+    #nav-options-container
+      display: inline-block
+      float: right
+      line-height: 40px
+      z-index: 100
+      .nav-option
+        display: inline-block
+        margin-left: 3em
+      
+  @include phone
+    #nav-menu-button
+      display: inline-block
+      float: right
+      line-height: 40px
+      color: $link
+    #nav-options-container
+      margin-top: 1em
+      #nav-options
+        border-top: 1px solid $light-gray
+        .nav-option
+          padding-top: 1em
+      

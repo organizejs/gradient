@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Example Integration</title>
+  <style>
+    html {
+        font-family: 'sans-serif';
+    }
+    h1 {
+        font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+    <h1>Super Store</h1>
+    <button id="checkout-with-gradient">Checkout with Gradient</button>
+    <script src="http://localhost:5001/assets/js/gradient.js"></script>
+    <script>
+        document.getElementById('checkout-with-gradient').addEventListener('click', function() {
+            gradientCheckout(1, [{
+                id: 0,
+                max_price: 5000,
+                min_price: 1000,
+                sku: 'A01',
+                name: 'Lonely Hat',
+                image_url: 'https://prettythings.soylent.com/assets/drink/20170627/0102a_gallery.jpg'
+            }, {
+                id: 1,
+                max_price: 5000,
+                min_price: 1000,
+                sku: 'A02',
+                name: 'Lonely Shirt',
+                image_url: 'https://prettythings.soylent.com/assets/drink/20170627/0103a_gallery.jpg'
+            }]);
+        });
+    </script>
+</body>
+</html>
