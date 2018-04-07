@@ -1,10 +1,18 @@
 #doc-content
-  display: grid
-  grid-template-columns: 12rem 1fr
-  grid-template-areas: "nav md"
+  @include desktop
+    display: grid
+    grid-column-gap: 1rem
+    grid-template-columns: 12rem 1fr
+    grid-template-areas: "nav md"
+    
   #doc-nav 
     grid-area: nav
-    border-right: 1px solid $light-gray
+    @include desktop
+      border-right: 1px solid $light-gray
+    @include phone
+      padding-bottom: 1rem
+      margin-bottom: 1rem
+      border-bottom: 1px solid $light-gray
     li 
       list-style: none
       margin: 0.75em 0 0.75em 0

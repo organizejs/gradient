@@ -2000,18 +2000,16 @@ label {
 /* line 1, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
 .md {
   background-color: #ffffff;
-  padding-left: 1em;
-  padding-right: 1em;
   line-height: 1.5em;
 }
-/* line 6, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+/* line 4, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
 .md code {
   background-color: #f0f0f0;
   font-family: monospace;
   font-size: 1.1em;
   padding: 2.5px 5px;
 }
-/* line 11, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+/* line 9, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
 .md pre {
   font-family: monospace;
   color: #444444;
@@ -2019,13 +2017,19 @@ label {
   background-color: #f0f0f0;
   margin: 1em 0;
   line-height: 1.4em;
+  overflow-x: auto;
 }
-/* line 18, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+/* line 17, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+.md pre code {
+  padding: 0px 0px;
+}
+/* line 19, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
 .md h1 {
   margin: 0 0 0.5em 0;
   font-size: 2rem;
+  line-height: 2rem;
 }
-/* line 21, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+/* line 23, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
 .md h2, .md body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .md .explanation-number,
 .md body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number,
 body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .md .explanation-number, .md body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .md .explanation-header,
@@ -2033,52 +2037,70 @@ body.main.faq #explainer #explainer-content #explainer-slides-container .explain
 body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .md .explanation-header {
   margin: 1em 0 0.5em 0;
   font-size: 1.6rem;
+  line-height: 1.6rem;
 }
-/* line 24, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+/* line 27, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
 .md h3 {
   font-size: 1.2rem;
+  line-height: 1.2rem;
 }
-/* line 26, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+/* line 30, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
 .md ol,
 .md ul {
   padding-left: 2.5em;
   margin-bottom: 1em;
 }
-/* line 30, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+/* line 34, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
 .md ol li,
 .md ul li {
   margin: 0 0 0.5em 0;
 }
-/* line 32, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+/* line 36, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
 .md ol {
   list-style-type: decimal;
 }
-/* line 34, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+/* line 38, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
 .md ul {
   list-style-type: disc;
 }
 
-/* line 1, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
-#doc-content {
-  display: grid;
-  grid-template-columns: 12rem 1fr;
-  grid-template-areas: "nav md";
-}
-/* line 5, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
-#doc-content #doc-nav {
-  grid-area: nav;
-  border-right: 1px solid #f0f0f0;
+@media only screen and (min-width: 640px) {
+  /* line 1, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
+  #doc-content {
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-template-columns: 12rem 1fr;
+    grid-template-areas: "nav md";
+  }
 }
 /* line 8, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
+#doc-content #doc-nav {
+  grid-area: nav;
+}
+@media only screen and (min-width: 640px) {
+  /* line 8, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
+  #doc-content #doc-nav {
+    border-right: 1px solid #f0f0f0;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 8, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
+  #doc-content #doc-nav {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+/* line 16, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
 #doc-content #doc-nav li {
   list-style: none;
   margin: 0.75em 0 0.75em 0;
 }
-/* line 11, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
+/* line 19, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
 #doc-content #doc-nav li.active {
   font-weight: 600;
 }
-/* line 13, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
+/* line 21, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
 #doc-content #doc-md {
   grid-area: md;
 }

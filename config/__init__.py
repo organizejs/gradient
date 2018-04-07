@@ -1,7 +1,7 @@
 """
 This loads a configuration according to
 the FLASK_CONFIG environmental variable.
-For instanec, if `FLASK_CONFIG=dev`, it
+For instance, if `FLASK_CONFIG=dev`, it
 load `config/dev.py` (this is the default).
 In staging and production, you should set `FLASK_CONFIG=env`
 so that it loads `config/env.py`, which loads configuration

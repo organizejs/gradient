@@ -1,11 +1,11 @@
+/**
+ ** is_mobile function
+ **/
+function is_mobile() {
+  return $('#mobile-indicator').is(':visible');
+}
+
 $(document).ready(function() {
-  /**
-   ** is_mobile function
-   **/
-  function is_mobile() {
-    return $('#mobile-indicator').is(':visible');
-  }
-  
   /**
    ** Mobile navigation
    **/
