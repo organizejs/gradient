@@ -1,0 +1,2429 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+ * v2.0 | 20110126
+ * License: none (public domain) */
+@import url("https://fonts.googleapis.com/css?family=Nunito:400,400i,600,600i,800,800i");
+@import url("https://fonts.googleapis.com/css?family=Abril+Fatface");
+@import url("https://fonts.googleapis.com/css?family=Nunito:400,400i,600,600i,800,800i");
+@import url("https://fonts.googleapis.com/css?family=Abril+Fatface");
+/* line 5, /home/ec2-user/environment/gradient/front/static/css/_reset.sass */
+html, body, div, span, applet, object, iframe, h1, h2, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header, h3, h4, h5, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-desc,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-desc, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video, button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+/* line 15, /home/ec2-user/environment/gradient/front/static/css/_reset.sass */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+/* line 18, /home/ec2-user/environment/gradient/front/static/css/_reset.sass */
+body {
+  line-height: 1;
+}
+
+/* line 21, /home/ec2-user/environment/gradient/front/static/css/_reset.sass */
+ol, ul {
+  list-style: none;
+}
+
+/* line 24, /home/ec2-user/environment/gradient/front/static/css/_reset.sass */
+blockquote, q {
+  quotes: none;
+}
+
+/* line 28, /home/ec2-user/environment/gradient/front/static/css/_reset.sass */
+blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 33, /home/ec2-user/environment/gradient/front/static/css/_reset.sass */
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+/* line 37, /home/ec2-user/environment/gradient/front/static/css/_reset.sass */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 41, /home/ec2-user/environment/gradient/front/static/css/_reset.sass */
+button {
+  background: none;
+}
+
+/**
+ ** Font Management 
+ */
+/**
+ ** Color Management
+ */
+/**
+ ** Screen Size Management 
+ */
+/* line 49, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+* {
+  box-sizing: border-box;
+}
+
+/**
+ ** div to indicate if screen is mobile (this is used in javascript)
+ */
+@media only screen and (max-width: 640px) {
+  /* line 58, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  #mobile-indicator {
+    display: block;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 63, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  #mobile-indicator {
+    display: none;
+  }
+}
+/**
+ ** Base Content 
+ */
+/* line 70, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+/* line 76, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+body {
+  color: #111111;
+  font-family: "Nunito", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  background: #ffffff;
+}
+
+/* line 81, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+body.customer,
+body.vendor {
+  background-color: #f0f0f0;
+  min-height: 100vh;
+}
+
+/* line 86, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+body.setup,
+body.register,
+body.vendor.integration {
+  background-color: #ffffff !important;
+}
+
+/* line 91, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+::selection {
+  background: #111111;
+  color: #ffffff;
+}
+
+/* line 95, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+::-moz-selection {
+  background: #111111;
+  color: #ffffff;
+}
+
+/* line 99, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+a, a:link, a:visited {
+  color: #0000ff;
+  text-decoration: none;
+}
+/* line 102, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+a:hover, a:link:hover, a:visited:hover {
+  text-decoration: underline;
+}
+
+/* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.contain {
+  margin: 0 auto;
+}
+@media only screen and (max-width: 640px) {
+  /* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .contain {
+    padding: 5vw;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .contain {
+    padding: 1em;
+  }
+}
+@media (min-width: 0px) {
+  /* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .contain {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) {
+  /* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .contain {
+    max-width: 786px;
+  }
+}
+@media (min-width: 992px) {
+  /* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .contain {
+    max-width: 992px;
+  }
+}
+@media (min-width: 1200px) {
+  /* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .contain {
+    max-width: 1200px;
+  }
+}
+
+/* line 120, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+main {
+  margin: 0 auto;
+}
+
+/* line 123, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+h1 {
+  font-weight: 600;
+}
+@media only screen and (max-width: 640px) {
+  /* line 123, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  h1 {
+    font-size: 10vw;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 123, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  h1 {
+    font-size: 3em;
+  }
+}
+
+/* line 129, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+h2, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header {
+  font-size: 1.8em;
+  font-weight: 400;
+}
+
+/* line 132, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+h3 {
+  font-size: 1.4em;
+  font-weight: 400;
+}
+
+/* line 135, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+h4 {
+  font-weight: 400;
+}
+@media only screen and (max-width: 640px) {
+  /* line 135, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  h4 {
+    font-size: 5vw;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 135, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  h4 {
+    font-size: 1.2em;
+  }
+}
+
+/* line 141, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+h6 {
+  font-size: 0.8em;
+}
+
+/* line 144, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+p {
+  margin: 0 0 1em 0;
+}
+/* line 146, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+p:last-child {
+  margin-bottom: 0;
+}
+
+/* line 157, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+hr {
+  border: 0;
+  height: 1px;
+  background-color: #cccccc;
+}
+
+/**
+ ** Forms Elements
+ */
+/* line 168, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+button,
+input[type=submit] {
+  font-size: 1em;
+  font-family: "Nunito", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  background: #0000ff;
+  color: #ffffff;
+  min-width: 8em;
+  display: inline-block;
+  border-radius: 2px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  padding: 4px 12px;
+}
+
+/* line 182, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+input[type=text],
+input[type=number],
+input[type=password],
+select {
+  display: block;
+  margin: 0 0 0 0;
+  font-family: #0000ff;
+  border: 0px;
+  background-color: #f0f0f0;
+  width: 100%;
+  height: 3em;
+  line-height: 2em;
+  font-size: 1em;
+  outline: none;
+  padding: 0.5em 1.5em;
+}
+@media only screen and (min-width: 640px) {
+  /* line 182, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  input[type=text],
+  input[type=number],
+  input[type=password],
+  select {
+    max-width: 20em;
+  }
+}
+
+/* line 200, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+select {
+  -webkit-appearance: none;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+/* line 205, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+input[type=text],
+input[type=password] {
+  border: none;
+  border-bottom: 1px solid #0000ff;
+  outline: none;
+}
+
+/* line 211, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+label {
+  cursor: pointer;
+}
+
+/* line 214, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.errors {
+  color: red;
+}
+/* line 216, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.errors li {
+  padding: 0.5em 0 0 0;
+  display: block;
+}
+
+/* line 221, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.form-field label[for=subscribe] {
+  display: inline-block;
+  color: #0000ff;
+}
+@media only screen and (max-width: 640px) {
+  /* line 224, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .form-field input {
+    display: inline-block;
+  }
+}
+/* line 227, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.form-field input::placeholder {
+  color: #0000ff;
+  opacity: 1;
+}
+/* line 230, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.form-field input:hover,
+.form-field select:hover {
+  background-color: #cccccc;
+}
+
+/* line 233, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.form-field:first-of-type {
+  margin: 0em 0 0.5em 0;
+}
+
+/* line 235, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.form-field:not(:first-of-type) {
+  margin: 1em 0 0.5em 0;
+}
+
+/**
+ ** Misc
+ */
+/* line 243, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.flashes li {
+  padding: 1em;
+  background: #0000ff;
+  color: #ffffff;
+  text-align: center;
+  border-bottom: 1px solid #ffffff;
+}
+/* line 249, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.flashes li.error {
+  background: #ff0000;
+}
+
+/* line 252, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.module {
+  width: 100%;
+  text-align: left;
+  background-color: #ffffff;
+  color: #111111;
+  margin-bottom: 2em;
+}
+
+/* line 259, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.module-content {
+  padding: 1.25em;
+  background-color: #ffffff;
+  color: #111111;
+  box-shadow: 2px 2px 10px #cccccc;
+}
+
+/* line 264, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.module-content:first-of-type {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom: 1px solid #cccccc;
+}
+
+/* line 268, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.module-content:not(:first-of-type):not(:last-child) {
+  border-bottom: 1px solid #cccccc;
+}
+
+/* line 270, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.module-content:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* line 274, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.notice-module {
+  padding: 1.25em;
+  background-color: #cccccc;
+  color: #444444;
+}
+
+/**
+ ** hamburger
+ */
+/* line 283, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.hamburger {
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* line 287, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.bar1, .bar2, .bar3 {
+  width: 30px;
+  height: 5px;
+  background-color: #333;
+  margin: 5px 0;
+  transition: 0.4s;
+  background-color: #0000ff;
+}
+
+/* line 295, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-8px, 6px);
+  transform: rotate(-45deg) translate(-8px, 6px);
+}
+
+/* line 299, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.change .bar2 {
+  opacity: 0;
+}
+
+/* line 302, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -7px);
+  transform: rotate(45deg) translate(-8px, -7px);
+}
+
+/**
+ ** Responsive Helpers
+ */
+@media only screen and (min-width: 640px) {
+  /* line 310, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .mobile-only {
+    display: none !important;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 310, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .mobile-only {
+    display: inherit !important;
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  /* line 316, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .desktop-only {
+    display: block !important;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 316, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+/* line 1, /home/ec2-user/environment/gradient/front/static/css/security.sass */
+body.security,
+body.onboarding {
+  background-color: #f0f0f0 !important;
+}
+/* line 4, /home/ec2-user/environment/gradient/front/static/css/security.sass */
+body.security hr,
+body.onboarding hr {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+/* line 7, /home/ec2-user/environment/gradient/front/static/css/security.sass */
+body.security #submit,
+body.onboarding #submit {
+  width: 100%;
+}
+/* line 9, /home/ec2-user/environment/gradient/front/static/css/security.sass */
+body.security #register-button,
+body.onboarding #register-button {
+  width: 100%;
+  border: 1px solid #0000ff;
+  background-color: #ffffff;
+  color: #0000ff;
+}
+/* line 14, /home/ec2-user/environment/gradient/front/static/css/security.sass */
+body.security #security-module,
+body.onboarding #security-module {
+  display: inline-block;
+}
+@media only screen and (min-width: 640px) {
+  /* line 14, /home/ec2-user/environment/gradient/front/static/css/security.sass */
+  body.security #security-module,
+  body.onboarding #security-module {
+    width: 25em;
+    position: absolute;
+    top: calc(50% - 1em);
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 14, /home/ec2-user/environment/gradient/front/static/css/security.sass */
+  body.security #security-module,
+  body.onboarding #security-module {
+    position: relative;
+    top: inherit;
+    left: inherit;
+    transform: inherit;
+    width: 100vw;
+    border-top: 1px solid #f0f0f0;
+  }
+}
+/* line 29, /home/ec2-user/environment/gradient/front/static/css/security.sass */
+body.security #security-module .module,
+body.onboarding #security-module .module {
+  padding: 1.5em;
+  background-color: #ffffff;
+  color: #111111;
+  padding: 3em;
+}
+@media only screen and (max-width: 640px) {
+  /* line 29, /home/ec2-user/environment/gradient/front/static/css/security.sass */
+  body.security #security-module .module,
+  body.onboarding #security-module .module {
+    border: 0px;
+    border-radius: 0px;
+  }
+}
+/* line 37, /home/ec2-user/environment/gradient/front/static/css/security.sass */
+body.security #login-logo,
+body.onboarding #login-logo {
+  text-align: center;
+}
+/* line 39, /home/ec2-user/environment/gradient/front/static/css/security.sass */
+body.security #login-logo img,
+body.onboarding #login-logo img {
+  width: 60%;
+}
+
+/* line 1, /home/ec2-user/environment/gradient/front/static/css/navigation.sass */
+header {
+  background-color: #ffffff;
+  color: #0000ff;
+}
+/* line 4, /home/ec2-user/environment/gradient/front/static/css/navigation.sass */
+header .nav-el {
+  display: inline-block;
+}
+/* line 6, /home/ec2-user/environment/gradient/front/static/css/navigation.sass */
+header .nav-el img {
+  height: 40px;
+}
+@media only screen and (min-width: 640px) {
+  /* line 9, /home/ec2-user/environment/gradient/front/static/css/navigation.sass */
+  header #nav-options-container {
+    display: inline-block;
+    float: right;
+    line-height: 40px;
+    z-index: 100;
+  }
+  /* line 14, /home/ec2-user/environment/gradient/front/static/css/navigation.sass */
+  header #nav-options-container .nav-option {
+    display: inline-block;
+    margin-left: 3em;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 19, /home/ec2-user/environment/gradient/front/static/css/navigation.sass */
+  header #nav-menu-button {
+    display: inline-block;
+    float: right;
+    line-height: 40px;
+    color: #0000ff;
+  }
+  /* line 24, /home/ec2-user/environment/gradient/front/static/css/navigation.sass */
+  header #nav-options-container {
+    margin-top: 1em;
+  }
+  /* line 26, /home/ec2-user/environment/gradient/front/static/css/navigation.sass */
+  header #nav-options-container #nav-options {
+    border-top: 1px solid #f0f0f0;
+  }
+  /* line 28, /home/ec2-user/environment/gradient/front/static/css/navigation.sass */
+  header #nav-options-container #nav-options .nav-option {
+    padding-top: 1em;
+  }
+}
+
+/* line 1, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-row-gap: 2em;
+  grid-template-rows: auto auto;
+  grid-template-areas: "title" "body";
+}
+@media only screen and (min-width: 640px) {
+  /* line 1, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+  #onboarding {
+    margin-top: 1em;
+  }
+}
+/* line 10, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .onboard-title-container {
+  grid-area: title;
+}
+/* line 12, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .onboard-title-container .onboard-title {
+  margin-bottom: 0.5em;
+}
+/* line 14, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .onboard-title-container .onboard-subtitle {
+  color: #0000ff;
+}
+/* line 17, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form {
+  grid-area: body;
+}
+@media only screen and (min-width: 640px) {
+  /* line 17, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+  #onboarding .register-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "form progress";
+  }
+}
+/* line 26, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form {
+  grid-area: form;
+  text-align: left;
+}
+/* line 30, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section-active {
+  display: block !important;
+}
+/* line 33, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section {
+  display: none;
+}
+/* line 35, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section li {
+  display: block;
+}
+/* line 37, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section li input {
+  max-width: 20em;
+  display: none;
+}
+/* line 40, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section li input:checked + label {
+  background: #0000ff;
+  border: 1px solid #0000ff;
+  color: #ffffff;
+}
+/* line 44, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section li label {
+  text-align: center;
+  padding: 0.5em 1em;
+  margin: 0 0.5em 0 0;
+  cursor: pointer;
+  border: 1px solid #444444;
+  border-radius: 0.5em;
+  font-size: 0.9em;
+  min-width: 6em;
+  display: inline-block;
+}
+/* line 54, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section li label:hover label {
+  border: solid 1px #0000ff !important;
+  background: #ffffff;
+}
+/* line 58, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section .onboard-confirm-info {
+  font-size: 1.2em;
+}
+/* line 61, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section .onboard-confirm-sig {
+  background-color: #f0f0f0;
+}
+@media only screen and (max-width: 640px) {
+  /* line 61, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+  #onboarding .register-form form .onboard-section .onboard-confirm-sig {
+    width: 100%;
+  }
+}
+/* line 66, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section .onboard-field-wrapper.disabled {
+  opacity: 0.2;
+}
+/* line 69, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section .onboard-confirm-row {
+  margin: 1em 0 0.5em 0;
+}
+/* line 71, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section .onboard-confirm-row .onboard-confirm-label,
+#onboarding .register-form form .onboard-section .onboard-confirm-row .onboard-confirm-el {
+  display: block;
+}
+/* line 74, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section .onboard-confirm-row .onboard-confirm-el {
+  padding: 1em;
+  background-color: #f0f0f0;
+  display: inline-block;
+  min-width: 300px;
+  opacity: 0.8;
+}
+/* line 81, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section .onboard-actions {
+  margin: 2em 0 0 0;
+}
+/* line 83, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form .onboard-section .onboard-actions button, #onboarding .register-form form .onboard-section .onboard-actions input[type=submit] {
+  text-transform: lowercase;
+  margin: 0 0 1em 0;
+  color: #ffffff;
+  max-width: 15em;
+}
+/* line 90, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form #onboard-signature-section .signature-wrapper {
+  position: relative;
+}
+/* line 92, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form #onboard-signature-section .signature-wrapper canvas {
+  display: inline-block;
+  border-bottom: 1px solid #0000ff;
+  background-color: #f0f0f0;
+}
+@media only screen and (max-width: 640px) {
+  /* line 92, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+  #onboarding .register-form form #onboard-signature-section .signature-wrapper canvas {
+    width: 100%;
+    height: 100px;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 92, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+  #onboarding .register-form form #onboard-signature-section .signature-wrapper canvas {
+    width: 500px;
+    height: 100px;
+  }
+}
+/* line 102, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form #onboard-signature-section .signature-wrapper h1 {
+  position: absolute;
+  left: 0.25em;
+  bottom: 0.25em;
+  display: inline-block;
+  font-family: "Nunito", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  color: #0000ff;
+}
+/* line 110, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form #onboard-signature-section .signature-about {
+  color: #0000ff;
+}
+/* line 113, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form form #onboard-signature-section input[name=signature] {
+  display: none;
+}
+/* line 117, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form .onboard-progress {
+  grid-area: progress;
+  padding: 0 0 0 2em;
+  color: #0000ff;
+}
+@media only screen and (min-width: 640px) {
+  /* line 117, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+  #onboarding .register-form .onboard-progress {
+    justify-self: end;
+    text-align: right;
+  }
+}
+/* line 124, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form .onboard-progress li {
+  cursor: pointer;
+  padding: 0 1em 1em 0;
+  text-align: right;
+  position: relative;
+}
+/* line 129, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form .onboard-progress li:last-child {
+  padding-bottom: 0;
+}
+/* line 131, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form .onboard-progress li::after {
+  content: " ";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: #cccccc;
+  border-radius: 1em;
+  position: absolute;
+  top: 4px;
+}
+/* line 140, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form .onboard-progress li.onboard-progress-completed::after {
+  background: #cccccc;
+  font-size: 12px;
+  line-height: 1.1;
+}
+/* line 144, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form .onboard-progress li span {
+  padding-right: 6px;
+}
+@media only screen and (max-width: 640px) {
+  /* line 117, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+  #onboarding .register-form .onboard-progress {
+    padding: 1em 0 2em 0;
+    text-align: center;
+  }
+  /* line 150, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+  #onboarding .register-form .onboard-progress span {
+    display: none;
+  }
+  /* line 152, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+  #onboarding .register-form .onboard-progress li {
+    padding: 0 0.5em;
+    display: inline-block;
+    border: none;
+  }
+  /* line 156, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+  #onboarding .register-form .onboard-progress li::after {
+    right: 0;
+    top: 0;
+  }
+}
+/* line 160, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form .onboard-progress-active {
+  text-decoration: underline;
+}
+/* line 162, /home/ec2-user/environment/gradient/front/static/css/onboarding.sass */
+#onboarding .register-form .onboard-progress-active::after {
+  background: #0000ff !important;
+}
+
+/* line 1, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index,
+body.main.faq {
+  color: #111111;
+}
+/* line 6, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index h1, body.main.index h2, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide body.main.index .explanation-number, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide body.main.index .explanation-header,
+body.main.faq h1,
+body.main.faq h2,
+body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide body.main.faq .explanation-number,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number,
+body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide body.main.faq .explanation-header,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header {
+  font-family: "Abril Fatface", "Times", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+}
+/* line 9, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index h2, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide body.main.index .explanation-number, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide body.main.index .explanation-header,
+body.main.faq h2,
+body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide body.main.faq .explanation-number,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number,
+body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide body.main.faq .explanation-header,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header {
+  letter-spacing: 0.025em;
+}
+/* line 11, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index h3, body.main.index h4, body.main.index h6,
+body.main.faq h3,
+body.main.faq h4,
+body.main.faq h6 {
+  font-family: "Nunito", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+/* line 13, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index button,
+body.main.faq button {
+  background-color: #ffffff;
+  color: #0000ff;
+}
+/* line 18, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #splash,
+body.main.faq #splash {
+  background-color: #0000ff;
+  background-image: url("/assets/images/landing-bg.png");
+  background-size: cover;
+  color: #ffffff;
+}
+@media only screen and (max-width: 640px) {
+  /* line 18, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #splash,
+  body.main.faq #splash {
+    height: 80vh;
+    max-height: 560px;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 18, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #splash,
+  body.main.faq #splash {
+    height: 35em;
+    display: grid;
+  }
+}
+/* line 29, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #splash #splash-content,
+body.main.faq #splash #splash-content {
+  display: grid;
+  height: 100%;
+}
+@media only screen and (min-width: 640px) {
+  /* line 29, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #splash #splash-content,
+  body.main.faq #splash #splash-content {
+    padding-top: 5em;
+    padding-bottom: 5em;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 29, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #splash #splash-content,
+  body.main.faq #splash #splash-content {
+    padding-top: 2.5em;
+    padding-bottom: 2.5em;
+  }
+}
+/* line 38, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #splash #splash-content #splash-subscribe,
+body.main.faq #splash #splash-content #splash-subscribe {
+  align-self: end;
+}
+/* line 43, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #tagline #tagline-content,
+body.main.faq #tagline #tagline-content {
+  text-align: center;
+}
+@media only screen and (min-width: 640px) {
+  /* line 43, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #tagline #tagline-content,
+  body.main.faq #tagline #tagline-content {
+    background-color: #f0f0f0;
+    height: 30em;
+    padding: 7.5em 5em 10em 5em;
+    margin: 5em auto;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 43, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #tagline #tagline-content,
+  body.main.faq #tagline #tagline-content {
+    background-color: #ffffff;
+    margin-top: 0;
+    padding: 20vw 10vw;
+    height: inherit;
+    color: #0000ff;
+  }
+  /* line 56, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #tagline #tagline-content img,
+  body.main.faq #tagline #tagline-content img {
+    max-width: 80vw;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 61, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #philosophy #philosophy-content,
+  body.main.faq #philosophy #philosophy-content {
+    display: grid;
+    grid-column-gap: 1em;
+    grid-row-gap: 2em;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr auto;
+    grid-template-areas: "header header header header . . ." ". el1 el1 el2 el2 el3 el3";
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 71, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #philosophy #philosophy-content #philosophy-header,
+  body.main.faq #philosophy #philosophy-content #philosophy-header {
+    background-color: #ffffff;
+    grid-area: header;
+  }
+  /* line 74, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #philosophy #philosophy-content #philosophy-el-1,
+  body.main.faq #philosophy #philosophy-content #philosophy-el-1 {
+    grid-area: el1;
+  }
+  /* line 76, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #philosophy #philosophy-content #philosophy-el-2,
+  body.main.faq #philosophy #philosophy-content #philosophy-el-2 {
+    grid-area: el2;
+  }
+  /* line 78, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #philosophy #philosophy-content #philosophy-el-3,
+  body.main.faq #philosophy #philosophy-content #philosophy-el-3 {
+    grid-area: el3;
+  }
+}
+/* line 82, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #philosophy #philosophy-content .philosophy-el .philosophy-el-img,
+body.main.faq #philosophy #philosophy-content .philosophy-el .philosophy-el-img {
+  text-align: center;
+}
+/* line 84, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #philosophy #philosophy-content .philosophy-el .philosophy-el-img img,
+body.main.faq #philosophy #philosophy-content .philosophy-el .philosophy-el-img img {
+  width: 80%;
+  margin-bottom: 1em;
+}
+/* line 87, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #philosophy #philosophy-content .philosophy-el .philosophy-el-header,
+body.main.faq #philosophy #philosophy-content .philosophy-el .philosophy-el-header {
+  margin-bottom: 1em;
+}
+/* line 89, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #philosophy #philosophy-content .philosophy-el .philosophy-el-text,
+body.main.faq #philosophy #philosophy-content .philosophy-el .philosophy-el-text {
+  width: 100%;
+}
+@media only screen and (max-width: 640px) {
+  /* line 61, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #philosophy #philosophy-content,
+  body.main.faq #philosophy #philosophy-content {
+    background-color: #f0f0f0;
+  }
+  /* line 94, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #philosophy #philosophy-content #philosophy-header,
+  body.main.faq #philosophy #philosophy-content #philosophy-header {
+    margin-bottom: 2em;
+  }
+  /* line 96, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #philosophy #philosophy-content .philosophy-el,
+  body.main.faq #philosophy #philosophy-content .philosophy-el {
+    background-color: #ffffff;
+    padding: 5vw;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+  }
+  /* line 101, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #philosophy #philosophy-content .philosophy-el .philosophy-el-img,
+  body.main.faq #philosophy #philosophy-content .philosophy-el .philosophy-el-img {
+    text-align: center;
+  }
+  /* line 103, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #philosophy #philosophy-content .philosophy-el .philosophy-el-img img,
+  body.main.faq #philosophy #philosophy-content .philosophy-el .philosophy-el-img img {
+    width: 60vw;
+  }
+}
+/* line 107, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #explainer,
+body.main.faq #explainer {
+  color: #0000ff;
+  display: grid;
+}
+@media only screen and (min-width: 640px) {
+  /* line 107, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #explainer,
+  body.main.faq #explainer {
+    min-height: 35em;
+    padding: 6em 5em;
+    margin: 5em auto 0 auto;
+    grid-template-rows: auto auto;
+    grid-template-areas: "slides" "nav";
+    background-color: #f0f0f0;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 107, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #explainer,
+  body.main.faq #explainer {
+    margin-bottom: 0em;
+    padding: 2.5em 1.25em;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 122, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #explainer #explainer-content #explainer-nav,
+  body.main.faq #explainer #explainer-content #explainer-nav {
+    grid-area: nav;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 122, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #explainer #explainer-content #explainer-nav,
+  body.main.faq #explainer #explainer-content #explainer-nav {
+    margin-top: 10vw;
+    margin-bottom: 2.5vw;
+    text-align: center;
+  }
+}
+/* line 129, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #explainer #explainer-content #explainer-nav .explainer-nav-el,
+body.main.faq #explainer #explainer-content #explainer-nav .explainer-nav-el {
+  cursor: pointer;
+  border-radius: 100%;
+  background-color: #ffffff;
+  color: #0000ff;
+  display: inline-block;
+  width: 1.75em;
+  height: 1.75em;
+  line-height: calc(1.75em - 2px);
+  text-align: center;
+  margin: 0 0.5em;
+  font-size: 1em;
+}
+@media only screen and (max-width: 640px) {
+  /* line 129, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #explainer #explainer-content #explainer-nav .explainer-nav-el,
+  body.main.faq #explainer #explainer-content #explainer-nav .explainer-nav-el {
+    font-size: 7vw;
+    background-color: #f0f0f0;
+  }
+}
+/* line 144, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #explainer #explainer-content #explainer-nav .explainer-nav-el.active,
+body.main.faq #explainer #explainer-content #explainer-nav .explainer-nav-el.active {
+  color: #fff;
+  background-color: #0000ff;
+}
+@media only screen and (min-width: 640px) {
+  /* line 148, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #explainer #explainer-content #explainer-slides-container,
+  body.main.faq #explainer #explainer-content #explainer-slides-container {
+    grid-area: slides;
+  }
+}
+/* line 152, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide {
+  display: none;
+}
+/* line 154, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number {
+  grid-area: num;
+  border-radius: 100%;
+  color: #ffffff;
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  line-height: 1.5em;
+  text-align: center;
+  background-color: #0000ff;
+}
+/* line 165, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header {
+  grid-area: title;
+}
+/* line 168, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-desc,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-desc {
+  grid-area: desc;
+  color: #111111;
+}
+/* line 172, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-img,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-img {
+  grid-area: img;
+  box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.25);
+}
+/* line 175, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-img img,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-img img {
+  width: 100%;
+}
+/* line 177, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide.active,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide.active {
+  display: grid;
+}
+@media only screen and (min-width: 640px) {
+  /* line 177, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide.active,
+  body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide.active {
+    grid-column-gap: 2em;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas: "num img img img" "title img img img" "desc img img img" "desc img img img";
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 177, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide.active,
+  body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide.active {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 4fr;
+    grid-template-areas: "title" "desc" "img";
+  }
+}
+/* line 190, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index .subscribe-form,
+body.main.faq .subscribe-form {
+  margin: 1em 0;
+}
+/* line 192, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index .subscribe-form input[type='text'],
+body.main.faq .subscribe-form input[type='text'] {
+  background-color: #ffffff;
+  vertical-align: middle;
+  border: 0;
+  height: inherit;
+  padding: 0.6em 1em;
+  display: inline-block;
+  border-radius: 0px;
+  line-height: inherit;
+}
+@media only screen and (max-width: 640px) {
+  /* line 192, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index .subscribe-form input[type='text'],
+  body.main.faq .subscribe-form input[type='text'] {
+    width: 70vw;
+    margin-bottom: 3vw;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 192, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index .subscribe-form input[type='text'],
+  body.main.faq .subscribe-form input[type='text'] {
+    width: 16em;
+  }
+}
+/* line 206, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index .subscribe-form input[type='submit'],
+body.main.faq .subscribe-form input[type='submit'] {
+  background-color: #ff4d4d;
+  vertical-align: middle;
+  color: #ffffff;
+  border-radius: 0px;
+  display: inline-block;
+  padding: 0.5em;
+}
+@media only screen and (max-width: 640px) {
+  /* line 206, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index .subscribe-form input[type='submit'],
+  body.main.faq .subscribe-form input[type='submit'] {
+    width: 25vw;
+    margin-left: 0px;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 206, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+  body.main.index .subscribe-form input[type='submit'],
+  body.main.faq .subscribe-form input[type='submit'] {
+    width: inherit;
+    min-width: 7.5em;
+    margin-left: 0.25em;
+  }
+}
+/* line 220, /home/ec2-user/environment/gradient/front/static/css/landing.sass */
+body.main.index .subscribe-form .subscribe-form-feedback,
+body.main.faq .subscribe-form .subscribe-form-feedback {
+  height: 1em;
+}
+
+/* line 2, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+body.checkout #checkout-container {
+  display: grid;
+}
+@media only screen and (min-width: 640px) {
+  /* line 2, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+  body.checkout #checkout-container {
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: "header header" "cart form";
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 2, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+  body.checkout #checkout-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "header" "cart" "form";
+  }
+}
+/* line 13, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+body.checkout #checkout-container #checkout-header {
+  grid-area: header;
+  margin-bottom: 2em;
+}
+/* line 17, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+body.checkout #checkout-container #checkout-cart {
+  grid-area: cart;
+}
+/* line 20, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+body.checkout #checkout-container #checkout-cart .cart-item {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin-bottom: 2rem;
+}
+/* line 24, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+body.checkout #checkout-container #checkout-cart .cart-item .cart-item-image {
+  background: #0000ff;
+  width: 14em;
+  height: 14em;
+  overflow: hidden;
+  position: relative;
+}
+/* line 30, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+body.checkout #checkout-container #checkout-cart .cart-item .cart-item-image img {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+/* line 36, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+body.checkout #checkout-container #checkout-cart .cart-item .cart-item-meta {
+  padding: 0 1.5em;
+}
+/* line 38, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+body.checkout #checkout-container #checkout-cart .cart-item .cart-item-meta .cart-item-title,
+body.checkout #checkout-container #checkout-cart .cart-item .cart-item-meta .cart-item-price {
+  margin: 0 0 1em 0;
+  line-height: 1.4;
+}
+/* line 43, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+body.checkout #checkout-container #checkout-form {
+  grid-area: form;
+}
+@media only screen and (min-width: 640px) {
+  /* line 43, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+  body.checkout #checkout-container #checkout-form {
+    text-align: right;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 43, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+  body.checkout #checkout-container #checkout-form {
+    text-align: center;
+  }
+}
+/* line 49, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+body.checkout #checkout-container #checkout-form button {
+  width: 10rem;
+}
+/* line 51, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+body.checkout #checkout-container #checkout-form .checkout-pay {
+  width: 10em;
+}
+/* line 53, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+body.checkout #checkout-container #checkout-form .checkout-info {
+  margin: 0 0 1em 0;
+}
+/* line 55, /home/ec2-user/environment/gradient/front/static/css/checkout.sass */
+body.checkout #checkout-container #checkout-form .checkout-total {
+  font-size: 1.6em;
+  margin: 0.2em 0 0 0;
+  border-bottom: 1px solid #111111;
+  display: inline-block;
+  padding-bottom: 0.1em;
+}
+
+/* line 1, /home/ec2-user/environment/gradient/front/static/css/faq.sass */
+body.main.faq {
+  color: #111111;
+}
+/* line 4, /home/ec2-user/environment/gradient/front/static/css/faq.sass */
+body.main.faq h1, body.main.faq h2, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide body.main.faq .explanation-number,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide body.main.faq .explanation-header,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header {
+  font-family: "Abril Fatface", "Times", "Helvetica", "Arial", sans-serif;
+}
+/* line 6, /home/ec2-user/environment/gradient/front/static/css/faq.sass */
+body.main.faq h3, body.main.faq h4, body.main.faq h6 {
+  font-family: "Nunito", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+/* line 8, /home/ec2-user/environment/gradient/front/static/css/faq.sass */
+body.main.faq button {
+  background-color: #ffffff;
+  color: #0000ff;
+}
+/* line 13, /home/ec2-user/environment/gradient/front/static/css/faq.sass */
+body.main.faq #faq-splash {
+  background-color: #111111;
+  background-image: url("/assets/images/faq-bg.png");
+  background-size: cover;
+  background-position: center;
+}
+/* line 18, /home/ec2-user/environment/gradient/front/static/css/faq.sass */
+body.main.faq #faq-splash-content {
+  color: #ffffff;
+  margin-bottom: 2em;
+  display: grid;
+}
+@media only screen and (min-width: 640px) {
+  /* line 18, /home/ec2-user/environment/gradient/front/static/css/faq.sass */
+  body.main.faq #faq-splash-content {
+    padding-top: 5em;
+    padding-bottom: 5em;
+    padding-right: 50%;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 18, /home/ec2-user/environment/gradient/front/static/css/faq.sass */
+  body.main.faq #faq-splash-content {
+    padding-top: 2.5em;
+    padding-bottom: 2.5em;
+  }
+}
+/* line 29, /home/ec2-user/environment/gradient/front/static/css/faq.sass */
+body.main.faq #faq-splash-content #faq-sub-header {
+  width: 30em;
+}
+/* line 31, /home/ec2-user/environment/gradient/front/static/css/faq.sass */
+body.main.faq #faq-splash-content #faq-sub-header a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+@media only screen and (max-width: 640px) {
+  /* line 29, /home/ec2-user/environment/gradient/front/static/css/faq.sass */
+  body.main.faq #faq-splash-content #faq-sub-header {
+    width: inherit;
+  }
+}
+/* line 39, /home/ec2-user/environment/gradient/front/static/css/faq.sass */
+body.main.faq #faq h3 {
+  margin-bottom: 0.5em;
+  font-weight: 600;
+}
+
+/**
+ ** Font Management 
+ */
+/**
+ ** Color Management
+ */
+/**
+ ** Screen Size Management 
+ */
+/* line 49, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+* {
+  box-sizing: border-box;
+}
+
+/**
+ ** div to indicate if screen is mobile (this is used in javascript)
+ */
+@media only screen and (max-width: 640px) {
+  /* line 58, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  #mobile-indicator {
+    display: block;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 63, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  #mobile-indicator {
+    display: none;
+  }
+}
+/**
+ ** Base Content 
+ */
+/* line 70, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+/* line 76, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+body {
+  color: #111111;
+  font-family: "Nunito", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  background: #ffffff;
+}
+
+/* line 81, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+body.customer,
+body.vendor {
+  background-color: #f0f0f0;
+  min-height: 100vh;
+}
+
+/* line 86, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+body.setup,
+body.register,
+body.vendor.integration {
+  background-color: #ffffff !important;
+}
+
+/* line 91, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+::selection {
+  background: #111111;
+  color: #ffffff;
+}
+
+/* line 95, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+::-moz-selection {
+  background: #111111;
+  color: #ffffff;
+}
+
+/* line 99, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+a, a:link, a:visited {
+  color: #0000ff;
+  text-decoration: none;
+}
+/* line 102, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+a:hover, a:link:hover, a:visited:hover {
+  text-decoration: underline;
+}
+
+/* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.contain {
+  margin: 0 auto;
+}
+@media only screen and (max-width: 640px) {
+  /* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .contain {
+    padding: 5vw;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .contain {
+    padding: 1em;
+  }
+}
+@media (min-width: 0px) {
+  /* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .contain {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) {
+  /* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .contain {
+    max-width: 786px;
+  }
+}
+@media (min-width: 992px) {
+  /* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .contain {
+    max-width: 992px;
+  }
+}
+@media (min-width: 1200px) {
+  /* line 105, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .contain {
+    max-width: 1200px;
+  }
+}
+
+/* line 120, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+main {
+  margin: 0 auto;
+}
+
+/* line 123, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+h1 {
+  font-weight: 600;
+}
+@media only screen and (max-width: 640px) {
+  /* line 123, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  h1 {
+    font-size: 10vw;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 123, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  h1 {
+    font-size: 3em;
+  }
+}
+
+/* line 129, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+h2, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header {
+  font-size: 1.8em;
+  font-weight: 400;
+}
+
+/* line 132, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+h3 {
+  font-size: 1.4em;
+  font-weight: 400;
+}
+
+/* line 135, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+h4 {
+  font-weight: 400;
+}
+@media only screen and (max-width: 640px) {
+  /* line 135, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  h4 {
+    font-size: 5vw;
+  }
+}
+@media only screen and (min-width: 640px) {
+  /* line 135, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  h4 {
+    font-size: 1.2em;
+  }
+}
+
+/* line 141, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+h6 {
+  font-size: 0.8em;
+}
+
+/* line 144, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+p {
+  margin: 0 0 1em 0;
+}
+/* line 146, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+p:last-child {
+  margin-bottom: 0;
+}
+
+/* line 157, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+hr {
+  border: 0;
+  height: 1px;
+  background-color: #cccccc;
+}
+
+/**
+ ** Forms Elements
+ */
+/* line 168, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+button,
+input[type=submit] {
+  font-size: 1em;
+  font-family: "Nunito", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  background: #0000ff;
+  color: #ffffff;
+  min-width: 8em;
+  display: inline-block;
+  border-radius: 2px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  padding: 4px 12px;
+}
+
+/* line 182, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+input[type=text],
+input[type=number],
+input[type=password],
+select {
+  display: block;
+  margin: 0 0 0 0;
+  font-family: #0000ff;
+  border: 0px;
+  background-color: #f0f0f0;
+  width: 100%;
+  height: 3em;
+  line-height: 2em;
+  font-size: 1em;
+  outline: none;
+  padding: 0.5em 1.5em;
+}
+@media only screen and (min-width: 640px) {
+  /* line 182, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  input[type=text],
+  input[type=number],
+  input[type=password],
+  select {
+    max-width: 20em;
+  }
+}
+
+/* line 200, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+select {
+  -webkit-appearance: none;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+/* line 205, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+input[type=text],
+input[type=password] {
+  border: none;
+  border-bottom: 1px solid #0000ff;
+  outline: none;
+}
+
+/* line 211, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+label {
+  cursor: pointer;
+}
+
+/* line 214, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.errors {
+  color: red;
+}
+/* line 216, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.errors li {
+  padding: 0.5em 0 0 0;
+  display: block;
+}
+
+/* line 221, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.form-field label[for=subscribe] {
+  display: inline-block;
+  color: #0000ff;
+}
+@media only screen and (max-width: 640px) {
+  /* line 224, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .form-field input {
+    display: inline-block;
+  }
+}
+/* line 227, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.form-field input::placeholder {
+  color: #0000ff;
+  opacity: 1;
+}
+/* line 230, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.form-field input:hover,
+.form-field select:hover {
+  background-color: #cccccc;
+}
+
+/* line 233, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.form-field:first-of-type {
+  margin: 0em 0 0.5em 0;
+}
+
+/* line 235, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.form-field:not(:first-of-type) {
+  margin: 1em 0 0.5em 0;
+}
+
+/**
+ ** Misc
+ */
+/* line 243, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.flashes li {
+  padding: 1em;
+  background: #0000ff;
+  color: #ffffff;
+  text-align: center;
+  border-bottom: 1px solid #ffffff;
+}
+/* line 249, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.flashes li.error {
+  background: #ff0000;
+}
+
+/* line 252, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.module {
+  width: 100%;
+  text-align: left;
+  background-color: #ffffff;
+  color: #111111;
+  margin-bottom: 2em;
+}
+
+/* line 259, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.module-content {
+  padding: 1.25em;
+  background-color: #ffffff;
+  color: #111111;
+  box-shadow: 2px 2px 10px #cccccc;
+}
+
+/* line 264, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.module-content:first-of-type {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom: 1px solid #cccccc;
+}
+
+/* line 268, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.module-content:not(:first-of-type):not(:last-child) {
+  border-bottom: 1px solid #cccccc;
+}
+
+/* line 270, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.module-content:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* line 274, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.notice-module {
+  padding: 1.25em;
+  background-color: #cccccc;
+  color: #444444;
+}
+
+/**
+ ** hamburger
+ */
+/* line 283, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.hamburger {
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* line 287, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.bar1, .bar2, .bar3 {
+  width: 30px;
+  height: 5px;
+  background-color: #333;
+  margin: 5px 0;
+  transition: 0.4s;
+  background-color: #0000ff;
+}
+
+/* line 295, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-8px, 6px);
+  transform: rotate(-45deg) translate(-8px, 6px);
+}
+
+/* line 299, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.change .bar2 {
+  opacity: 0;
+}
+
+/* line 302, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+.change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -7px);
+  transform: rotate(45deg) translate(-8px, -7px);
+}
+
+/**
+ ** Responsive Helpers
+ */
+@media only screen and (min-width: 640px) {
+  /* line 310, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .mobile-only {
+    display: none !important;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 310, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .mobile-only {
+    display: inherit !important;
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  /* line 316, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .desktop-only {
+    display: block !important;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 316, /home/ec2-user/environment/gradient/front/static/css/base.sass */
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+/* line 1, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+#footer {
+  background-color: #0000ff;
+  color: #ffffff;
+}
+/* line 4, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+#footer #footer-content {
+  display: grid;
+  padding-top: 2.5em;
+  padding-bottom: 2.5em;
+}
+@media only screen and (min-width: 640px) {
+  /* line 4, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+  #footer #footer-content {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: "newsletter options" "footer-left footer-right";
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 4, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+  #footer #footer-content {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto;
+    grid-template-areas: "newsletter" "options" "footer-left" "footer-right";
+  }
+}
+/* line 16, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+#footer #footer-content #footer-newsletter-container {
+  grid-area: newsletter;
+  text-align: left;
+  justify-self: start;
+  max-width: 25em;
+}
+@media only screen and (max-width: 640px) {
+  /* line 16, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+  #footer #footer-content #footer-newsletter-container {
+    text-align: center;
+  }
+}
+/* line 23, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+#footer #footer-content #footer-options-container {
+  grid-area: options;
+}
+@media only screen and (min-width: 640px) {
+  /* line 23, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+  #footer #footer-content #footer-options-container {
+    text-align: right;
+    justify-self: end;
+  }
+  /* line 28, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+  #footer #footer-content #footer-options-container img {
+    width: 15em;
+  }
+  /* line 30, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+  #footer #footer-content #footer-options-container #footer-options > a > div {
+    color: white;
+    margin: 1em auto;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 23, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+  #footer #footer-content #footer-options-container {
+    text-align: center;
+    margin-bottom: 2em;
+  }
+  /* line 36, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+  #footer #footer-content #footer-options-container #footer-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-space: between;
+  }
+  /* line 40, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+  #footer #footer-content #footer-options-container #footer-options a > div {
+    color: white;
+    display: inline-block;
+  }
+}
+/* line 43, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+#footer #footer-content #footer-bot-left {
+  grid-area: footer-left;
+  border-top: 1px solid #ffffff;
+  width: 100%;
+  padding-top: 1em;
+}
+@media only screen and (min-width: 640px) {
+  /* line 43, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+  #footer #footer-content #footer-bot-left {
+    justify-self: start;
+    text-align: left;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 43, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+  #footer #footer-content #footer-bot-left {
+    text-align: center;
+  }
+}
+/* line 53, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+#footer #footer-content #footer-bot-right {
+  grid-area: footer-right;
+  width: 100%;
+}
+@media only screen and (min-width: 640px) {
+  /* line 53, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+  #footer #footer-content #footer-bot-right {
+    text-align: right;
+    border-top: 1px solid #ffffff;
+    justify-self: end;
+    padding-top: 1em;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 53, /home/ec2-user/environment/gradient/front/static/css/footer.sass */
+  #footer #footer-content #footer-bot-right {
+    text-align: center;
+  }
+}
+
+/* line 1, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+.md {
+  background-color: #ffffff;
+  line-height: 1.5em;
+}
+/* line 4, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+.md code {
+  background-color: #f0f0f0;
+  font-family: monospace;
+  font-size: 1.1em;
+  padding: 2.5px 5px;
+}
+/* line 9, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+.md pre {
+  font-family: monospace;
+  color: #444444;
+  padding: 1.5em !important;
+  background-color: #f0f0f0;
+  margin: 1em 0;
+  line-height: 1.4em;
+  overflow-x: auto;
+}
+/* line 17, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+.md pre code {
+  padding: 0px 0px;
+}
+/* line 19, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+.md h1 {
+  margin: 0 0 0.5em 0;
+  font-size: 2rem;
+  line-height: 2rem;
+}
+/* line 23, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+.md h2, .md body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .md .explanation-number,
+.md body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-number,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .md .explanation-number, .md body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header, body.main.index #explainer #explainer-content #explainer-slides-container .explainer-slide .md .explanation-header,
+.md body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .explanation-header,
+body.main.faq #explainer #explainer-content #explainer-slides-container .explainer-slide .md .explanation-header {
+  margin: 1em 0 0.5em 0;
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+}
+/* line 27, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+.md h3 {
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+}
+/* line 30, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+.md ol,
+.md ul {
+  padding-left: 2.5em;
+  margin-bottom: 1em;
+}
+/* line 34, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+.md ol li,
+.md ul li {
+  margin: 0 0 0.5em 0;
+}
+/* line 36, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+.md ol {
+  list-style-type: decimal;
+}
+/* line 38, /home/ec2-user/environment/gradient/front/static/css/markdown.sass */
+.md ul {
+  list-style-type: disc;
+}
+
+@media only screen and (min-width: 640px) {
+  /* line 1, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
+  #doc-content {
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-template-columns: 12rem 1fr;
+    grid-template-areas: "nav md";
+  }
+}
+/* line 8, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
+#doc-content #doc-nav {
+  grid-area: nav;
+}
+@media only screen and (min-width: 640px) {
+  /* line 8, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
+  #doc-content #doc-nav {
+    border-right: 1px solid #f0f0f0;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 8, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
+  #doc-content #doc-nav {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+/* line 16, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
+#doc-content #doc-nav li {
+  list-style: none;
+  margin: 0.75em 0 0.75em 0;
+}
+/* line 19, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
+#doc-content #doc-nav li.active {
+  font-weight: 600;
+}
+/* line 21, /home/ec2-user/environment/gradient/front/static/css/documentation.sass */
+#doc-content #doc-md {
+  grid-area: md;
+}
+
+@media only screen and (min-width: 640px) {
+  /* line 4, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+  body.customer .header,
+  body.vendor .header {
+    padding-bottom: 1em;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 7, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+  body.customer .header .user-greeting,
+  body.vendor .header .user-greeting {
+    display: inline-block;
+  }
+}
+/* line 10, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer .header .user-greeting .user-icon,
+body.vendor .header .user-greeting .user-icon {
+  display: inline-block;
+}
+/* line 12, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer .header .user-greeting .user-icon img,
+body.vendor .header .user-greeting .user-icon img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  box-shadow: 3px 3px 3px #cccccc;
+  border: 2px solid #ffffff;
+  vertical-align: top;
+}
+/* line 20, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer .header .user-greeting .user-text,
+body.vendor .header .user-greeting .user-text {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 1em;
+  line-height: 36px;
+}
+/* line 25, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer .header .user-greeting .user-text #home-name,
+body.vendor .header .user-greeting .user-text #home-name {
+  display: inline-block;
+  color: #0000ff;
+  text-transform: capitalize;
+}
+/* line 29, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer .header .user-nav,
+body.vendor .header .user-nav {
+  float: right;
+  position: relative;
+  display: block;
+  text-align: right;
+  z-index: 101;
+}
+/* line 37, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer .home-property:last-of-type,
+body.vendor .home-property:last-of-type {
+  margin: 0;
+}
+/* line 39, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer .home-property,
+body.vendor .home-property {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0 0 1em 0;
+}
+/* line 43, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer .home-property .home-property-label,
+body.vendor .home-property .home-property-label {
+  display: inline-block;
+  padding: 3px 0px;
+}
+/* line 46, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer .home-property .home-property-value-container,
+body.vendor .home-property .home-property-value-container {
+  text-align: right;
+  line-height: 1.25em;
+}
+/* line 49, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer .home-property .home-property-value-container .home-property-value,
+body.vendor .home-property .home-property-value-container .home-property-value {
+  color: #0000ff;
+  border-radius: 2px;
+  padding: 3px 6px;
+  display: inline-block;
+  background-color: #f0f0f0;
+}
+/* line 56, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer .home-footer,
+body.vendor .home-footer {
+  display: grid;
+}
+/* line 58, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer .home-footer .home-action,
+body.vendor .home-footer .home-action {
+  text-align: right;
+}
+/* line 60, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer .home-footer .home-button,
+body.vendor .home-footer .home-button {
+  display: inline-block;
+  color: white;
+  background-color: #0000ff;
+  padding: 4px 12px;
+  border-radius: 2px;
+}
+/* line 67, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer #home-content,
+body.vendor #home-content {
+  display: grid;
+}
+@media only screen and (min-width: 640px) {
+  /* line 67, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+  body.customer #home-content,
+  body.vendor #home-content {
+    grid-template-columns: 12rem 1fr;
+    grid-gap: 2em;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 67, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+  body.customer #home-content,
+  body.vendor #home-content {
+    grid-template-columns: 1fr;
+    width: 100%;
+    margin-top: 5vw;
+  }
+}
+/* line 78, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer #home-content #home-side-pane hr,
+body.vendor #home-content #home-side-pane hr {
+  margin-bottom: 0.75em;
+  margin-top: 0;
+}
+/* line 81, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer #home-content #home-side-pane .side-el,
+body.vendor #home-content #home-side-pane .side-el {
+  padding: 4px 0;
+  cursor: pointer;
+  border-radius: 2px;
+  margin: 0 0.75em 0.75em 0;
+  color: blue;
+  display: table;
+}
+/* line 88, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer #home-content #home-side-pane .side-el.active,
+body.vendor #home-content #home-side-pane .side-el.active {
+  background-color: #0000ff;
+  color: #ffffff;
+  margin-left: 0;
+  padding: 4px 12px;
+}
+@media only screen and (max-width: 640px) {
+  /* line 94, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+  body.customer #home-content #home-side-pane,
+  body.vendor #home-content #home-side-pane {
+    display: none;
+    z-index: 100;
+    padding: 1em;
+    background-color: #ffffff;
+    width: 100vw;
+    left: 0px;
+    position: fixed;
+    box-shadow: 3px 3px 3px #cccccc;
+    top: 0px;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 105, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+  body.customer #home-content #home-content-pane,
+  body.vendor #home-content #home-content-pane {
+    max-width: 90vw;
+  }
+}
+/* line 108, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer #home-content #home-content-pane #getting-started-module,
+body.customer #home-content #home-content-pane .content-pane,
+body.vendor #home-content #home-content-pane #getting-started-module,
+body.vendor #home-content #home-content-pane .content-pane {
+  border-radius: 4px;
+}
+/* line 111, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer #home-content #home-content-pane .content-pane.active,
+body.vendor #home-content #home-content-pane .content-pane.active {
+  display: block;
+}
+/* line 114, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer #home-content #home-content-pane .content-pane .home-content-title,
+body.vendor #home-content #home-content-pane .content-pane .home-content-title {
+  text-align: left;
+  display: inline-block;
+  line-height: 24px;
+}
+/* line 120, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer #home-content #purchases-module #purchases-content,
+body.vendor #home-content #purchases-module #purchases-content {
+  overflow-y: scroll;
+}
+@media only screen and (min-width: 640px) {
+  /* line 120, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+  body.customer #home-content #purchases-module #purchases-content,
+  body.vendor #home-content #purchases-module #purchases-content {
+    max-height: 70vh;
+  }
+}
+@media only screen and (max-width: 640px) {
+  /* line 120, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+  body.customer #home-content #purchases-module #purchases-content,
+  body.vendor #home-content #purchases-module #purchases-content {
+    max-height: inherit;
+  }
+}
+/* line 126, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer #home-content #purchases-module #purchases-content .transaction-grid.odd,
+body.vendor #home-content #purchases-module #purchases-content .transaction-grid.odd {
+  background-color: #f0f0f0;
+}
+/* line 128, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer #home-content #purchases-module #purchases-content .transaction-grid,
+body.vendor #home-content #purchases-module #purchases-content .transaction-grid {
+  position: relative;
+}
+/* line 130, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer #home-content #purchases-module #purchases-content .transaction-grid .transaction-col,
+body.vendor #home-content #purchases-module #purchases-content .transaction-grid .transaction-col {
+  padding: 0.75em;
+}
+/* line 132, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer #home-content #purchases-module #purchases-content .transaction-grid .transaction-col div,
+body.vendor #home-content #purchases-module #purchases-content .transaction-grid .transaction-col div {
+  padding: 0.25em;
+}
+
+/* line 136, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer.purchases .transaction-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 5fr;
+}
+/* line 139, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer.purchases .transaction-grid .datetime {
+  text-align: center;
+}
+/* line 141, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer.purchases .transaction-grid .datetime .month {
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+/* line 145, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer.purchases .transaction-grid .datetime .date {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+/* line 148, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer.purchases .transaction-grid .vendor {
+  text-transform: capitalize;
+}
+/* line 150, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer.purchases .transaction-grid .vendor .name {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+/* line 153, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer.purchases .transaction-grid .vendor .sector {
+  font-size: 0.9em;
+}
+/* line 155, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer.purchases .transaction-grid .product {
+  text-align: right;
+}
+/* line 157, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer.purchases .transaction-grid .product .price {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+/* line 160, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.customer.purchases .transaction-grid .product .skus {
+  font-size: 0.9em;
+}
+
+/* line 164, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.vendor.purchases .transaction-grid {
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+}
+/* line 167, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.vendor.purchases .transaction-grid .datetime {
+  text-align: left;
+}
+/* line 169, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.vendor.purchases .transaction-grid .datetime .month {
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+/* line 173, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.vendor.purchases .transaction-grid .datetime .date {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+/* line 177, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.vendor.purchases .transaction-grid .data .products {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+}
+/* line 180, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.vendor.purchases .transaction-grid .data .products div {
+  padding: 0.5em;
+  border: 1px solid #f0f0f0;
+}
+/* line 183, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.vendor.purchases .transaction-grid .data .products div.even {
+  background-color: #ffffff;
+}
+/* line 185, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.vendor.purchases .transaction-grid .data .products div.odd {
+  background-color: #f0f0f0;
+}
+/* line 187, /home/ec2-user/environment/gradient/front/static/css/home.sass */
+body.vendor.purchases .transaction-grid .total-price {
+  text-align: right;
+}
