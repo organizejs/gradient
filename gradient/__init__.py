@@ -118,54 +118,20 @@ def create_app(
   # =======================================
   generated = False
 
-  # if app.debug:
-  #   # in debug mode, always re-generate assets
-  #   app = _generate_assets(app)  
-  # else:
-  #   if not generated:
-  #     # check if assets (/js/gen/main.js, etc) 
-  #     # are generated, if not, then generate
-  #     app = _generate_assets(app)
-  #     generated = True
-  #   else:
-  #     # hash generated assets (avoid browser caching)
-  #     hash = md5(datetime.utcnow().isoformat().encode('utf8')).hexdigest()[:10]
-  #     app.config['JS_URLS'] = lambda: ['{}/js/gen/main.js?{}'.format(static_url_path, hash)]
-  #     app.config['CSS_URLS'] = lambda: ['{}/css/gen/style.css?{}'.format(static_url_path, hash)]
-  # TODO this needs work, but works as a stop-gap
   if app.debug:
-    # Set up webassets so that they are precompiled for deployment
-    assets = Environment(app)
-
-    css = Bundle('css/style.sass',
-                #filters='sass,cssmin',
-                filters='sass',
-                depends=[
-                    'css/*.sass',
-                    'css/**/*.sass',
-                    'css/**/**/*.sass'
-                ],
-                output='css/gen/style.css')
-
-    js = Bundle('js/*.js',
-                'js/modules/*.js',
-                #filters='jsmin',
-                depends=[
-                    'js/*.js',
-                    'js/**/*.js',
-                    'js/**/**/*.js'
-                ],
-                output='js/gen/main.js')
-
-    assets.register('css_all', css)
-    assets.register('js_all', js)
-
-    app.config['JS_URLS'] = assets['js_all'].urls
-    app.config['CSS_URLS'] = assets['css_all'].urls
+    # in debug mode, always re-generate assets
+    app = _generate_assets(app)  
   else:
-    hash = md5(datetime.utcnow().isoformat().encode('utf8')).hexdigest()[:10]
-    app.config['JS_URLS'] = lambda: ['{}/js/gen/main.js?{}'.format(static_url_path, hash)]
-    app.config['CSS_URLS'] = lambda: ['{}/css/gen/style.css?{}'.format(static_url_path, hash)]
+    if not generated:
+      # check if assets (/js/gen/main.js, etc) 
+      # are generated, if not, then generate
+      app = _generate_assets(app)
+      generated = True
+    else:
+      # hash generated assets (avoid browser caching)
+      hash = md5(datetime.utcnow().isoformat().encode('utf8')).hexdigest()[:10]
+      app.config['JS_URLS'] = lambda: ['{}/js/gen/main.js?{}'.format(static_url_path, hash)]
+      app.config['CSS_URLS'] = lambda: ['{}/css/gen/style.css?{}'.format(static_url_path, hash)]
 
   # =======================================
   # Create the database tables.
