@@ -1,1 +1,1 @@
-from .models import User, Role, HasUser, Address
+from .models import User, HasUser, Address, Role

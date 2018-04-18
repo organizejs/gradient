@@ -202,7 +202,10 @@ body.main.faq
         width: 70vw
         margin-bottom: 3vw
       @include desktop
-        width: 16em
+        max-width: 16em
+        width: inherit
+        margin-right: 0.25em
+        margin-bottom: 0.5em
     input[type='submit']
       background-color: $red
       vertical-align: middle
@@ -216,7 +219,7 @@ body.main.faq
       @include desktop
         width: inherit
         min-width: 7.5em 
-        margin-left: 0.25em 
+        vertical-align: top
     .subscribe-form-feedback
       height: 1.0em
 
