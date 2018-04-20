@@ -1,18 +1,18 @@
 # Development (Setting up your environment)
 This page goes over how you would setup your dev environment on a Linux Centos machine.
 
-## Basics
-1. Add `alias python=python3` in ~/.bashrc or ~/.bash_profile
-2. Run `source ~/.bashrc`
-
-
 ## Postgres
 1. Install and Setup postgres
 
-    a. Install posgres
+    a. Install postgres
     ```sh
+    # CentOS
     sudo yum update
     sudo yum install postgresql postgresql-server postgresql-devel postgresql-contrib postgresql-docs
+    
+    # Ubuntu
+    sudo apt-get update
+    sudo apt-get install postgresql postgresql-contrib
     ```
     b. Once the above installation completes, initialize the DB
     ```sh
