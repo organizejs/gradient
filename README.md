@@ -60,7 +60,37 @@ ALTER USER postgres WITH PASSWORD 'password';
 ```
 
 ## Flask application
-1. Install requirements
+1. Install SASS and Dependecies
+Ubuntu:
+```sh
+sudo apt-get install ruby-full build-essential rubygems
+sudo gem install sass
+````
+CentOS:
+```sh
+# Install deps
+yum install libyaml libyaml-devel openssl libxml2-devel bison libxslt-devel openssl-devel tcl tk libffi tcl-devel tk-devel libffi-devel
+
+# Download Ruby
+cd /usr/local/src/
+wget http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p392.tar.gz
+tar -xvzf ruby-1.9.3-p392.tar.gz
+cd ruby-1.9.3-p392
+
+# Compile Ruby from Source
+./configure
+make
+make test
+make install
+ruby -v
+
+# Install things for SASS
+gem install bundler
+gem install sass
+gem install listen
+```
+
+2. Install requirements
 ```sh
 # if pip is pip3
 pip install -r requirements.txt
@@ -68,7 +98,7 @@ pip install -r requirements.txt
 # otherwise
 python3 -m pip install -r requirements.txt
 ``` 
-2. Setup and populate a secrets/config.py file:
+3. Setup and populate a secrets/config.py file:
 ```sh
 mkdir secrets
 touch secrets/config.py
@@ -96,35 +126,9 @@ class Config(BaseConfig):
     MAILCHIMP_REGISTERED_LIST_ID = [ex 'some_guid' - based on mailchimp]
     TX_SECRET_KEY = [ex 'some_guid']
 ```
-3. Run locally
+4. Run locally
 ```sh
 python application.py
-```
-
-## SASS
-When developing, you need to make sure that your Sass files are able to generate CSS files for the application to consume. In order to do this, you need to install Sass. You can do this by running the following commands:
-
-```sh
-# Install deps
-yum install libyaml libyaml-devel openssl libxml2-devel bison libxslt-devel openssl-devel tcl tk libffi tcl-devel tk-devel libffi-devel
-
-# Download Ruby
-cd /usr/local/src/
-wget http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p392.tar.gz
-tar -xvzf ruby-1.9.3-p392.tar.gz
-cd ruby-1.9.3-p392
-
-# Compile Ruby from Source
-./configure
-make
-make test
-make install
-ruby -v
-
-# Install things for SASS
-gem install bundler
-gem install sass
-gem install listen
 ```
 
 ---
