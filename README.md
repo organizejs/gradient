@@ -147,9 +147,11 @@ python application.py
 This page goes over how you would deploy to AWS EBS. (As of 01/01/18) Gradient is deployed on AWS EBS on three environments: Production, Staging, and Devenv. 
 
 ## Deployment (to EBS)
+1. Install the EB CLI
 
-1. Download your AWS security credentials from the AWS console (this will require having an IAM user designated by the account owner) - [more information here](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html)
-2. In ~/.aws create a file titled: 'config'
+2. Download your AWS security credentials from the AWS console (this will require having an IAM user designated by the account owner) - [more information here](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html)
+
+3. In ~/.aws create a file titled: 'config'
 ```sh
 touch ~/.aws/config
 ```
@@ -159,7 +161,7 @@ Add the following in the file:
 aws_access_key_id = your_aws_access_key_id
 aws_secret_access_key = your_aws_secret_access_key
 ```
-3. In your project directory, create the file .elasticbeanstalk/config.yml
+4. In your project directory, create the file .elasticbeanstalk/config.yml
 ```sh
 touch .elasticbeanstalk/config.yml
 ```
