@@ -18,7 +18,7 @@ This page goes over how you would setup your dev environment on a Linux Centos m
     ```sh
     sudo service postgresql initdb
     ```
-    d. Edit pg_hba.conf
+    d. (CentOS only) Edit pg_hba.conf
     ```sh
     sudo vim /var/lib/pgsql9/data/pg_hba.conf
     ```
@@ -33,7 +33,7 @@ This page goes over how you would setup your dev environment on a Linux Centos m
     # IPv6 local connections:
     host    all             all             ::1/128                 trust
     ```
-    e. Edit postgresql.conf
+    e. (CentOS only) Edit postgresql.conf
     ```sh
     sudo vim /var/lib/pgsql9/data/postgresql.conf
     ```
@@ -54,6 +54,7 @@ sudo service postgresql restart
 sudo su - postgres
 psql -U postgres
 ```
+
 4. Change password on postgres user:
 ```
 ALTER USER postgres WITH PASSWORD 'password';
@@ -65,7 +66,7 @@ ALTER USER postgres WITH PASSWORD 'password';
 ```
 
 ## Flask application
-1. Install SASS and Dependecies
+1. Install SASS and Dependencies
 
 Ubuntu:
 ```sh
