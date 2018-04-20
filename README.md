@@ -138,11 +138,10 @@ class Config(BaseConfig):
 python application.py
 ```
 
----
-
 ## Additional References
 - [Setting up postgreSQL on AWS instance](https://www.quora.com/How-can-I-install-PostgreSQL-on-AWS-EC2-and-how-can-I-access-that)
 
+---
 
 # Deployment 
 This page goes over how you would deploy to AWS EBS. (As of 01/01/18) Gradient is deployed on AWS EBS on three environments: Production, Staging, and Devenv. 
