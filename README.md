@@ -61,6 +61,7 @@ ALTER USER postgres WITH PASSWORD 'password';
 
 ## Flask application
 1. Install SASS and Dependecies
+
 Ubuntu:
 ```sh
 sudo apt-get install ruby-full build-essential rubygems
