@@ -59,6 +59,11 @@ psql -U postgres
 ALTER USER postgres WITH PASSWORD 'password';
 ```
 
+5. Create your database for Gradient:
+```sh
+./run db:create #or use db:reset if that doesnt work
+```
+
 ## Flask application
 1. Install SASS and Dependecies
 
