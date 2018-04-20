@@ -70,6 +70,7 @@ python3 -m pip install -r requirements.txt
 ``` 
 2. Setup and populate a secrets/config.py file:
 ```sh
+mkdir secrets
 touch secrets/config.py
 ```
 The file should have the following:
