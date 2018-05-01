@@ -293,4 +293,14 @@ def validate():
         return jsonify(success=True)
 
 
+@bp.route('/vendor_name', methods=['GET'])
+@cross_origin()
+def vendor_name():
+    '''
+    This gets the vendors name from the vendor's id
+    '''
+    vendor_name = 'vendor name'
+    vendor_id = request.args.get('vendor_id')
+    vendor = Vendor.query.filter_by(id=vendor_id).first_or_404()
+    return vendor.company_name
 

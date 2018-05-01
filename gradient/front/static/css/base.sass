@@ -79,12 +79,12 @@ body
   background: $white
 
 body.customer,
+body.setup,
+body.register,
 body.vendor
   background-color: $light-gray
   min-height: 100vh
 
-body.setup,
-body.register,
 body.vendor.integration
   background-color: $white !important
 
@@ -204,6 +204,8 @@ select
 
 input[type=text],
 input[type=password],
+input[type=number],
+select
   border: none
   border-bottom: 1px solid $blue
   outline: none
@@ -221,15 +223,9 @@ label
   label[for=subscribe]
     display: inline-block
     color: $blue
-  input
-    @include phone
-      display: inline-block
   input::placeholder
     color: $blue
     opacity: 1
-  input:hover,
-  select:hover
-    background-color: $gray
 .form-field:first-of-type
   margin: 0em 0 0.5em 0
 .form-field:not(:first-of-type)
@@ -275,6 +271,7 @@ label
   padding: 1.25em
   background-color: $gray
   color: $dark-gray
+  margin-bottom: 1em
 
 /** 
  ** hamburger

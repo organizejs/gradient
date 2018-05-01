@@ -7,6 +7,12 @@
   @include desktop
     margin-top: 1em
 
+  input[type=text],
+  input[type=number],
+  input[type=password], 
+  select
+    background-color: $white
+
   .onboard-title-container
     grid-area: title
     .onboard-title
@@ -59,12 +65,12 @@
           font-size: 1.2em
       
         .onboard-confirm-sig 
-          background-color: $light-grey
+          background-color: $white
           @include phone
             width: 100%
         
         .onboard-field-wrapper.disabled
-          opacity: 0.2
+          opacity: 0.5
       
         .onboard-confirm-row
           margin: 1em 0 0.5em 0
@@ -73,7 +79,7 @@
             display: block
           .onboard-confirm-el
             padding: 1em
-            background-color: $light-gray
+            background-color: $white
             display: inline-block
             min-width: 300px
             opacity: 0.8
@@ -98,7 +104,7 @@
               height: 100px
             display: inline-block
             border-bottom: 1px solid $blue
-            background-color: $light-grey
+            background-color: $white
           h1
             position: absolute
             left: 0.25em

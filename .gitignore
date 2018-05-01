@@ -118,3 +118,6 @@ secret
 gradient/front/static/css/gen/style.css
 gradient/front/static/js/gen/main.js
 
+# .swp files
+*.swp
+
