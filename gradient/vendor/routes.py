@@ -10,11 +10,13 @@ from flask_security.forms import LoginForm
 from .forms import (
   VendorConfirmRegisterForm, VendorRegisterForm, 
   DetailsForm, StripeKeysForm, RedirectUrlForm,
+  AddProductForm,
 )
 from .models import Vendor
 from ..datastore import db
 from ..transaction import Transaction
 from ..user import Address
+from ..product import Product
 
 bp = Blueprint('vendor', __name__, url_prefix='/v')
 
@@ -132,6 +134,57 @@ def settings():
           redirect_url_form=redirect_url_form)
 
 
+@bp.route('/home/product/<int:product_id>')
+@vendor_required
+def product(product_id):
+  '''
+  Render product page in home page for specified product
+  '''
+  product = Product.query.filter(Product.id == product_id).first()
+  return render_template(
+          'account/vendor/home.html',
+          product=product)
+
+
+@bp.route('/home/products')
+@vendor_required
+def products():
+  '''
+  Render products page in home page
+  '''
+  products = Product.query.filter(Product.vendor == current_user.account).all()
+  return render_template(
+          'account/vendor/home.html',
+          products=products)
+
+
+@bp.route('/home/add_product_form')
+@vendor_required
+def add_product_form():
+  '''
+  Render add product form in home page
+  '''
+  add_product_form = AddProductForm()
+  return render_template(
+          'account/vendor/home.html',
+          add_product_form=add_product_form)
+
+
+@bp.route('/home/edit_product_form/<int:product_id>')
+@vendor_required
+def edit_product_form(product_id):
+  '''
+  Render edit product form in home page
+  '''
+  # TODO - uses 'AddProductForm()' which may need to be renamed
+  edit_product_form = AddProductForm()
+  product = Product.query.filter(Product.id == product_id).first()
+  return render_template(
+          'account/vendor/home.html',
+          product=product,
+          add_product_form=edit_product_form)
+
+
 @bp.route('/home/settings/stripe_keys', methods=['POST'])
 @vendor_required
 def stripe_keys():
@@ -199,6 +252,68 @@ def reset_redirect_url():
   flash('You have successfully removed your redirect url.')
   return redirect(url_for('vendor.settings'))
 
+
+@bp.route('/home/edit_product_form/delete_product/<int:product_id>', methods=['POST'])
+@vendor_required
+def delete_product(product_id):
+  '''
+  Delete the specified product
+  1. Check that product exists
+  2. Delete product from db
+  '''
+
+  # TODO
+  # 
+  # Problem: 
+  #   currently products cannot be deleted as it breaks the foreign key
+  #   with gradient_prices that makes a reference to product_id
+  # Action:
+  #   refactor table to track events (not just 'current state')
+  #   | timestamp | action | id  | ...
+  #   | --------- | ------ | --- | ...
+  #   | 00:00:00. | add    | 123 | ...
+  #   | 00:00:00. | delete | 123 | ...
+ 
+  pass
+
+  # product = Product.query.filter(Product.id == product_id).first()
+  # if product is not None:
+  #   db.session.delete(product)
+  #   db.session.commit()
+  #   flash('You have deleted the product: %s' % product.name)
+  #   return redirect(url_for('vendor.products'))
+  # else:
+  #   flash("ERROR product id DNE")
+  #   return redirect(url_for('vendor.products'))
+
+
+@bp.route('/home/add_product_form/add_product', methods=['POST'])
+@vendor_required
+def add_product():
+  '''
+  Add a product associated to the vendor
+  '''
+  form = AddProductForm()
+
+  if form.validate_on_submit():
+    data = form.data
+    vendor = current_user.account
+
+    product = Product(vendor=vendor,
+                      sku=data.get('product_sku'),
+                      name=data.get('product_name'),
+                      max_price=data.get('max_price'),
+                      min_price=data.get('min_price'),
+                      image_url=data.get('image_url'))
+
+    db.session.add(product)
+    db.session.commit()
+
+    flash('Your product(s) have been added')
+    return redirect(url_for('vendor.products'))
+  
+  return jsonify(success=False, errors=form.errors)
+   
 
 @bp.route('/register/validate/user', methods=['POST'])
 def validate_user():

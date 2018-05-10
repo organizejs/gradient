@@ -31,3 +31,4 @@ class Product(db.Model):
     transactions   = association_proxy('gradient_prices', 'transaction')
 
     __table_args__ = (db.Index('sku_vendor_index', 'sku', 'vendor_id'), )
+

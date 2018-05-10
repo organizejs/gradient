@@ -1,0 +1,26 @@
+{% from "modules/_form_fields.html" import render_field_with_errors, render_field %}
+<div id="settings-module" class="content-pane">
+  <div class="module">
+    <div class="module-content">
+      <div class="home-content-title">
+        <a href="{{ url_for('vendor.products') }}">back</a>
+      </div>
+    </div>
+    <div class="module-content">
+      <h3>Add Product</h3>
+      <br>
+      <form action="{{ url_for('vendor.add_product') }}" method="POST" name="add_product_form">
+        {{ add_product_form.hidden_tag() }}
+        {{ render_field_with_errors(add_product_form.product_sku) }}
+        {{ render_field_with_errors(add_product_form.product_name) }}
+        {{ render_field_with_errors(add_product_form.image_url) }}
+        {{ render_field_with_errors(add_product_form.max_price) }}
+        {{ render_field_with_errors(add_product_form.min_price) }}
+        <br>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </div>
+</div>
+
+

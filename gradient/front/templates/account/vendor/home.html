@@ -24,6 +24,12 @@
       <a href="{{ url_for('vendor.purchases') }}">
         <div class="side-el {% if endpoint == 'vendor.purchases' %}active{% endif %}">Purchases</div>
       </a>
+      <a href="{{ url_for('vendor.products') }}">
+        <div class="side-el {% if (endpoint == 'vendor.products') or 
+          (endpoint == 'vendor.add_product_form') or 
+          (endpoint == 'vendor.edit_product_form') or 
+          (endpoint == 'vendor.product') %}active{% endif %}">Products</div>
+      </a>
       <a href="{{ url_for('vendor.settings') }}">
         <div class="side-el {% if endpoint == 'vendor.settings' %}active{% endif %}">Settings</div>
       </a>
@@ -37,24 +43,21 @@
     </div>
 
     <div id="home-content-pane">
-      {# if the user hasn't entered a redirect_url, assume that the user is not set up as a vendor #}
-      {% if not current_user.account.redirect_url or not current_user.account.stripe_pk  %}
-      <div id="getting-started-module" class="module">
-        <div class="module-content">
-          <h4>Getting Started</h4>
-          <br>
-          <p>
-            Take a look at our documentation pages to see how you get started with Gradient.
-          </p>
-          <a href="{{ url_for('main.docs') }}"><button>Read Documentation</button></a>
-        </div>
-      </div>
-      {% endif %}        
-
       {% if endpoint == 'vendor.purchases' %}
+        {% include "account/vendor/_getting_started_module.html" %}
         {% include "account/vendor/_purchases_module.html" %}
       {% elif endpoint == 'vendor.settings' %}
+        {% include "account/vendor/_getting_started_module.html" %}
         {% include "account/vendor/_settings_module.html" %}
+      {% elif endpoint == 'vendor.products' %}
+        {% include "account/vendor/_getting_started_module.html" %}
+        {% include "account/vendor/_products_module.html" %}
+      {% elif endpoint == 'vendor.add_product_form' %}
+        {% include "account/vendor/_add_product_form_module.html" %}
+      {% elif endpoint == 'vendor.edit_product_form' %}
+        {% include "account/vendor/_edit_product_form_module.html" %}
+      {% elif endpoint == 'vendor.product' %}
+        {% include "account/vendor/_product_module.html" %}
       {% endif %}
     </div>
   </div>
