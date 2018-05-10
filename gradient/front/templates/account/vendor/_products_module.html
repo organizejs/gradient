@@ -1,0 +1,72 @@
+{% from "modules/_form_fields.html" import render_field_with_errors, render_field %}
+<!-- TODO -->
+<div id="settings-module" class="content-pane">
+  <div class="module">
+    <div class="module-content">
+      <div class="home-content-title"><h4>Products</h4></div>
+      <div class="home-content-action">
+        <a href="{{ url_for('vendor.add_product_form') }}"><button>Add Product</button></a>
+      </div>
+    </div>
+    <div class="module-content">
+
+      <!-- TODO -->
+      {% if products is defined and products|length > 0 %}
+      <div class="product-grid">
+        {% for product in products %}
+        <div class="product-cell">
+          <a href="{{ url_for('vendor.product',  product_id=product.id) }}">{{ product.name }}</a>
+        </div>
+        {% if not loop.last %}<hr>{% endif %}
+        {% endfor %}
+      </div>
+      {% else %}
+      <div>
+        You have no listed products.
+      </div>
+      {% endif %}
+
+      {% if current_user.account.stripe_sk %} 
+      <!--
+      <div class="home-property">
+        <div class="home-property-label">Stripe Secret Key</div>
+        <div class="home-property-value-container">
+          <div class="home-property-value">
+            {{ current_user.account.stripe_sk }} 
+          </div>
+        </div>
+      </div>
+      <div class="home-property">
+        <div class="home-property-label">Stripe Public Key</div>
+        <div class="home-property-value-container">
+          <div class="home-property-value">
+            {{ current_user.account.stripe_pk }} 
+          </div>
+        </div>
+      </div>
+      <div class="home-footer">
+        <div class="home-action">
+          <a href="{{ url_for('vendor.reset_stripe_keys') }}">
+            <div class="home-button">Reset Stripe Keys</div>
+          </a>
+        </div>
+      </div>
+      -->
+      {% else %}
+      {#
+      <!--
+      <form action="{{ url_for('vendor.stripe_keys') }}" method="POST" name="stripe_keys_form">
+        {{ stripe_keys_form.hidden_tag() }}
+        {{ render_field_with_errors(stripe_keys_form.stripe_sk) }}
+        {{ render_field_with_errors(stripe_keys_form.stripe_pk) }}
+        <br>
+        <input type="submit" value="Submit">
+      </form>
+      -->
+      #}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+

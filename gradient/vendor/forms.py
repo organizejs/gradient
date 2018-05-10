@@ -12,37 +12,46 @@ from wtforms import (
 from ..util import StateCodes
 
 
+class AddProductForm(FlaskForm):
+  product_sku   = StringField('Product SKU', [InputRequired()])
+  product_name  = StringField('Product Name', [InputRequired()])
+  image_url     = StringField('Product Thumbnail Url', [
+                                InputRequired(), 
+                                URL(message='This is not a valid URL')
+                              ])
+  max_price     = IntegerField('Maximum Price', [InputRequired()])
+  min_price     = IntegerField('Maximum Price', [InputRequired()])
+
+
 class StripeKeysForm(FlaskForm):
-    stripe_sk    = StringField('Stripe Secret Key', 
-                               [InputRequired()])
-    stripe_pk    = StringField('Stripe Public Key', 
-                               [InputRequired()])
+  stripe_sk = StringField('Stripe Secret Key', [InputRequired()])
+  stripe_pk = StringField('Stripe Public Key', [InputRequired()])
 
 
 class RedirectUrlForm(FlaskForm):
-    redirect_url = StringField('Redirect URL', 
-                               [URL(message='Sorry this is not a valid URL')])
+  redirect_url = StringField('Redirect URL', 
+                             [URL(message='Sorry this is not a valid URL')])
 
 
 class DetailsForm(FlaskForm):
-    company_name     = StringField('Company Name', [InputRequired()])
-    street           = StringField('Street Address', [InputRequired()])
-    city             = StringField('City', [InputRequired()])
-    state_code       = SelectField('State', [
-                                       InputRequired(),
-                                       Length(message="State codes is invalid", max=2)
-                                   ],
-                                   choices=StateCodes)
-    zip_code         = StringField('Zip Code', [InputRequired()])
-    subscribe        = BooleanField('Subscribe for the Gradient newsletter', [])
+  company_name = StringField('Company Name', [InputRequired()])
+  street       = StringField('Street Address', [InputRequired()])
+  city         = StringField('City', [InputRequired()])
+  state_code   = SelectField('State', [
+                               InputRequired(),
+                               Length(message="State codes is invalid", max=2)
+                             ],
+                             choices=StateCodes)
+  zip_code     = StringField('Zip Code', [InputRequired()])
+  subscribe    = BooleanField('Subscribe for the Gradient newsletter', [])
 
 
 class VendorConfirmRegisterForm(ConfirmRegisterForm):
-    first_name       = StringField('First Name', [InputRequired()])
-    last_name        = StringField('Last Name', [InputRequired()])
-    password_confirm = PasswordField('Confirm Password', 
-                                     [EqualTo('password', message='Passwords must match')])
+  first_name       = StringField('First Name', [InputRequired()])
+  last_name        = StringField('Last Name', [InputRequired()])
+  password_confirm = PasswordField('Confirm Password', 
+                                   [EqualTo('password', message='Passwords must match')])
 
 
 class VendorRegisterForm(DetailsForm, VendorConfirmRegisterForm):
-    pass
+  pass

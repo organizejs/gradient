@@ -1,115 +1,115 @@
 {% from "modules/_form_fields.html" import render_field_with_errors, render_field %}
 
 <div id="settings-module" class="content-pane">
-    <div class="module">
-        <div class="module-content">
-            <div class="home-content-title"><h4>Stripe Keys</h4></div>
-            <div class="home-content-options">
-            </div>
+  <div class="module">
+    <div class="module-content">
+      <div class="home-content-title"><h4>Stripe Keys</h4></div>
+      <div class="home-content-options">
+      </div>
+    </div>
+    <div class="module-content">
+      {% if current_user.account.stripe_sk %} 
+      <div class="home-property">
+        <div class="home-property-label">Stripe Secret Key</div>
+        <div class="home-property-value-container">
+          <div class="home-property-value">
+            {{ current_user.account.stripe_sk }} 
+          </div>
         </div>
-        <div class="module-content">
-            {% if current_user.account.stripe_sk %} 
-            <div class="home-property">
-                <div class="home-property-label">Stripe Secret Key</div>
-                <div class="home-property-value-container">
-                    <div class="home-property-value">
-                        {{ current_user.account.stripe_sk }} 
-                    </div>
-                </div>
+      </div>
+      <div class="home-property">
+        <div class="home-property-label">Stripe Public Key</div>
+        <div class="home-property-value-container">
+          <div class="home-property-value">
+            {{ current_user.account.stripe_pk }} 
+          </div>
+        </div>
+      </div>
+      <div class="home-footer">
+        <div class="home-action">
+          <a href="{{ url_for('vendor.reset_stripe_keys') }}">
+            <div class="home-button">Reset Stripe Keys</div>
+          </a>
+        </div>
+      </div>
+      {% else %}
+      <form action="{{ url_for('vendor.stripe_keys') }}" method="POST" name="stripe_keys_form">
+        {{ stripe_keys_form.hidden_tag() }}
+        {{ render_field_with_errors(stripe_keys_form.stripe_sk) }}
+        {{ render_field_with_errors(stripe_keys_form.stripe_pk) }}
+        <br>
+        <input type="submit" value="Submit">
+      </form>
+      {% endif %}
+    </div>
+  </div>
+  <div class="module">
+    <div class="module-content">
+      <div class="home-content-title"><h4>Redirect URL</h4></div>
+      <div class="home-content-options">
+      </div>
+    </div>
+    <div class="module-content">
+      {% if current_user.account.redirect_url%} 
+      <div class="home-property">
+        <div class="home-property-label">Redirect Url</div>
+        <div class="home-property-value-container">
+          <div class="home-property-value">
+            {{ current_user.account.redirect_url }} 
+          </div>
+        </div>
+      </div>
+      <div class="home-footer">
+        <div class="home-action">
+          <a href="{{ url_for('vendor.reset_redirect_url') }}">
+            <div class="home-button">Reset Redirect Url</div>
+          </a>
+        </div>
+      </div>
+      {% else %}
+      <form action="{{ url_for('vendor.redirect_url') }}" method="POST" name="redirect_url_form">
+        {{ redirect_url_form.hidden_tag() }}
+        {{ render_field_with_errors(redirect_url_form.redirect_url) }}
+        <br>
+        <input type="submit" value="Submit">
+      </form>
+      {% endif %}
+    </div>
+  </div>
+  <div class="module">
+      <div class="module-content">
+        <div class="home-content-title"><h4>Settings</h4></div>
+        <div class="home-content-options">
+        </div>
+      </div>
+      <div class="module-content">
+        <div class="home-property">
+          <div class="home-property-label">Subscribed to Newsletter</div>
+          <div class="home-property-value-container">
+            <div class="home-property-value">
+              {% if current_user.subscribe == True %}
+              Subscribed
+              {% else %}
+              Not Subscribed
+              {% endif %}
             </div>
-            <div class="home-property">
-                <div class="home-property-label">Stripe Public Key</div>
-                <div class="home-property-value-container">
-                    <div class="home-property-value">
-                        {{ current_user.account.stripe_pk }} 
-                    </div>
-                </div>
-            </div>
-            <div class="home-footer">
-                <div class="home-action">
-                    <a href="{{ url_for('vendor.reset_stripe_keys') }}">
-                        <div class="home-button">Reset Stripe Keys</div>
-                    </a>
-                </div>
-            </div>
+          </div>
+        </div>
+        <div class="home-footer">
+          <div class="home-action">
+            {% if current_user.subscribe == True %}
+            <a href="{{ url_for('customer.unsubscribe') }}">
+              <div class="home-button">Unsubscribe</div>
+            </a>
             {% else %}
-            <form action="{{ url_for('vendor.stripe_keys') }}" method="POST" name="stripe_keys_form">
-                {{ stripe_keys_form.hidden_tag() }}
-                {{ render_field_with_errors(stripe_keys_form.stripe_sk) }}
-                {{ render_field_with_errors(stripe_keys_form.stripe_pk) }}
-                <br>
-                <input type="submit" value="Submit">
-            </form>
+            <a href="{{ url_for('customer.subscribe') }}">
+              <div class="home-button">Subscribe</div>
+            </a>
             {% endif %}
+          </div>
         </div>
-    </div>
-    <div class="module">
-        <div class="module-content">
-            <div class="home-content-title"><h4>Redirect URL</h4></div>
-            <div class="home-content-options">
-            </div>
-        </div>
-        <div class="module-content">
-            {% if current_user.account.redirect_url%} 
-            <div class="home-property">
-                <div class="home-property-label">Redirect Url</div>
-                <div class="home-property-value-container">
-                    <div class="home-property-value">
-                        {{ current_user.account.redirect_url }} 
-                    </div>
-                </div>
-            </div>
-            <div class="home-footer">
-                <div class="home-action">
-                    <a href="{{ url_for('vendor.reset_redirect_url') }}">
-                        <div class="home-button">Reset Redirect Url</div>
-                    </a>
-                </div>
-            </div>
-            {% else %}
-            <form action="{{ url_for('vendor.redirect_url') }}" method="POST" name="redirect_url_form">
-                {{ redirect_url_form.hidden_tag() }}
-                {{ render_field_with_errors(redirect_url_form.redirect_url) }}
-                <br>
-                <input type="submit" value="Submit">
-            </form>
-            {% endif %}
-        </div>
-    </div>
-    <div class="module">
-        <div class="module-content">
-            <div class="home-content-title"><h4>Settings</h4></div>
-            <div class="home-content-options">
-            </div>
-        </div>
-        <div class="module-content">
-            <div class="home-property">
-                <div class="home-property-label">Subscribed to Newsletter</div>
-                <div class="home-property-value-container">
-                    <div class="home-property-value">
-                        {% if current_user.subscribe == True %}
-                        Subscribed
-                        {% else %}
-                        Not Subscribed
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div class="home-footer">
-                <div class="home-action">
-                    {% if current_user.subscribe == True %}
-                    <a href="{{ url_for('customer.unsubscribe') }}">
-                        <div class="home-button">Unsubscribe</div>
-                    </a>
-                    {% else %}
-                    <a href="{{ url_for('customer.subscribe') }}">
-                        <div class="home-button">Subscribe</div>
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
+      </div>
+  </div>
 
 </div>
 

@@ -15,6 +15,8 @@ function gradientCheckout(
     }
     const INITIALIZE_URL = gradient_url + '/checkout/initialize';
 
+    // TODO write a cart validator 
+
     fetch(`${INITIALIZE_URL}`, {
         mode: 'cors',
         headers: {

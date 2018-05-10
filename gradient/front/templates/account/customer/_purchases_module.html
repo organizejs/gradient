@@ -5,9 +5,10 @@
     </div>
     <div id="purchases-content" class="module-content">
     {% if current_user.account.transactions and (current_user.account.transactions is defined) %} 
+      <div class="transaction-grid">
       {% for transaction in current_user.account.transactions | reverse 
          if (transaction.status == transaction.Status.SUCCESS) %}
-        <div class="transaction-grid {{ loop.cycle('odd', 'even') }}">
+        <div class="transaction-cell {{ loop.cycle('odd', 'even') }}">
           <div class="transaction-col datetime">
             <div class="month">{{ transaction.updated_at.strftime('%b') }}</div>
             <div class="date">{{ transaction.updated_at.strftime('%d') }}</div>
@@ -27,6 +28,7 @@
           </div>
         </div>
       {% endfor %}
+      </div>
     {% else %}
       <p>
         You have no completed transactions

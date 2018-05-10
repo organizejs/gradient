@@ -1,0 +1,22 @@
+{% from "modules/_form_fields.html" import render_field_with_errors, render_field %}
+<div id="settings-module" class="content-pane">
+  <div class="module">
+    <div class="module-content">
+      <div class="home-content-title">
+        <a href="{{ url_for('vendor.products') }}">back</a>
+      </div>
+      <div class="home-content-action">
+        <a href="{{ url_for('vendor.edit_product_form', product_id=product.id) }}"><button>Edit</button></a>
+      </div>
+    </div>
+    <div class="module-content">
+      <div class="product-name">Product Name: {{ product.name }}</div>
+      <div class="product-image"><img src="{{ product.image_url }}" style="max-width: 100%"></div>
+      <div class="product-sku">Product SKU: {{ product.sku }}</div>
+      <div class="product-max-price">Max Price: {{ product.max_price}}</div>
+      <div class="product-min-price">Min Price: {{ product.min_price}}</div>
+    </div>
+  </div>
+</div>
+
+

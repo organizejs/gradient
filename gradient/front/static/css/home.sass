@@ -115,7 +115,10 @@ body.vendor
           text-align: left
           display: inline-block
           line-height: 24px
-
+        .home-content-action
+          float: right
+          text-align: right
+          
     #purchases-module
       #purchases-content
         @include desktop
@@ -123,17 +126,20 @@ body.vendor
         @include phone
           max-height: inherit 
         overflow-y: scroll
-        .transaction-grid.odd
+        .transaction-cell.odd
           background-color: $light-gray
-        .transaction-grid
+        .transaction-cell
           position: relative
           .transaction-col
             padding: 0.75em
             div
               padding: 0.25em
             
+// ----------------------- 
+// tables for transactions  
+// -----------------------
 body.customer.purchases
-  .transaction-grid
+  .transaction-cell
     display: grid
     grid-template-columns: 1fr 2fr 5fr
     .datetime
@@ -161,7 +167,7 @@ body.customer.purchases
         font-size: 0.9em
 
 body.vendor.purchases
-  .transaction-grid
+  .transaction-cell
     display: grid
     grid-template-columns: 1fr 6fr 1fr
     .datetime
