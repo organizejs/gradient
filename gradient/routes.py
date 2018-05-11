@@ -68,19 +68,19 @@ def index():
         return render_template('index.html')
 
 
-@bp.route('/home')
+@bp.route('/account')
 @login_required
-def home():
+def account():
     '''
-    Redirect to 'home' page depending on user account type
+    Redirect to 'account' page depending on user account type
     '''
     if current_user.account_type == 'customer':
         if current_user.account.individual_income is None \
                 and current_user.account.household_income is None:
             return redirect(url_for('customer.onboarding'))
         else:
-            return redirect(url_for('customer.home'))
+            return redirect(url_for('customer.account'))
 
     if current_user.account_type == 'vendor':
-        return redirect(url_for('vendor.home'))
+        return redirect(url_for('vendor.account'))
 

@@ -1,0 +1,78 @@
+<div id="settings-module" class="content-pane">
+  <div class="module">
+    <div class="module-content">
+      <div class="account-content-title"><h4>Settings</h4></div>
+      <div class="account-content-options">
+      </div>
+    </div>
+    <div class="module-content">
+      <div class="account-property">
+        <div class="account-property-label">Subscribed to Newsletter</div>
+        <div class="account-property-value-container">
+          <div class="account-property-value">
+            {% if current_user.subscribe == True %}
+            Subscribed
+            {% else %}
+            Not Subscribed
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="account-footer">
+        <div class="account-action">
+          {% if current_user.subscribe == True %}
+          <a href="{{ url_for('customer.unsubscribe') }}">
+            <div class="account-button">Unsubscribe</div>
+          </a>
+          {% else %}
+          <a href="{{ url_for('customer.subscribe') }}">
+            <div class="account-button">Subscribe</div>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module">
+    <div class="module-content">
+      <div class="account-content-title"><h4>Account</h4></div>
+      <div class="account-content-options">
+      </div>
+    </div>
+    <div class="module-content">
+      <div class="account-property">
+        <div class="account-property-label">Email</div>
+        <div class="account-property-value-container">
+          <div class="account-property-value">
+            {{ current_user.email }}
+          </div>
+        </div>
+      </div>
+      <div class="account-property">
+        <div class="account-property-label">First Name</div>
+        <div class="account-property-value-container">
+          <div class="account-property-value">
+            {{ current_user.first_name }}
+          </div>
+        </div>
+      </div>
+      <div class="account-property">
+        <div class="account-property-label">Last Name</div>
+        <div class="account-property-value-container">
+          <div class="account-property-value">
+            {{ current_user.last_name }}
+          </div>
+        </div>
+      </div>
+      <div class="account-property">
+        <a href="{{ url_for('security.change_password') }}"><div class="account-property-label">Change Password</div></a>
+        <div class="account-property-value-container">
+          <div class="account-property-value">
+            *****
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

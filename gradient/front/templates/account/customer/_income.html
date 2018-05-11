@@ -1,0 +1,62 @@
+<div id="income-module" class="content-pane">
+  <div class="module">
+    <div class="module-content">
+      <div class="account-content-title"><h4>Income Information</h4></div>
+    </div>
+    <div class="module-content">
+      {% set customer = current_user.account %}
+      <div class="account-property">
+        {% if customer.individual_income %}
+        <div class="account-property-label">Individual Income:</div>
+        <div class="account-property-value-container">
+          <div class="account-property-value">
+            {{ customer.individual_income | currencyformat('USD') }}
+          </div>
+        </div>
+        {% endif %}
+        {% if current_user.account.household_income %} 
+        <div class="account-property-label">Household Income:</div>
+        <div class="account-property-value-container">
+          <div class="account-property-value">
+            {{ customer.household_income | currencyformat('USD') }}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      <div class="account-property">
+        <div class="account-property-label">Marital Status:</div>
+        <div class="account-property-value-container">
+          <div class="account-property-value">
+            {{ customer.marital_status._display(customer.marital_status.name) }}
+          </div>
+        </div>
+      </div>
+      <div class="account-property">
+        <div class="account-property-label">Number of Dependents:</div>
+        <div class="account-property-value-container">
+          <div class="account-property-value">
+            {{ customer.dependents }}
+          </div>
+        </div>
+      </div>
+      <div class="account-property">
+        <div class="account-property-label">Address:</div>
+        <div class="account-property-value-container">
+          <div class="account-property-value">
+            {{ current_user.address.street }}<br>
+            {{ current_user.address.city }}, {{ current_user.address.state_code }}, {{ current_user.address.zip_code }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="module-content">
+      <div class="account-footer">
+        <div class="account-action">
+          <a href="{{ url_for('customer.onboarding') }}">
+            <div class="account-button">Update</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

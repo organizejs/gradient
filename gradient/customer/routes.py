@@ -39,53 +39,53 @@ def customer_required(f):
 @bp.route('/')
 def index():
     '''
-    If customer is authenticated, redirect to home page
+    If customer is authenticated, redirect to account page
     If customer is not authenticated, redirect to register
     '''
     if current_user.is_authenticated \
             and current_user.account_type == 'customer':
-        return redirect(url_for('customer.home'))
+        return redirect(url_for('customer.account'))
     else:
         return redirect(url_for('customer.register'))
 
 
-@bp.route('/home')
+@bp.route('/account')
 @customer_required
-def home():
+def account():
     '''
-    Render customer home page
+    Render customer account page
     '''
     return redirect(url_for('customer.purchases'))
 
 
-@bp.route('/home/purchases')
+@bp.route('/account/purchases')
 @customer_required
 def purchases():
     '''
-    Render purchases in home page
+    Render purchases in account page
     '''
-    return render_template('account/customer/home.html')
+    return render_template('account/customer/account.html')
 
 
-@bp.route('/home/income')
+@bp.route('/account/income')
 @customer_required
 def income():
     '''
-    Render income in home page
+    Render income in account page
     '''
-    return render_template('account/customer/home.html')
+    return render_template('account/customer/account.html')
 
 
-@bp.route('/home/settings')
+@bp.route('/account/settings')
 @customer_required
 def settings():
     '''
-    Render settings in home page
+    Render settings in account page
     '''
-    return render_template('account/customer/home.html')
+    return render_template('account/customer/account.html')
 
 
-@bp.route('/home/settings/subscribe')
+@bp.route('/account/settings/subscribe')
 @customer_required
 def subscribe():
     '''
@@ -97,7 +97,7 @@ def subscribe():
     return redirect(url_for('customer.settings'))
 
 
-@bp.route('/home/settings/unsubscribe')
+@bp.route('/account/settings/unsubscribe')
 @customer_required
 def unsubscribe():
     '''

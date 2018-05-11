@@ -1,10 +1,10 @@
 /**
- ** This page contains the logic for vendor/customer home pages
+ ** This page contains the logic for vendor/customer account pages
  **/
-function setup_home() {
+function setup_account() {
   if (is_mobile()) {
     // set up nav bar
-    var side_pane = $("#home-side-pane")
+    var side_pane = $("#account-side-pane")
     side_pane.hide();
     $(".hamburger").click(function() {
       if (side_pane.is(":visible")) {

@@ -32,9 +32,9 @@
     </div>
   </div>
 
-  <div id="home-content">
+  <div id="account-content">
     {% set endpoint = request.url_rule.endpoint %}
-    <div id="home-side-pane">
+    <div id="account-side-pane">
       <a href="{{ url_for('customer.purchases') }}">
         <div class="side-el {% if endpoint == 'customer.purchases' %}active{% endif %}">Purchases</div>
       </a>
@@ -53,13 +53,13 @@
       <a href="{{ url_for('security.logout') }}"><div class="side-el">Logout</div></a>
     </div>
 
-    <div id="home-content-pane">
+    <div id="account-content-pane">
       {% if endpoint == 'customer.purchases' %}
-        {% include "account/customer/_purchases_module.html" %}
+        {% include "account/customer/_purchases.html" %}
       {% elif endpoint == 'customer.income' %}
-        {% include "account/customer/_income_module.html" %}
+        {% include "account/customer/_income.html" %}
       {% elif endpoint == 'customer.settings' %}
-        {% include "account/customer/_settings_module.html" %}
+        {% include "account/customer/_settings.html" %}
       {% endif %}
     </div>
 
@@ -70,6 +70,6 @@
 
 {% block scripts %}
 <script>
-  setup_home();
+  setup_account();
 </script>
 {% endblock %}

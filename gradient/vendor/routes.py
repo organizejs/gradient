@@ -23,7 +23,7 @@ bp = Blueprint('vendor', __name__, url_prefix='/v')
 
 def vendor_required(f):
   '''
-  Decorator to require that account is authenticated and
+  Decorator to require that the account is authenticated and
   that account type is 'vendor'
   '''
   @wraps(f)
@@ -40,12 +40,12 @@ def vendor_required(f):
 @bp.route('/')
 def index():
   '''
-  If vendor is authenticated, redirect to home page
+  If vendor is authenticated, redirect to account page
   If vendor is not authenticated, redirect to register
   '''
   if current_user.is_authenticated \
       and current_user.account_type == 'vendor':
-    return redirect(url_for('vendor.home'))
+    return redirect(url_for('vendor.account'))
   else:
     return redirect(url_for('vendor.register')) 
 
@@ -102,90 +102,90 @@ def register():
   return render_template('account/vendor/register.html', form=form)
 
 
-@bp.route('/home')
+@bp.route('/account')
 @vendor_required
-def home():
+def account():
   '''
-  Render vendor home page
+  Render vendor account page
   '''
   return redirect(url_for('vendor.purchases'))
 
 
-@bp.route('/home/purchases')
+@bp.route('/account/purchases')
 @vendor_required
 def purchases():
   '''
-  Render purchases in home page
+  Render purchases in account page
   '''
-  return render_template('account/vendor/home.html')
+  return render_template('account/vendor/account.html')
 
 
-@bp.route('/home/settings')
+@bp.route('/account/settings')
 @vendor_required
 def settings():
   '''
-  Render settings in home page
+  Render settings in account page
   '''
   stripe_keys_form = StripeKeysForm()
   redirect_url_form = RedirectUrlForm()
   return render_template(
-          'account/vendor/home.html',
+          'account/vendor/account.html',
           stripe_keys_form=stripe_keys_form,
           redirect_url_form=redirect_url_form)
 
 
-@bp.route('/home/product/<int:product_id>')
+@bp.route('/account/product/<int:product_id>')
 @vendor_required
 def product(product_id):
   '''
-  Render product page in home page for specified product
+  Render product page in account page for specified product
   '''
   product = Product.query.filter(Product.id == product_id).first()
   return render_template(
-          'account/vendor/home.html',
+          'account/vendor/account.html',
           product=product)
 
 
-@bp.route('/home/products')
+@bp.route('/account/products')
 @vendor_required
 def products():
   '''
-  Render products page in home page
+  Render products page in account page
   '''
   products = Product.query.filter(Product.vendor == current_user.account).all()
   return render_template(
-          'account/vendor/home.html',
+          'account/vendor/account.html',
           products=products)
 
 
-@bp.route('/home/add_product_form')
+@bp.route('/account/add_product_form')
 @vendor_required
 def add_product_form():
   '''
-  Render add product form in home page
+  Render add product form in accountpage
   '''
   add_product_form = AddProductForm()
   return render_template(
-          'account/vendor/home.html',
+          'account/vendor/account.html',
           add_product_form=add_product_form)
 
 
-@bp.route('/home/edit_product_form/<int:product_id>')
+@bp.route('/account/edit_product_form/<int:product_id>')
 @vendor_required
 def edit_product_form(product_id):
   '''
-  Render edit product form in home page
+  Render edit product form in account page
   '''
   # TODO - uses 'AddProductForm()' which may need to be renamed
   edit_product_form = AddProductForm()
   product = Product.query.filter(Product.id == product_id).first()
   return render_template(
-          'account/vendor/home.html',
+          'account/vendor/account.html',
           product=product,
           add_product_form=edit_product_form)
 
 
-@bp.route('/home/settings/stripe_keys', methods=['POST'])
+@bp.route('/account/settings/stripe_keys', methods=['POST'])
 @vendor_required
 def stripe_keys():
   '''
@@ -206,7 +206,7 @@ def stripe_keys():
   return jsonify(success=False, errors=form.errors)
 
 
-@bp.route('/home/settings/stripe_keys/reset')
+@bp.route('/account/settings/stripe_keys/reset')
 @vendor_required
 def reset_stripe_keys():
   '''
@@ -220,7 +220,7 @@ def reset_stripe_keys():
   return redirect(url_for('vendor.settings'))
 
 
-@bp.route('/home/settings/redirect_url', methods=['POST'])
+@bp.route('/account/settings/redirect_url', methods=['POST'])
 @vendor_required
 def redirect_url():
   '''
@@ -240,7 +240,7 @@ def redirect_url():
   return jsonify(success=False, errors=form.errors)
 
 
-@bp.route('/home/settings/redirect_url/reset')
+@bp.route('/account/settings/redirect_url/reset')
 @vendor_required
 def reset_redirect_url():
   '''
@@ -253,7 +253,7 @@ def reset_redirect_url():
   return redirect(url_for('vendor.settings'))
 
 
-@bp.route('/home/edit_product_form/delete_product/<int:product_id>', methods=['POST'])
+@bp.route('/account/edit_product_form/delete_product/<int:product_id>', methods=['POST'])
 @vendor_required
 def delete_product(product_id):
   '''
@@ -287,7 +287,7 @@ def delete_product(product_id):
   #   return redirect(url_for('vendor.products'))
 
 
-@bp.route('/home/add_product_form/add_product', methods=['POST'])
+@bp.route('/account/add_product_form/add_product', methods=['POST'])
 @vendor_required
 def add_product():
   '''

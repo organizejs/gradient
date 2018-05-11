@@ -9,7 +9,7 @@ Please make sure you have the following pre-requisites:
 - A Stripe account
 - A Gradient vendor account with your Stripe Keys and Re-direct URL configured
 
-For more information on the above, visit the [home page]({{ url_for('main.home') }}).
+For more information on the above, visit the [home page]({{ url_for('main.account') }}).
 
 ## Overview
 
@@ -26,7 +26,7 @@ On your checkout page, add the following to include the Gradient frontend librar
 <script src="https://www.gradient.care/assets/js/gradient.js"></script>
 ```
 
-This provides a JavaScript function, `gradientCheckout`, that initiates the Gradient checkout process. It takes two arguments: your Gradient vendor ID ([available on your account page]({{ url_for('vendor.home') }})) and a list of products that the customer is purchasing (i.e. the cart).
+This provides a JavaScript function, `gradientCheckout`, that initiates the Gradient checkout process. It takes two arguments: your Gradient vendor ID ([available on your account page]({{ url_for('vendor.account') }})) and a list of products that the customer is purchasing (i.e. the cart).
 
 The items in the cart must be JavaScript object with at least the following keys: 
 

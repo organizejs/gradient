@@ -22,7 +22,7 @@ body.vendor
         vertical-align: top
         margin-left: 1em
         line-height: 36px 
-        #home-name
+        #account-name
           display: inline-block
           color: $blue
           text-transform: capitalize
@@ -34,37 +34,37 @@ body.vendor
       z-index: 101
 
 
-  .home-property:last-of-type
+  .account-property:last-of-type
     margin: 0
-  .home-property
+  .account-property
     display: grid
     grid-template-columns: 1fr 1fr
     margin: 0 0 1em 0
-    .home-property-label
+    .account-property-label
       display: inline-block
       padding: 3px 0px
-    .home-property-value-container
+    .account-property-value-container
       text-align: right
       line-height: 1.25em
-      .home-property-value
+      .account-property-value
         color: $blue
         border-radius: 2px
         padding: 3px 6px
         display: inline-block
         background-color: $light-gray
 
-  .home-footer
+  .account-footer
     display: grid
-    .home-action
+    .account-action
       text-align: right
-    .home-button  
+    .account-button  
       display: inline-block
       color: white
       background-color: $blue
       padding: 4px 12px
       border-radius: 2px
 
-  #home-content 
+  #account-content 
     display: grid
     @include desktop
       grid-template-columns: 12rem 1fr
@@ -74,7 +74,7 @@ body.vendor
       width: 100%
       margin-top: 5vw
 
-    #home-side-pane
+    #account-side-pane
       hr
         margin-bottom: 0.75em
         margin-top: 0
@@ -91,7 +91,7 @@ body.vendor
         margin-left: 0
         padding: 4px 12px
     @include phone
-      #home-side-pane
+      #account-side-pane
         display: none
         z-index: 100
         padding: 1em
@@ -102,7 +102,7 @@ body.vendor
         box-shadow: 3px 3px 3px $gray
         top: 0px
 
-    #home-content-pane
+    #account-content-pane
       @include phone
         max-width: 90vw
       #getting-started-module,
@@ -111,11 +111,11 @@ body.vendor
       .content-pane.active
         display: block
       .content-pane
-        .home-content-title
+        .account-content-title
           text-align: left
           display: inline-block
           line-height: 24px
-        .home-content-action
+        .account-content-action
           float: right
           text-align: right
           
