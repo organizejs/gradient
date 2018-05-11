@@ -44,20 +44,20 @@
 
     <div id="home-content-pane">
       {% if endpoint == 'vendor.purchases' %}
-        {% include "account/vendor/_getting_started_module.html" %}
-        {% include "account/vendor/_purchases_module.html" %}
+        {% include "account/vendor/_getting_started.html" %}
+        {% include "account/vendor/_purchases.html" %}
       {% elif endpoint == 'vendor.settings' %}
-        {% include "account/vendor/_getting_started_module.html" %}
-        {% include "account/vendor/_settings_module.html" %}
+        {% include "account/vendor/_getting_started.html" %}
+        {% include "account/vendor/_settings.html" %}
       {% elif endpoint == 'vendor.products' %}
-        {% include "account/vendor/_getting_started_module.html" %}
-        {% include "account/vendor/_products_module.html" %}
+        {% include "account/vendor/_getting_started.html" %}
+        {% include "account/vendor/_products.html" %}
       {% elif endpoint == 'vendor.add_product_form' %}
-        {% include "account/vendor/_add_product_form_module.html" %}
+        {% include "account/vendor/_add_product_form.html" %}
       {% elif endpoint == 'vendor.edit_product_form' %}
-        {% include "account/vendor/_edit_product_form_module.html" %}
+        {% include "account/vendor/_edit_product_form.html" %}
       {% elif endpoint == 'vendor.product' %}
-        {% include "account/vendor/_product_module.html" %}
+        {% include "account/vendor/_product.html" %}
       {% endif %}
     </div>
   </div>
