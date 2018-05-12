@@ -8,4 +8,4 @@ class BaseConfig:
     SECURITY_CHANGEABLE = True
     SECURITY_RECOVERABLE = True
     SECURITY_REGISTERABLE = False # so we can specify our own registration route
-    SECURITY_POST_LOGIN_VIEW = '/home'
+    SECURITY_POST_LOGIN_VIEW = '/account'
