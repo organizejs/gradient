@@ -2,7 +2,7 @@ import random
 from gradient.user import User
 from gradient.vendor import Vendor
 from gradient.product import Product
-from gradient.customer import Customer
+from gradient.customer import Customer, MaritalStatus
 from gradient.transaction import Transaction
 from flask_security.confirmable import confirm_user
 
@@ -13,6 +13,8 @@ def create_user(app, email=None, password='test'):
     user = User(
         email=email,
         password=password,
+        first_name='some_firstname',
+        last_name='some_lastname',
         active=True)
     confirm_user(user)
     app.db.session.add(user)
@@ -26,9 +28,7 @@ def create_customer(app, email=None, password='test'):
         user = user,
         individual_income=100,
         household_income=100,
-        first_name='some_firstname',
-        last_name='some_lastname',
-        marital_status=0,
+        marital_status=MaritalStatus.NOT_MARRIED,
         dependents=1
     )
     app.db.session.add(customer)

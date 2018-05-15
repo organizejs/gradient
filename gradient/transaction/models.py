@@ -52,55 +52,55 @@ class TransactionStatus(Enum):
 
 
 class Transaction(db.Model):
-    Status = TransactionStatus
+  Status = TransactionStatus
 
-    id          = db.Column(db.Integer(), 
-                            primary_key=True)
-    uuid        = db.Column(UUID(as_uuid=True), 
-                            index=True, 
-                            default=uuid4)
-    created_at  = db.Column(db.DateTime(), 
-                            default=datetime.utcnow)
-    updated_at  = db.Column(db.DateTime(), 
-                            default=datetime.utcnow, 
-                            onupdate=datetime.utcnow)
-    properties  = db.Column(JSON())
-    customer    = db.relationship('Customer', 
-                                  backref=db.backref('transactions'))
-    customer_id = db.Column(db.Integer(), 
-                            db.ForeignKey('customer.id'))
-    vendor      = db.relationship('Vendor', 
-                                  backref=db.backref('transactions'))
-    vendor_id   = db.Column(db.Integer(), 
-                            db.ForeignKey('vendor.id'),
-                            nullable=False)
-    status      = db.Column(db.Enum(TransactionStatus), 
-                            default=TransactionStatus.OPEN, 
-                            nullable=False)
-    products    = association_proxy('gradient_prices', 'product')
+  id          = db.Column(db.Integer(), 
+                          primary_key=True)
+  created_at  = db.Column(db.DateTime(), 
+                          default=datetime.utcnow)
+  updated_at  = db.Column(db.DateTime(), 
+                          default=datetime.utcnow, 
+                          onupdate=datetime.utcnow)
+  uuid        = db.Column(UUID(as_uuid=True), 
+                          index=True, 
+                          default=uuid4)
+  properties  = db.Column(JSON())
+  customer_id = db.Column(db.Integer(), 
+                          db.ForeignKey('customer.id'))
+  vendor_id   = db.Column(db.Integer(), 
+                          db.ForeignKey('vendor.id'),
+                          nullable=False)
+  status      = db.Column(db.Enum(TransactionStatus), 
+                          default=TransactionStatus.OPEN, 
+                          nullable=False)
+  products    = association_proxy('gradient_prices', 'product')
+  customer    = db.relationship('Customer', 
+                                backref=db.backref('transactions'))
+  vendor      = db.relationship('Vendor', 
+                                backref=db.backref('transactions'))
 
-    @property
-    def total(self):
-      return sum(gp.price for gp in self.gradient_prices)
+  @property
+  def total(self):
+    return sum(gp.price for gp in self.gradient_prices)
 
-    def add_product(self, product, price, max_price, min_price):
-      self.gradient_prices \
-          .append(GradientPrice(product=product, 
-                                price=price, 
-                                max_price=max_price,
-                                min_price=min_price))
+  def add_product(self, product, price, max_price, min_price):
+    self.gradient_prices \
+        .append(GradientPrice(product=product, 
+                              price=price, 
+                              max_price=max_price,
+                              min_price=min_price))
 
-    @property
-    def key(self):
-      '''
-      Generates an encrypted key based off of this transaction's UUID
-      '''
-      return f.encrypt(str(self.uuid).encode('utf8')).decode('utf8')
+  @property
+  def key(self):
+    '''
+    Generates an encrypted key based off of this transaction's UUID
+    '''
+    return f.encrypt(str(self.uuid).encode('utf8')).decode('utf8')
 
-    def validate_key(self, key):
-      '''
-      Asserts that the supplied key, when decrypted, matches this
-      transaction's UUID
-      '''
-      return f.decrypt(key.encode('utf8')).decode('utf8') == str(self.uuid)
+  def validate_key(self, key):
+    '''
+    Asserts that the supplied key, when decrypted, matches this
+    transaction's UUID
+    '''
+    return f.decrypt(key.encode('utf8')).decode('utf8') == str(self.uuid)
 

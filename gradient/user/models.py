@@ -1,22 +1,25 @@
+from enum import Enum
 from ..datastore import db
 from ..mailchimp import mc
 from datetime import datetime, timezone
 from flask_security import UserMixin, RoleMixin
 
 
+# TODO: Not in use
 roles_users = db.Table('roles_users',
   db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
   db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
 
 
-class HasUser():
-  pass
-
-
+# TODO: Not in use
 class Role(db.Model, RoleMixin):
   id          = db.Column(db.Integer(), primary_key=True)
   name        = db.Column(db.String(80), unique=True)
   description = db.Column(db.String(255))
+
+
+class HasUser():
+  pass
 
 
 class Address(db.Model):
@@ -29,23 +32,20 @@ class Address(db.Model):
 
 class User(db.Model, UserMixin):
   id           = db.Column(db.Integer(), primary_key=True)
-  first_name   = db.Column(db.Unicode(255), nullable=False)
-  last_name    = db.Column(db.Unicode(255), nullable=False)
-  email        = db.Column(db.String(255), unique=True)
-  active       = db.Column(db.Boolean())
-  confirmed_at = db.Column(db.DateTime())
   created_at   = db.Column(db.DateTime(), 
                            default=datetime.utcnow)
   updated_at   = db.Column(db.DateTime(), 
                            default=datetime.utcnow, 
                            onupdate=datetime.utcnow)
-  last_seen_at = db.Column(db.DateTime(), 
-                           default=datetime.utcnow, 
-                           onupdate=datetime.utcnow)
+  first_name   = db.Column(db.Unicode(255), nullable=False)
+  last_name    = db.Column(db.Unicode(255), nullable=False)
+  email        = db.Column(db.String(255), unique=True)
+  active       = db.Column(db.Boolean())
+  confirmed_at = db.Column(db.DateTime())
   password     = db.Column(db.String(255))
   account_id   = db.Column(db.Integer())
   account_type = db.Column(db.String(50))
-  subscribe    = db.Column(db.Boolean(), default=False)
+  subscribed   = db.Column(db.Boolean(), default=False)
   address_id   = db.Column(db.Integer(),
                            db.ForeignKey('address.id'))
   address      = db.relationship('Address', 
@@ -54,6 +54,7 @@ class User(db.Model, UserMixin):
                                  secondary=roles_users,
                                  backref=db.backref('users', lazy='dynamic'))
 
+  
   def update_subscribe(self, subscribe):
     self.subscribe = subscribe 
     if self.subscribe:
@@ -74,9 +75,6 @@ class User(db.Model, UserMixin):
   @property
   def account(self):
     return getattr(self, 'parent_{}'.format(self.account_type))
-
-  def update_last_seen(self):
-    self.last_seen_at = datetime.now(timezone.utc)
 
 
 @db.event.listens_for(HasUser, 'mapper_configured', propagate=True)

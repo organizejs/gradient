@@ -13,16 +13,6 @@ from .mailchimp import mc
 bp = Blueprint('main', __name__)
 
 
-@bp.before_request
-def update_last_seen():
-    '''
-    Update user's last_seen_on field
-    '''
-    if current_user.is_authenticated:
-        current_user.update_last_seen()
-        db.session.commit()
-
-
 @bp.route('/subscribe', methods=['POST'])
 def subscribe():
     '''
