@@ -7,10 +7,11 @@ from flask_security import current_user
 from flask_security.registerable import register_user
 from flask_security.decorators import anonymous_user_required
 from flask_security.forms import LoginForm
+from sqlalchemy import and_
 from .forms import (
   VendorConfirmRegisterForm, VendorRegisterForm, 
   DetailsForm, StripeKeysForm, RedirectUrlForm,
-  AddProductForm,
+  ProductForm,
 )
 from .models import Vendor
 from ..datastore import db
@@ -59,8 +60,8 @@ def login():
   # TODO - eventually vendor login page should look different
   form = LoginForm()
   return render_template(
-          'security/login_user.html',
-          login_user_form=form)
+           'security/login_user.html',
+           login_user_form=form)
 
 
 @bp.route('/register', methods=['GET', 'POST'])
@@ -86,7 +87,7 @@ def register():
     # create user model out of form, and add address
     user = register_user(**registration_data)
     user.address = address
-    user.update_subscribe(data.get('subscribe'))
+    user.update_subscription(data.get('subscribe'))
 
     # create vendor model out of user
     vendor = Vendor(user=user, 
@@ -129,9 +130,9 @@ def settings():
   stripe_keys_form = StripeKeysForm()
   redirect_url_form = RedirectUrlForm()
   return render_template(
-          'account/vendor/account.html',
-          stripe_keys_form=stripe_keys_form,
-          redirect_url_form=redirect_url_form)
+           'account/vendor/account.html',
+           stripe_keys_form=stripe_keys_form,
+           redirect_url_form=redirect_url_form)
 
 
 @bp.route('/account/product/<int:product_id>')
@@ -140,10 +141,10 @@ def product(product_id):
   '''
   Render product page in account page for specified product
   '''
-  product = Product.query.filter(Product.id == product_id).first()
+  product = Product.query.filter_by(id=product_id).first()
   return render_template(
-          'account/vendor/account.html',
-          product=product)
+           'account/vendor/account.html',
+           product=product)
 
 
 @bp.route('/account/products')
@@ -152,10 +153,11 @@ def products():
   '''
   Render products page in account page
   '''
-  products = Product.query.filter(Product.vendor == current_user.account).all()
+  products = Product.query \
+    .filter_by(vendor=current_user.account, active=True).all()
   return render_template(
-          'account/vendor/account.html',
-          products=products)
+           'account/vendor/account.html',
+           products=products)
 
 
 @bp.route('/account/add_product_form')
@@ -164,10 +166,10 @@ def add_product_form():
   '''
   Render add product form in accountpage
   '''
-  add_product_form = AddProductForm()
+  product_form = ProductForm()
   return render_template(
-          'account/vendor/account.html',
-          add_product_form=add_product_form)
+           'account/vendor/account.html',
+           product_form=product_form)
 
 
 @bp.route('/account/edit_product_form/<int:product_id>')
@@ -176,13 +178,18 @@ def edit_product_form(product_id):
   '''
   Render edit product form in account page
   '''
-  # TODO - uses 'AddProductForm()' which may need to be renamed
-  edit_product_form = AddProductForm()
-  product = Product.query.filter(Product.id == product_id).first()
+  product = Product.query.filter_by(id=product_id).first()
+  product_form = ProductForm(
+    product_sku=product.sku,
+    product_name=product.name,
+    image_url=product.image_url,
+    max_price=product.max_price,
+    min_price=product.min_price)
+
   return render_template(
-          'account/vendor/account.html',
-          product=product,
-          add_product_form=edit_product_form)
+           'account/vendor/account.html',
+           product=product,
+           product_form=product_form)
 
 
 @bp.route('/account/settings/stripe_keys', methods=['POST'])
@@ -261,30 +268,42 @@ def delete_product(product_id):
   1. Check that product exists
   2. Delete product from db
   '''
+  product = Product.query.filter_by(id=product_id).first()
+  if product is not None:
+    product.deactivate()
+    flash('You have deleted the product: %s' % product.name)
+    return redirect(url_for('vendor.products'))
+  else:
+    flash("ERROR product id DNE")
+    return redirect(url_for('vendor.products'))
 
-  # TODO
-  # 
-  # Problem: 
-  #   currently products cannot be deleted as it breaks the foreign key
-  #   with gradient_prices that makes a reference to product_id
-  # Action:
-  #   refactor table to track events (not just 'current state')
-  #   | timestamp | action | id  | ...
-  #   | --------- | ------ | --- | ...
-  #   | 00:00:00. | add    | 123 | ...
-  #   | 00:00:00. | delete | 123 | ...
- 
-  pass
 
-  # product = Product.query.filter(Product.id == product_id).first()
-  # if product is not None:
-  #   db.session.delete(product)
-  #   db.session.commit()
-  #   flash('You have deleted the product: %s' % product.name)
-  #   return redirect(url_for('vendor.products'))
-  # else:
-  #   flash("ERROR product id DNE")
-  #   return redirect(url_for('vendor.products'))
+@bp.route('/account/edit_product_form/edit_product/<int:product_id>', methods=['POST'])
+@vendor_required
+def edit_product(product_id):
+  '''
+  Edit product associated to the vendor
+  '''
+  form = ProductForm()
+
+  if form.validate_on_submit():
+    data = form.data
+    vendor = current_user.account
+
+    product = Product.query.filter_by(id=product_id).first()
+    product.sku = data.get('product_sku')
+    product.name = data.get('product_name')
+    product.max_price = data.get('max_price')
+    product.min_price = data.get('min_price')
+    product.image_url = data.get('image_url')
+
+    db.session.add(product)
+    db.session.commit()
+
+    flash('Your product has been updated')
+    return redirect(url_for('vendor.products'))
+  
+  return jsonify(success=False, errors=form.errors)
 
 
 @bp.route('/account/add_product_form/add_product', methods=['POST'])
@@ -293,7 +312,7 @@ def add_product():
   '''
   Add a product associated to the vendor
   '''
-  form = AddProductForm()
+  form = ProductForm()
 
   if form.validate_on_submit():
     data = form.data

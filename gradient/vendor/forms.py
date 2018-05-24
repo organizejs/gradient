@@ -12,7 +12,7 @@ from wtforms import (
 from ..util import StateCodes
 
 
-class AddProductForm(FlaskForm):
+class ProductForm(FlaskForm):
   product_sku   = StringField('Product SKU', [InputRequired()])
   product_name  = StringField('Product Name', [InputRequired()])
   image_url     = StringField('Product Thumbnail Url', [

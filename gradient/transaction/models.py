@@ -1,12 +1,12 @@
 from enum import Enum
 from uuid import uuid4
 from config import Config
-from ..datastore import db
-from ..product import Product
 from datetime import datetime
 from cryptography.fernet import Fernet
 from sqlalchemy.dialects.postgresql import JSON, UUID
 from sqlalchemy.ext.associationproxy import association_proxy
+from ..datastore import db
+from ..product import Product
 
 # load Fernet for encrypting keys (see below)
 f = Fernet(Config.TX_SECRET_KEY)
@@ -16,7 +16,6 @@ class GradientPrice(db.Model):
   id             = db.Column(db.Integer(), 
                              primary_key=True, 
                              autoincrement=True)
-  created_at     = db.Column(db.DateTime(), default=datetime.utcnow)
   price          = db.Column(db.Integer(), nullable=False) # in cents
   max_price      = db.Column(db.Integer(), nullable=False) # in cents
   min_price      = db.Column(db.Integer(), nullable=False) # in cents
@@ -54,19 +53,14 @@ class TransactionStatus(Enum):
 class Transaction(db.Model):
   Status = TransactionStatus
 
-  id          = db.Column(db.Integer(), 
-                          primary_key=True)
-  created_at  = db.Column(db.DateTime(), 
-                          default=datetime.utcnow)
+  id          = db.Column(db.Integer(), primary_key=True)
+  created_at  = db.Column(db.DateTime(), default=datetime.utcnow)
   updated_at  = db.Column(db.DateTime(), 
                           default=datetime.utcnow, 
                           onupdate=datetime.utcnow)
-  uuid        = db.Column(UUID(as_uuid=True), 
-                          index=True, 
-                          default=uuid4)
+  uuid        = db.Column(UUID(as_uuid=True), index=True, default=uuid4)
   properties  = db.Column(JSON())
-  customer_id = db.Column(db.Integer(), 
-                          db.ForeignKey('customer.id'))
+  customer_id = db.Column(db.Integer(), db.ForeignKey('customer.id'))
   vendor_id   = db.Column(db.Integer(), 
                           db.ForeignKey('vendor.id'),
                           nullable=False)

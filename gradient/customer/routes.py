@@ -91,7 +91,7 @@ def subscribe():
     '''
     Subscribe Customer
     '''
-    current_user.update_subscribe(True);
+    current_user.update_subscription(True);
     db.session.commit()
     flash('Thank you for subscribing.')
     return redirect(url_for('customer.settings'))
@@ -103,7 +103,7 @@ def unsubscribe():
     '''
     Unsubscribe Customer
     '''
-    current_user.update_subscribe(False);
+    current_user.update_subscription(False);
     db.session.commit()
     flash('You have successfully unsubscribed.')
     return redirect(url_for('customer.settings'))
@@ -193,7 +193,7 @@ def onboarding():
         address = Address()
         form.populate_obj(address)
         current_user.address = address
-        current_user.update_subscribe(data.get('subscribe'));
+        current_user.update_subscription(data.get('subscribe'));
 
         # get and populate customer 
         customer = current_user.account
