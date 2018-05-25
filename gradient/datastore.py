@@ -7,10 +7,54 @@ from sqlalchemy.event import listen
 db = SQLAlchemy(session_options={'autoflush': False})
 
 
-# -----------------------
-# ---- Auditing Code ----
-# -----------------------
+'''
+--------
+Auditing
+--------
 
+All tables in Gradient should be auditable - which means that 
+all activity that happens in each table must be logged somewhere. 
+The following shows how to make things auditable in gradient
+
+In order to make a table 'auditable' we will use the classes 
+below: AuditAction, AuditMixin & AuditableMixin
+
+The AuditMixin is the mixin to add to the actual audit table. 
+The AuditableMixin is the mixin to add the table you with to make 
+auditable.
+
+Ex
+
+Lets use the Product table as an example...
+
+To use the below classes to make the Product table
+auditable, we need to use the following:
+  - ProductPropertiesMixin
+  - Product 
+  - ProductAudit
+
+Both the Product and the ProductAudit must use the inherit the 
+db.model as they are actual postgres tables.
+
+class ProductPropertiesMixin():
+  property_a = db.Column(...)
+  property_b = db.Column(...)
+
+class Product(db.Model, ProductPropertiesMixin, AuditableMixin):
+  id = db.Column(db.Integer(), primary_key=True)
+
+  @property
+  def audit_class(self):
+    return ProductAudit
+
+  @property
+  def properties_mixin(self):
+    return ProductPropertiesMixin
+
+class ProductAudit(db.Model, ProductPropertiesMixin, AuditMixin):
+  __tablename__ = 'product_audit'
+
+'''
 
 class AuditAction(Enum):
   INSERT = 0
@@ -32,8 +76,6 @@ class AuditMixin():
 class AuditableMixin():
   '''
   this is a mixin for classes that should be auditable
-  - requires that all classes that uses this mixin 
-    implements the audit_class & properties_mixin property
   '''
   @property
   @abstractmethod

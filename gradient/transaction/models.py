@@ -5,32 +5,53 @@ from datetime import datetime
 from cryptography.fernet import Fernet
 from sqlalchemy.dialects.postgresql import JSON, UUID
 from sqlalchemy.ext.associationproxy import association_proxy
-from ..datastore import db
+from sqlalchemy.ext.declarative import as_declarative, declared_attr
+from ..datastore import db, AuditableMixin, AuditAction, AuditMixin
 from ..product import Product
 
 # load Fernet for encrypting keys (see below)
 f = Fernet(Config.TX_SECRET_KEY)
 
 
-class GradientPrice(db.Model):
-  id             = db.Column(db.Integer(), 
-                             primary_key=True, 
-                             autoincrement=True)
-  price          = db.Column(db.Integer(), nullable=False) # in cents
-  max_price      = db.Column(db.Integer(), nullable=False) # in cents
-  min_price      = db.Column(db.Integer(), nullable=False) # in cents
-  product_id     = db.Column(db.Integer(), 
-                             db.ForeignKey('product.id'), 
-                             primary_key=True) 
-  transaction_id = db.Column(db.Integer(), 
-                             db.ForeignKey('transaction.id'), 
-                             primary_key=True)
-  transaction    = db.relationship('Transaction', 
-                                   backref=db.backref('gradient_prices', 
-                                                      lazy='dynamic'))
-  product        = db.relationship(Product, 
-                                   backref=db.backref('gradient_prices', 
-                                                      lazy='dynamic'))
+class GradientPricePropertiesMixin():
+  price     = db.Column(db.Integer(), nullable=False) # in cents
+  max_price = db.Column(db.Integer(), nullable=False) # in cents
+  min_price = db.Column(db.Integer(), nullable=False) # in cents
+
+  @declared_attr
+  def transaction_id(cls):
+    return db.Column(db.Integer(), 
+                     db.ForeignKey('transaction.id'))
+                     # primary_key=True)
+
+  @declared_attr
+  def product_id(cls):
+    return db.Column(db.Integer(), 
+                     db.ForeignKey('product.id'))
+                     # primary_key=True) 
+
+
+class GradientPrice(db.Model, GradientPricePropertiesMixin, AuditableMixin):
+  id          = db.Column(db.Integer(), primary_key=True)
+  transaction = db.relationship('Transaction', 
+                                backref=db.backref('gradient_prices', 
+                                                   lazy='dynamic'))
+  product     = db.relationship('Product', 
+                                backref=db.backref('gradient_prices', 
+                                                   lazy='dynamic'))
+
+  @property
+  def audit_class(self):
+    return GradientPriceAudit
+
+  @property
+  def properties_mixin(self):
+    return GradientPricePropertiesMixin
+
+
+class GradientPriceAudit(db.Model, GradientPricePropertiesMixin, AuditMixin):
+  __tablename__ = 'gradient_price_audit'
+
 
 class TransactionStatus(Enum):
   OPEN = 0
@@ -50,39 +71,42 @@ class TransactionStatus(Enum):
       return 'UNKNOWN'
 
 
-class Transaction(db.Model):
+class TransactionPropertiesMixin():
+  uuid       = db.Column(UUID(as_uuid=True), index=True, default=uuid4)
+  properties = db.Column(JSON())
+  status     = db.Column(db.Enum(TransactionStatus), 
+                         default=TransactionStatus.OPEN, 
+                         nullable=False)
+  @declared_attr
+  def customer_id(self):
+    return db.Column(db.Integer(), db.ForeignKey('customer.id'))
+
+  @declared_attr
+  def vendor_id(self):
+    return db.Column(db.Integer(), db.ForeignKey('vendor.id'))
+
+
+class Transaction(db.Model, TransactionPropertiesMixin, AuditableMixin):
   Status = TransactionStatus
 
-  id          = db.Column(db.Integer(), primary_key=True)
-  created_at  = db.Column(db.DateTime(), default=datetime.utcnow)
-  updated_at  = db.Column(db.DateTime(), 
-                          default=datetime.utcnow, 
-                          onupdate=datetime.utcnow)
-  uuid        = db.Column(UUID(as_uuid=True), index=True, default=uuid4)
-  properties  = db.Column(JSON())
-  customer_id = db.Column(db.Integer(), db.ForeignKey('customer.id'))
-  vendor_id   = db.Column(db.Integer(), 
-                          db.ForeignKey('vendor.id'),
-                          nullable=False)
-  status      = db.Column(db.Enum(TransactionStatus), 
-                          default=TransactionStatus.OPEN, 
-                          nullable=False)
-  products    = association_proxy('gradient_prices', 'product')
-  customer    = db.relationship('Customer', 
-                                backref=db.backref('transactions'))
-  vendor      = db.relationship('Vendor', 
-                                backref=db.backref('transactions'))
+  id       = db.Column(db.Integer(), primary_key=True)
+  products = association_proxy('gradient_prices', 'product')
+  customer = db.relationship('Customer', 
+                             backref=db.backref('transactions'))
+  vendor   = db.relationship('Vendor', 
+                             backref=db.backref('transactions'))
+
+  @property
+  def audit_class(self):
+    return TransactionAudit 
+
+  @property
+  def properties_mixin(self):
+    return TransactionPropertiesMixin
 
   @property
   def total(self):
     return sum(gp.price for gp in self.gradient_prices)
-
-  def add_product(self, product, price, max_price, min_price):
-    self.gradient_prices \
-        .append(GradientPrice(product=product, 
-                              price=price, 
-                              max_price=max_price,
-                              min_price=min_price))
 
   @property
   def key(self):
@@ -97,4 +121,22 @@ class Transaction(db.Model):
     transaction's UUID
     '''
     return f.decrypt(key.encode('utf8')).decode('utf8') == str(self.uuid)
+
+  def add_product(self, product, price, max_price, min_price):
+    # self.gradient_prices \
+    #     .append(GradientPrice(product=product, 
+    #                           price=price, 
+    #                           max_price=max_price,
+    #                           min_price=min_price))
+    gradient_price = GradientPrice(product=product,
+                                   transaction=self,
+                                   price=price,
+                                   max_price=max_price,
+                                   min_price=min_price)
+    db.session.add(gradient_price)
+    db.session.commit()
+
+
+class TransactionAudit(db.Model, AuditMixin, TransactionPropertiesMixin):
+  __tablename__ = 'transaction_audit'
 

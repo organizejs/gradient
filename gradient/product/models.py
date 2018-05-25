@@ -7,13 +7,13 @@ from ..datastore import db, AuditAction, AuditMixin, AuditableMixin
 
 
 class ProductPropertiesMixin():
-  name           = db.Column(db.String())  
-  max_price      = db.Column(db.Integer()) 
-  min_price      = db.Column(db.Integer()) 
-  sku            = db.Column(db.String(), nullable=False, index=True)
-  image_url      = db.Column(db.Unicode())
-  properties     = db.Column(JSON())
-  active         = db.Column(db.Boolean(), default=True)
+  name       = db.Column(db.String())  
+  max_price  = db.Column(db.Integer()) 
+  min_price  = db.Column(db.Integer()) 
+  sku        = db.Column(db.String(), nullable=False, index=True)
+  image_url  = db.Column(db.Unicode())
+  properties = db.Column(JSON())
+  active     = db.Column(db.Boolean(), default=True)
 
   @declared_attr
   def vendor_id(cls):
@@ -23,10 +23,10 @@ class ProductPropertiesMixin():
 
 
 class Product(db.Model, ProductPropertiesMixin, AuditableMixin):
-  id            = db.Column(db.Integer(), primary_key=True)
-  vendor        = db.relationship('Vendor', 
-                                  backref=db.backref('products'))
-  transactions  = association_proxy('gradient_prices', 'transaction')
+  id           = db.Column(db.Integer(), primary_key=True)
+  vendor       = db.relationship('Vendor', 
+                                 backref=db.backref('products'))
+  transactions = association_proxy('gradient_prices', 'transaction')
   # __table_args__ = (db.Index('sku_vendor_index', 'sku', 'vendor_id'), )
 
   @property

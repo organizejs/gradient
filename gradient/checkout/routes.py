@@ -66,7 +66,7 @@ def initialize():
 
     # get gradient price
     gradient_price = price(user, product)
-
+    
     # update transaction with prices
     current_transaction \
       .add_product(product, 

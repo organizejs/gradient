@@ -6,10 +6,6 @@ from ..user import HasUser
 
 
 class VendorPropertiesMixin():
-  created_at   = db.Column(db.DateTime(), default=datetime.utcnow)
-  updated_at   = db.Column(db.DateTime(), 
-                           default=datetime.utcnow, 
-                           onupdate=datetime.utcnow)
   slug         = db.Column(db.Unicode(), index=True, unique=True)
   company_name = db.Column(db.Unicode(255))
   stripe_sk    = db.Column(EncryptedType(db.String, Config.SECRET_KEY))

@@ -15,12 +15,14 @@ def create_user(app, email=None, password='test'):
     password=password,
     first_name='some_firstname',
     last_name='some_lastname',
-    active=True)
+    active=True
+  )
   address = Address(
     street='17 Meacham Rd, Apt 1',
     city='Cambridge',
     state_code='MA',
-    zip_code='12345')
+    zip_code='12345'
+  )
   user.address = address
   confirm_user(user)
   app.db.session.add(user)
@@ -44,7 +46,11 @@ def create_customer(app, email=None, password='test'):
 
 def create_vendor(app, user=None, email=None, password='test'):
   user = create_user(app, email, password)
-  vendor = Vendor(user=user)
+  vendor = Vendor(
+    user=user,
+    company_name="vendor_test_name",
+    redirect_url="http://www.google.com"
+  )
   app.db.session.add(vendor)
   app.db.session.commit()
   return vendor
