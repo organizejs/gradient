@@ -30,7 +30,7 @@ if __name__ == '__main__':
 
   app = create_app()
   with app.app_context():
-
+    
     # create customer account
     email = username_prefix + '_customer@test.com'
     customer = factory.create_customer(

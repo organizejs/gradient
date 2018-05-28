@@ -17,7 +17,7 @@
   </div>
 
   <div class="register-form">
-    <form action="{{ url_for('customer.onboarding') }}" method="POST" name="register_user_form">
+    <form action="{{ url_for('customer.onboarding') }}" method="POST" name="register_user_form" novalidate>
       {{ form.hidden_tag() }}
 
       <!-- Section 1 -->
@@ -110,11 +110,11 @@
 {% block scripts %}
 <script src="//cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
 <script>
-    const first_name = '{{ current_user.first_name }}';
-    const last_name = '{{ current_user.last_name }}';
+  const first_name = '{{ current_user.first_name }}';
+  const last_name = '{{ current_user.last_name }}';
 
-    // called in /js/customer_onboarding.js
-    customer_onboarding(first_name, last_name);
+  // called in /js/customer_onboarding.js
+  customer_onboarding(first_name, last_name);
 
 </script>
 {% endblock %}

@@ -64,45 +64,6 @@ def login():
            login_user_form=form)
 
 
-@bp.route('/register', methods=['GET', 'POST'])
-@anonymous_user_required
-def register():
-  '''
-  Vendor registration page
-  if GET - render the registration page
-  if POST - validate the form and redirect to the 
-      customer setup pages
-  '''
-  form = VendorRegisterForm()
-
-  # if POST
-  if request.method == 'POST' and form.validate_on_submit():
-    registration_data = form.to_dict()
-    data = form.data
-
-    # create address model out of form
-    address = Address()
-    form.populate_obj(address)
-
-    # create user model out of form, and add address
-    user = register_user(**registration_data)
-    user.address = address
-    user.update_subscription(data.get('subscribe'))
-
-    # create vendor model out of user
-    vendor = Vendor(user=user, 
-                    company_name=data.get('company_name'))
-    form.populate_obj(vendor)
-
-    # commmit!
-    db.session.add(vendor)
-    db.session.commit()
-    return redirect('/')
-
-  # if GET
-  return render_template('account/vendor/register.html', form=form)
-
-
 @bp.route('/account')
 @vendor_required
 def account():
@@ -333,6 +294,55 @@ def add_product():
   
   return jsonify(success=False, errors=form.errors)
    
+
+# ======================
+# ==== Registration ====
+# ======================
+
+@bp.route('/register', methods=['GET', 'POST'])
+@anonymous_user_required
+def register():
+  '''
+  Vendor registration page
+  if GET - render the registration page
+  if POST - validate the form and redirect to the 
+      customer setup pages
+  '''
+  form = VendorRegisterForm()
+
+  # if POST
+  if request.method == 'POST' and form.validate_on_submit():
+    registration_data = form.to_dict()
+    data = form.data
+
+    # get address for user if exists otherwise create one
+    address = None
+    if not current_user.address:
+      address = Address()
+    else:
+      address = Address.query.filter_by(id=current_user.address.id).first() #?
+
+    # create address model out of form
+    form.populate_obj(address)
+
+    # register_user() - sends confirmation email and encrypts password
+    user = register_user(**registration_data) 
+    user.address = address
+    user.update_subscription(data.get('subscribe'))
+    db.session.add(user)
+
+    # create vendor model out of user
+    vendor = Vendor(user=user, company_name=data.get('company_name'))
+    form.populate_obj(vendor)
+
+    # commmit!
+    db.session.add(vendor)
+    db.session.commit()
+    return redirect('/')
+
+  # if GET
+  return render_template('account/vendor/register.html', form=form)
+
 
 @bp.route('/register/validate/user', methods=['POST'])
 def validate_user():

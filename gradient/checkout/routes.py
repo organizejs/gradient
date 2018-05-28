@@ -48,9 +48,6 @@ def initialize():
     vendor=vendor,
     status=Transaction.Status.OPEN)
 
-  db.session.add(current_transaction)
-  db.session.commit()
-
   # calculate price for each product
   for p_id in products:
 
@@ -60,7 +57,6 @@ def initialize():
 
     # stop process and throw error if product dne
     if product is None:
-      # TODO raise error
       print("ERROR: product id, %s, is not valid" % p_id)
       abort(404)
 
@@ -121,13 +117,13 @@ def cart():
     db.session.add(transaction)
     db.session.commit()
 
-  if transaction.customer is None:
-    if transaction.id in session.get('_tids', []):
-      # NOTE added customer ref here
-      customer = current_user.account
-      transaction.customer = customer
-      db.session.add(transaction)
-      db.session.commit()
+  # if transaction.customer is None:
+  #   if transaction.id in session.get('_tids', []):
+  #     # NOTE added customer ref here
+  #     customer = current_user.account
+  #     transaction.customer = customer
+  #     db.session.add(transaction)
+  #     db.session.commit()
 
   valid, err = validate_transaction(transaction, customer)
   if not valid:

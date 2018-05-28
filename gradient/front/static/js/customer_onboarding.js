@@ -38,7 +38,7 @@ function customer_onboarding(first_name, last_name) {
         _sig = signaturePad.toDataURL();
         _form_signature.val(_sig);
       }
-    });
+   });
     signaturePad.fromDataURL(_form_signature.val());
   };
 
@@ -85,7 +85,6 @@ function customer_onboarding(first_name, last_name) {
 
   function set_user_info() {
     var data = onboarding_util.get_form_data($('form'));
-    console.log(data);
 
     // TODO - handle the case for household income
     var text = `My name is <b>${escape(_first_name)} ${escape(_last_name)}</b>.

@@ -25,12 +25,27 @@ class HasUser():
   pass
 
 
-class Address(db.Model):
-  id          = db.Column(db.Integer(), primary_key=True)
+class AddressPropertiesMixin():
   street      = db.Column(db.String)
   city        = db.Column(db.String)
   state_code  = db.Column(db.Unicode(2))
   zip_code    = db.Column(db.Unicode(16))
+
+
+class Address(db.Model, AddressPropertiesMixin, AuditableMixin):
+  id = db.Column(db.Integer(), primary_key=True)
+
+  @property
+  def audit_class(self):
+    return AddressAudit
+
+  @property
+  def properties_mixin(self):
+    return AddressPropertiesMixin
+
+
+class AddressAudit(db.Model, AddressPropertiesMixin, AuditMixin):
+  __tablename__ = 'address_audit'
 
 
 class UserPropertiesMixin():
@@ -84,8 +99,8 @@ class User(db.Model, UserPropertiesMixin, AuditableMixin, UserMixin):
     ''' 
     update subscription on mailchimp
     '''
-    self.subscribe = subscribe 
-    if self.subscribe:
+    self.subscribed = subscribe 
+    if self.subscribed:
       mc.add_or_update_user( \
         email=self.email, \
         is_registered=True, \

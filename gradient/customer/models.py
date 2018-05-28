@@ -21,7 +21,7 @@ class CustomerPropertiesMixin():
 
 
 class Customer(db.Model, HasUser, CustomerPropertiesMixin, AuditableMixin):
-  id                = db.Column(db.Integer(), primary_key=True)
+  id = db.Column(db.Integer(), primary_key=True)
 
   @property
   def audit_class(self):
