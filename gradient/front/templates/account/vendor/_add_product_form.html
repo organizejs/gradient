@@ -9,13 +9,13 @@
     <div class="module-content">
       <h3>Add Product</h3>
       <br>
-      <form action="{{ url_for('vendor.add_product') }}" method="POST" name="add_product_form">
-        {{ add_product_form.hidden_tag() }}
-        {{ render_field_with_errors(add_product_form.product_sku) }}
-        {{ render_field_with_errors(add_product_form.product_name) }}
-        {{ render_field_with_errors(add_product_form.image_url) }}
-        {{ render_field_with_errors(add_product_form.max_price) }}
-        {{ render_field_with_errors(add_product_form.min_price) }}
+      <form action="{{ url_for('vendor.add_product') }}" method="POST" name="product_form">
+        {{ product_form.hidden_tag() }}
+        {{ render_field_with_errors(product_form.product_sku) }}
+        {{ render_field_with_errors(product_form.product_name) }}
+        {{ render_field_with_errors(product_form.image_url) }}
+        {{ render_field_with_errors(product_form.max_price) }}
+        {{ render_field_with_errors(product_form.min_price) }}
         <br>
         <input type="submit" value="Submit">
       </form>

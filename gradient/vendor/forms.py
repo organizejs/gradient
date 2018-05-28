@@ -2,17 +2,17 @@ from flask_wtf import FlaskForm
 from wtforms.fields.html5 import IntegerField, DecimalField
 from flask_security.forms import ConfirmRegisterForm
 from wtforms.validators import (
-    InputRequired, DataRequired, EqualTo, URL, NumberRange,
-    Length,
+  InputRequired, DataRequired, EqualTo, URL, NumberRange,
+  Length,
 )
 from wtforms import (
-    BooleanField, StringField, PasswordField, SubmitField,
-    SelectField,
+  BooleanField, StringField, PasswordField, SubmitField,
+  SelectField,
 )
 from ..util import StateCodes
 
 
-class AddProductForm(FlaskForm):
+class ProductForm(FlaskForm):
   product_sku   = StringField('Product SKU', [InputRequired()])
   product_name  = StringField('Product Name', [InputRequired()])
   image_url     = StringField('Product Thumbnail Url', [

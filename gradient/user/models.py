@@ -1,8 +1,11 @@
 from enum import Enum
-from ..datastore import db
-from ..mailchimp import mc
 from datetime import datetime, timezone
 from flask_security import UserMixin, RoleMixin
+from sqlalchemy.ext.declarative import as_declarative, declared_attr
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import validates
+from ..datastore import db, AuditAction, AuditMixin, AuditableMixin
+from ..mailchimp import mc
 
 
 # TODO: Not in use
@@ -22,42 +25,82 @@ class HasUser():
   pass
 
 
-class Address(db.Model):
-  id          = db.Column(db.Integer(), primary_key=True)
+class AddressPropertiesMixin():
   street      = db.Column(db.String)
   city        = db.Column(db.String)
   state_code  = db.Column(db.Unicode(2))
   zip_code    = db.Column(db.Unicode(16))
 
 
-class User(db.Model, UserMixin):
-  id           = db.Column(db.Integer(), primary_key=True)
-  created_at   = db.Column(db.DateTime(), 
-                           default=datetime.utcnow)
-  updated_at   = db.Column(db.DateTime(), 
-                           default=datetime.utcnow, 
-                           onupdate=datetime.utcnow)
+class Address(db.Model, AddressPropertiesMixin, AuditableMixin):
+  id = db.Column(db.Integer(), primary_key=True)
+
+  @property
+  def audit_class(self):
+    return AddressAudit
+
+  @property
+  def properties_mixin(self):
+    return AddressPropertiesMixin
+
+
+class AddressAudit(db.Model, AddressPropertiesMixin, AuditMixin):
+  __tablename__ = 'address_audit'
+
+
+class UserPropertiesMixin():
   first_name   = db.Column(db.Unicode(255), nullable=False)
   last_name    = db.Column(db.Unicode(255), nullable=False)
-  email        = db.Column(db.String(255), unique=True)
+  email        = db.Column(db.String(255)) #, unique=True)
   active       = db.Column(db.Boolean())
   confirmed_at = db.Column(db.DateTime())
   password     = db.Column(db.String(255))
   account_id   = db.Column(db.Integer())
   account_type = db.Column(db.String(50))
   subscribed   = db.Column(db.Boolean(), default=False)
-  address_id   = db.Column(db.Integer(),
-                           db.ForeignKey('address.id'))
-  address      = db.relationship('Address', 
-                                 backref=db.backref('user', uselist=False))
-  roles        = db.relationship('Role', 
-                                 secondary=roles_users,
-                                 backref=db.backref('users', lazy='dynamic'))
 
-  
-  def update_subscribe(self, subscribe):
-    self.subscribe = subscribe 
-    if self.subscribe:
+  @declared_attr
+  def address_id(cls):
+    return db.Column(db.Integer(),
+                     db.ForeignKey('address.id'),
+                     index=True)
+
+
+class User(db.Model, UserPropertiesMixin, AuditableMixin, UserMixin):
+  id      = db.Column(db.Integer(), primary_key=True)
+  address = db.relationship('Address', 
+                            backref=db.backref('user', uselist=False))
+  roles   = db.relationship('Role', 
+                            secondary=roles_users,
+                            backref=db.backref('users', lazy='dynamic'))
+
+  @property
+  def audit_class(self):
+    return UserAudit
+
+  @property
+  def properties_mixin(self):
+    return UserPropertiesMixin
+
+  @property
+  def account(self):
+    return getattr(self, 'parent_{}'.format(self.account_type))
+
+  @validates('email')
+  def validate_email(self, key, email):
+    '''
+    assert uniqueness + assert email contains '@'
+    '''
+    assert '@' in email  
+    assert self.query.filter_by(email=email).count() == 0
+    return email
+
+  def update_subscription(self, subscribe):
+    ''' 
+    update subscription on mailchimp
+    '''
+    self.subscribed = subscribe 
+    if self.subscribed:
       mc.add_or_update_user( \
         email=self.email, \
         is_registered=True, \
@@ -72,9 +115,9 @@ class User(db.Model, UserMixin):
         first_name=self.first_name, \
         last_name=self.last_name)
 
-  @property
-  def account(self):
-    return getattr(self, 'parent_{}'.format(self.account_type))
+
+class UserAudit(db.Model, UserPropertiesMixin, AuditMixin):
+  __tablename__ = 'user_audit'
 
 
 @db.event.listens_for(HasUser, 'mapper_configured', propagate=True)
@@ -100,4 +143,5 @@ def setup_listener(mapper, class_):
   @db.event.listens_for(class_.user, 'set')
   def set_user(target, value, old_value, initiator):
     value.account_type = account_type
+
 
