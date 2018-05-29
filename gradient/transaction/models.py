@@ -8,49 +8,10 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.declarative import as_declarative, declared_attr
 from ..datastore import db, AuditableMixin, AuditAction, AuditMixin
 from ..product import Product
+from ..gradient_price import GradientPrice
 
 # load Fernet for encrypting keys (see below)
 f = Fernet(Config.TX_SECRET_KEY)
-
-
-class GradientPricePropertiesMixin():
-  price     = db.Column(db.Integer(), nullable=False) # in cents
-  max_price = db.Column(db.Integer(), nullable=False) # in cents
-  min_price = db.Column(db.Integer(), nullable=False) # in cents
-
-  @declared_attr
-  def transaction_id(cls):
-    return db.Column(db.Integer(), 
-                     db.ForeignKey('transaction.id'))
-                     # primary_key=True)
-
-  @declared_attr
-  def product_id(cls):
-    return db.Column(db.Integer(), 
-                     db.ForeignKey('product.id'))
-                     # primary_key=True) 
-
-
-class GradientPrice(db.Model, GradientPricePropertiesMixin, AuditableMixin):
-  id          = db.Column(db.Integer(), primary_key=True)
-  transaction = db.relationship('Transaction', 
-                                backref=db.backref('gradient_prices', 
-                                                   lazy='dynamic'))
-  product     = db.relationship('Product', 
-                                backref=db.backref('gradient_prices', 
-                                                   lazy='dynamic'))
-
-  @property
-  def audit_class(self):
-    return GradientPriceAudit
-
-  @property
-  def properties_mixin(self):
-    return GradientPricePropertiesMixin
-
-
-class GradientPriceAudit(db.Model, GradientPricePropertiesMixin, AuditMixin):
-  __tablename__ = 'gradient_price_audit'
 
 
 class TransactionStatus(Enum):
@@ -123,18 +84,11 @@ class Transaction(db.Model, TransactionPropertiesMixin, AuditableMixin):
     return f.decrypt(key.encode('utf8')).decode('utf8') == str(self.uuid)
 
   def add_product(self, product, price, max_price, min_price):
-    # self.gradient_prices \
-    #     .append(GradientPrice(product=product, 
-    #                           price=price, 
-    #                           max_price=max_price,
-    #                           min_price=min_price))
-    gradient_price = GradientPrice(product=product,
-                                   transaction=self,
+    gradient_price = GradientPrice(transaction=self,
+                                   product=product,
                                    price=price,
                                    max_price=max_price,
                                    min_price=min_price)
-    db.session.add(gradient_price)
-    db.session.commit()
 
 
 class TransactionAudit(db.Model, AuditMixin, TransactionPropertiesMixin):

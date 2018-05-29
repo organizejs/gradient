@@ -60,6 +60,7 @@ def initialize():
       print("ERROR: product id, %s, is not valid" % p_id)
       abort(404)
 
+    # TODO - this is done prematurely as user may be None
     # get gradient price
     gradient_price = price(user, product)
     

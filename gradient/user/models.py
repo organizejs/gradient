@@ -125,6 +125,9 @@ def setup_listener(mapper, class_):
   '''
   Sets the database up so that User objects can have either a
   Vendor or a Customer associated with them, as an `account`.
+
+  Ex. 
+  vendor = Vendor(user=current_user, ...)
   '''
   name = class_.__name__
   account_type = name.lower()

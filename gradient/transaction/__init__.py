@@ -1,2 +1,2 @@
-from .models import Transaction, GradientPrice
+from .models import Transaction
 
