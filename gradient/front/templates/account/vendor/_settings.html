@@ -97,12 +97,13 @@
         </div>
         <div class="account-footer">
           <div class="account-action">
-            {% if current_user.subscribe == True %}
-            <a href="{{ url_for('customer.unsubscribe') }}">
+            <!-- TODO - switch 'customer' to 'vendor' or 'user' -->
+            {% if current_user.subscribed == True %}
+            <a href="{{ url_for('customer.subscribe', subscribe=False) }}">
               <div class="account-button">Unsubscribe</div>
             </a>
             {% else %}
-            <a href="{{ url_for('customer.subscribe') }}">
+            <a href="{{ url_for('customer.subscribe', subscribe=True) }}">
               <div class="account-button">Subscribe</div>
             </a>
             {% endif %}

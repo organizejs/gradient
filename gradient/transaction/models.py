@@ -44,7 +44,7 @@ class TransactionPropertiesMixin():
 
   @declared_attr
   def vendor_id(self):
-    return db.Column(db.Integer(), db.ForeignKey('vendor.id'))
+    return db.Column(db.Integer(), db.ForeignKey('vendor.id'), nullable=False)
 
 
 class Transaction(db.Model, TransactionPropertiesMixin, AuditableMixin):
@@ -83,13 +83,35 @@ class Transaction(db.Model, TransactionPropertiesMixin, AuditableMixin):
     '''
     return f.decrypt(key.encode('utf8')).decode('utf8') == str(self.uuid)
 
-  def add_product(self, product, price, max_price, min_price):
-    gradient_price = GradientPrice(transaction=self,
-                                   product=product,
-                                   price=price,
-                                   max_price=max_price,
-                                   min_price=min_price)
+  def add_product(self, sku, quantity, vendor):
+    '''
+    return true if success, false otherwise
+    '''
+    # check that product exists
+    product = Product.query \
+      .filter_by(sku=sku, vendor=vendor) \
+      .first()
 
+    # stop process and throw error if product dne
+    if product is None:
+      print("ERROR: product sku, %s, is not valid for %s" % (sku, vendor.name))
+      return False
+
+    gradient_price = GradientPrice.query.filter_by(product=product, transaction=self)
+    # check if gradient price for transaction already exists
+    if gradient_price is None:
+      pass
+    
+    # if gradient price dne, then make one
+    else: 
+      gradient_price = GradientPrice(transaction=self,
+                                     product=product,
+                                     quantity=quantity,
+                                     price=100,
+                                     max_price=None,
+                                     min_price=None)
+
+    return True
 
 class TransactionAudit(db.Model, AuditMixin, TransactionPropertiesMixin):
   __tablename__ = 'transaction_audit'

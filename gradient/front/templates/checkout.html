@@ -20,8 +20,8 @@
         </figure>
         <div class="cart-item-meta">
           <div class="cart-item-sku">SKU: {{ gp.product.sku }}</div>
+          <div class="cart-item-quantity">Quantity: {{ gp.quantity }}</div>
           <h4 class="cart-item-title">{{ gp.product.name }}</h4>
-          <div class="cart-item-quantity"></div>
           <div class="cart-item-price">
             <div>{{ (gp.price/100) | currencyformat('USD') }}</div>
           </div>

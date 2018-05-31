@@ -4,8 +4,9 @@ from ..product import Product
 
 class GradientPricePropertiesMixin():
   price     = db.Column(db.Integer(), nullable=False) # in cents
-  max_price = db.Column(db.Integer(), nullable=False) # in cents
-  min_price = db.Column(db.Integer(), nullable=False) # in cents
+  quantity  = db.Column(db.Integer(), nullable=False, default=1)
+  max_price = db.Column(db.Integer()) # in cents
+  min_price = db.Column(db.Integer()) # in cents
 
   @declared_attr
   def transaction_id(cls):

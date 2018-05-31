@@ -26,7 +26,10 @@ def initialize():
 
   {
     "vendor_id": "<vendor_id">,
-    "products": ["<product_0_id>", "<product_1_id>"]
+    "products": [{
+      sku: "<product_0_sku>",
+      quantity: "<product_0_quantity>",
+    }, ...]
   }
 
   1. create transaction object with transaction state OPEN
@@ -34,7 +37,6 @@ def initialize():
   3. create gradient_price object(s) with computed price
   4. render payment page with computed price
   '''
-  user = None
 
   # get vendor and products from POST body (json)
   checkout_content = request.get_json()
@@ -44,32 +46,18 @@ def initialize():
 
   # create transaction object with OPEN transaction.status
   current_transaction = Transaction(
-    customer=user,
     vendor=vendor,
     status=Transaction.Status.OPEN)
 
   # calculate price for each product
-  for p_id in products:
+  for product in products:
 
-    product = Product.query \
-      .filter_by(id=p_id, vendor=vendor) \
-      .first()
+    sku = product['sku']
+    quantity = product['quantity']
 
-    # stop process and throw error if product dne
-    if product is None:
-      print("ERROR: product id, %s, is not valid" % p_id)
+    success = current_transaction.add_product(sku, quantity, vendor)
+    if not success:
       abort(404)
-
-    # TODO - this is done prematurely as user may be None
-    # get gradient price
-    gradient_price = price(user, product)
-    
-    # update transaction with prices
-    current_transaction \
-      .add_product(product, 
-                   gradient_price, 
-                   product.max_price,
-                   product.min_price)
 
   db.session.add(current_transaction)
   db.session.commit()
@@ -105,38 +93,32 @@ def cart():
     return current_app.login_manager.unauthorized()
 
   # block if user is not of type customer
-  elif current_user.account_type != 'customer':
+  if current_user.account_type != 'customer':
     return 'Not a customer', 400
 
-  else:
-    # set ownership of transaction to current_user/customer
-    # TODO 
-    #   this has some security implications ideally we set
+  # set ownership of transaction to current_user/customer
+  if transaction.customer == None:
+    # TODO: this has some security implications ideally we set
     #   ownership of this transaction via a session variable
     customer = current_user.account
     transaction.customer = customer
+
+    valid, err = validate_transaction(transaction, customer)
+    if not valid:
+      return err['message'], err['code']
+
     db.session.add(transaction)
     db.session.commit()
 
-  # if transaction.customer is None:
-  #   if transaction.id in session.get('_tids', []):
-  #     # NOTE added customer ref here
-  #     customer = current_user.account
-  #     transaction.customer = customer
-  #     db.session.add(transaction)
-  #     db.session.commit()
-
-  valid, err = validate_transaction(transaction, customer)
-  if not valid:
-    return err['message'], err['code']
-
+  # TODO - get gradient price using "price()" and update transaction
+ 
   return render_template(
           'checkout.html',
           transaction=transaction,
           logged_in=True)
 
 
-def validate_transaction(transaction, user):
+def validate_transaction(transaction, customer):
   '''
   Validates a transaction for a given user
   '''
@@ -145,7 +127,7 @@ def validate_transaction(transaction, user):
     return False, {'message': 'Transaction is not open', 'code': 403}
 
   # check that authenticated user is transaction owner
-  if transaction.customer != user:
+  if transaction.customer != customer:
     return False, {'message': 'Not owner of transaction', 'code': 401}
 
   return True, {}
