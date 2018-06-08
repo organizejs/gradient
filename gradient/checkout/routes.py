@@ -49,12 +49,20 @@ def initialize():
     vendor=vendor,
     status=Transaction.Status.OPEN)
 
-  # calculate price for each product
+  # create cart that is a mapping of sku:quantity
+  # this will also remove any duplicates
+  cart = {}
   for product in products:
-
     sku = product['sku']
     quantity = product['quantity']
 
+    if sku not in cart:
+      cart[sku] = int(quantity)
+    else:
+      cart[sku] = int(cart[sku]) + int(quantity)
+
+  # add sku/quantity of each product in cart to the transaction
+  for sku, quantity in cart.items():
     success = current_transaction.add_product(sku, quantity, vendor)
     if not success:
       abort(404)
@@ -76,7 +84,7 @@ def cart():
   listing the products they are about to pay for,
   with their respective Gradient prices. 
   
-  But firs we check if they are the owner of the 
+  But first we check if they are the owner of the 
   transaction and that the transaction is still OPEN.
   '''
   # get current transaction
@@ -181,6 +189,8 @@ def pay():
                            .first_or_404()
 
   customer = current_user.account
+
+  # validate transaction
   valid, err = validate_transaction(transaction, customer)
   if not valid:
     print(err)
