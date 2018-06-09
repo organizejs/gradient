@@ -6,6 +6,7 @@ from flask import (
   Blueprint, render_template, jsonify, request, redirect, 
   url_for, session, current_app, abort
 )
+from ..util import set_query_parameter
 from ..product import Product
 from ..vendor import Vendor
 from ..customer.routes import customer_required
@@ -37,16 +38,17 @@ def initialize():
   3. create gradient_price object(s) with computed price
   4. render payment page with computed price
   '''
-
   # get vendor and products from POST body (json)
   checkout_content = request.get_json()
   vendor_id = checkout_content['vendor_id']
   vendor = Vendor.query.get_or_404(vendor_id)
   products = checkout_content['products']
+  requester_url = request.environ['HTTP_REFERER']
 
   # create transaction object with OPEN transaction.status
   current_transaction = Transaction(
     vendor=vendor,
+    requester_url=requester_url,
     status=Transaction.Status.OPEN)
 
   # create cart that is a mapping of sku:quantity
@@ -119,7 +121,6 @@ def cart():
     db.session.commit()
 
   # TODO - get gradient price using "price()" and update transaction
- 
   return render_template(
           'checkout.html',
           transaction=transaction,
@@ -227,9 +228,14 @@ def pay():
     return jsonify(success=False, error=e._message), 400
 
   # TODO validate that these are external urls in vendor form
-  # TODO is it ok to include url params like this?
-  return redirect('{}?txid={}&vid={}'.format(
-    vendor.redirect_url, transaction.uuid, vendor.id))
+  # TODO is it ok to include url params like this? - NOT OKAY
+
+  url = vendor.redirect_url
+  url = set_query_parameter(url, 'txid', transaction.uuid)
+  url = set_query_parameter(url, 'vid', vendor.id)
+  # return redirect('{}?txid={}&vid={}'.format(
+  #   vendor.redirect_url, transaction.uuid, vendor.id))
+  return redirect(url)
 
 
 @bp.route('/validate', methods=['POST'])

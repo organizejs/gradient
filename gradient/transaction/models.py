@@ -33,9 +33,10 @@ class TransactionStatus(Enum):
 
 
 class TransactionPropertiesMixin():
-  uuid       = db.Column(UUID(as_uuid=True), index=True, default=uuid4)
-  properties = db.Column(JSON())
-  status     = db.Column(db.Enum(TransactionStatus), 
+  uuid          = db.Column(UUID(as_uuid=True), index=True, default=uuid4)
+  requester_url = db.Column(db.String())
+  properties    = db.Column(JSON())
+  status        = db.Column(db.Enum(TransactionStatus), 
                          default=TransactionStatus.OPEN, 
                          nullable=False)
   @declared_attr
