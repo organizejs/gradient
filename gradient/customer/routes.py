@@ -84,7 +84,13 @@ def settings():
   '''
   Render settings in account page
   '''
-  return render_template('account/customer/account.html')
+  # get all cards if customer stripe id exists
+  cards = None
+  if current_user.account.stripe_id:
+    stripe_customer = stripe.Customer.retrieve(current_user.account.stripe_id)
+    cards = stripe_customer.sources.all(object='card')
+
+  return render_template('account/customer/account.html', cards=cards)
 
 
 @bp.route('/account/settings/subscribe/<subscribe>')

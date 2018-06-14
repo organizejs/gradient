@@ -1,0 +1,17 @@
+{# if the user hasn't entered a redirect_url, assume that the user is not set up as a vendor #}
+
+{% if current_user.confirmed_at is none %}
+<div class="notice-module">
+  Please confirm your email address at <a>{{ current_user.email }}</a>. 
+  You can also <a href="{{ url_for('security.send_confirmation') }}">resend the confirmation email.</a>
+</div>
+{% endif  %}
+
+{% if (current_user.account.individual_income == None)
+   and (current_user.account.household_income == None) %}
+<div class="notice-module">
+  <a href="{{ url_for('customer.onboarding') }}">In order for us to lower prices to fit your financial need, we need to ask some basic questions about your income.</a>
+</div>
+{% endif %}        
+
+

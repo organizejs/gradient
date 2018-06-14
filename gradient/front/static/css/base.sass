@@ -250,7 +250,10 @@ label
   text-align: left
   background-color: $white
   color: $black
-  margin-bottom: 2em
+  @include desktop
+    margin-bottom: 1.0em
+  @include phone
+    margin-bottom: 0.5em
 
 .module-content
   padding: 1.25em
@@ -271,7 +274,7 @@ label
   padding: 1.25em
   background-color: $gray
   color: $dark-gray
-  margin-bottom: 1em
+  margin-bottom: 1.0em
 
 /** 
  ** hamburger
