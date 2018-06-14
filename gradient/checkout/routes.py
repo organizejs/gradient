@@ -120,14 +120,19 @@ def cart():
     db.session.add(transaction)
     db.session.commit()
 
+  # get all cards if customer stripe id exists
   cards = None
   if transaction.customer.stripe_id:
     stripe_customer = stripe.Customer.retrieve(transaction.customer.stripe_id)
     cards = stripe_customer.sources.all(object='card')
 
-  # TODO - get gradient price using "price()" and update transaction
+  # if user added new card, keep track of card id in session
+  new_card_id = None
+  if session.get('new_card_id'):
+    new_card_id = session.get('new_card_id')
+    session.pop('new_card_id', None)
 
-  new_card_id = session.get('new_card_id')
+  # TODO - get gradient price using "price()" and update transaction
 
   return render_template(
           'checkout/pay.html',

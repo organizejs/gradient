@@ -138,7 +138,6 @@ def add_card():
     return jsonify(success=False, error=e._message), 400
 
 
-
 # ===================================
 # ==== Registration & Onboarding ====
 # ===================================
