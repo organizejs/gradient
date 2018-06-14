@@ -21,9 +21,9 @@ class Role(db.Model, RoleMixin):
   description = db.Column(db.String(255))
 
 
-class HasUser():
-  pass
-
+# ===============
+# Address
+# ===============
 
 class AddressPropertiesMixin():
   street      = db.Column(db.String)
@@ -47,6 +47,10 @@ class Address(db.Model, AddressPropertiesMixin, AuditableMixin):
 class AddressAudit(db.Model, AddressPropertiesMixin, AuditMixin):
   __tablename__ = 'address_audit'
 
+
+# ===============
+# User
+# ===============
 
 class UserPropertiesMixin():
   first_name   = db.Column(db.Unicode(255), nullable=False)
@@ -118,6 +122,14 @@ class User(db.Model, UserPropertiesMixin, AuditableMixin, UserMixin):
 
 class UserAudit(db.Model, UserPropertiesMixin, AuditMixin):
   __tablename__ = 'user_audit'
+
+
+# ===============
+# Setup Customer / Vendor Relationship
+# ===============
+
+class HasUser():
+  pass
 
 
 @db.event.listens_for(HasUser, 'mapper_configured', propagate=True)

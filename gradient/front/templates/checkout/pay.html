@@ -1,0 +1,93 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% include "modules/_navigation.html" %}
+
+<div id="checkout-container" class="contain">
+  
+  <div id="checkout-header">
+    <h5>
+      Review your purchase
+    </h5>
+    <h3>
+      {{ transaction.vendor.company_name }}
+    </h3>
+  </div>
+  
+  <div id="checkout-cart">
+    {% for gp in transaction.gradient_prices %}
+      <li class="cart-item">
+        <figure class="cart-item-image">
+          <img src="{{ gp.product.image_url }}">
+        </figure>
+        <div class="cart-item-meta">
+          <h3 class="cart-item-title">{{ gp.product.name }}</h3>
+          <div class="cart-item-quantity">qty: {{ gp.quantity }}</div>
+          <div class="cart-item-price">{{ (gp.price/100) | currencyformat('USD') }}</div>
+        </div>
+      </li>
+    {% endfor %}
+  </div>
+  
+  <div id="checkout-form">
+    <div class="module">
+      <div class="module-content">
+        <div id="checkout-pay-button">
+          <button type="button" id="checkout-pay">Complete Payment</button>
+        </div>
+      </div>
+      <div class="module-content">
+        <div class="checkout-info">
+          <h6>Your total price:</h6>
+          <h1 class="checkout-total">{{ (transaction.total/100) | currencyformat('USD') }}</h1>
+        </div>
+        
+        <br>
+        {% if cards.data is defined %}
+          <div class="checkout-card-grid">
+            <div id="checkout-card-label">
+              <h6>Select your credit card:</h6>
+            </div>
+            <select id="select-card">
+              {% for card in cards.data %}
+              <option class="option-card" value="{{ card.id }}" {% if card.id == new_card_id %}selected{% endif %}>
+                  {{ card.brand }} ({{ card.last4 }}) - {{ card.name }}
+                </div>
+              </option>
+              {% endfor %}
+            </select>
+            <div id="checkout-add-card">+</div>
+          </div>
+        {% else %}
+          You have no cards. Please add a payment method to Checkout.
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<script>
+  const key = '{{ config.STRIPE_PUBLIC_KEY }}';
+  const pay_url = '{{ url_for("checkout.pay") }}';
+  const add_card_url = '{{ url_for("customer.add_card") }}';
+  const transaction_id = '{{ transaction.id }}'; // should this be uuid?
+  const transaction_total = {{ transaction.total }};
+  const pay_selector = '#checkout-pay';
+  const add_card_selector = '#checkout-add-card';
+
+  resize_images();
+
+  stripe_checkout(
+    key, 
+    pay_url, 
+    add_card_url,
+    transaction_id, 
+    transaction_total, 
+    pay_selector,
+    add_card_selector);
+
+</script>
+{% endblock %}

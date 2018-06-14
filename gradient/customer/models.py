@@ -1,8 +1,14 @@
+import stripe
 from datetime import datetime
+from sqlalchemy.ext.declarative import as_declarative, declared_attr
 from ..datastore import db, AuditAction, AuditMixin, AuditableMixin
 from ..user import HasUser
 from ..util import FormEnum
 
+
+# ===============
+# Customer
+# ===============
 
 class MaritalStatus(FormEnum):
   NOT_MARRIED = 0
@@ -17,7 +23,7 @@ class CustomerPropertiesMixin():
                                 nullable=False)
   dependents        = db.Column(db.Integer(), default=0)
   signature         = db.Column(db.String())
-  stripe_id         = db.Column(db.String(255))
+  stripe_id         = db.Column(db.String(255)) # created only after payment info is added
 
 
 class Customer(db.Model, HasUser, CustomerPropertiesMixin, AuditableMixin):

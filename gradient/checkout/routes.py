@@ -120,9 +120,19 @@ def cart():
     db.session.add(transaction)
     db.session.commit()
 
+  cards = None
+  if transaction.customer.stripe_id:
+    stripe_customer = stripe.Customer.retrieve(transaction.customer.stripe_id)
+    cards = stripe_customer.sources.all(object='card')
+
   # TODO - get gradient price using "price()" and update transaction
+
+  new_card_id = session.get('new_card_id')
+
   return render_template(
-          'checkout.html',
+          'checkout/pay.html',
+          cards=cards,
+          new_card_id=new_card_id,
           transaction=transaction,
           logged_in=True)
 
@@ -169,21 +179,29 @@ def pay():
   expects the following POSTed form data:
     {
       'transaction_id': uuid,
-      'token': str
+      'card_id': str
     }
-  validates:
+
+  First, we validate:
     - user is authenticated
     - transaction exists
     - transaction has status of OPEN
     - authenticated user is transaction owner
+
   if payment is successful, transaction status is set to SUCCESS
-  and the user is redirected to the vendor URL with params
-  describing the transaction (the id and vendor).
-  These params should be used by the vendor to validate the
+  and the user is redirected to the confirmation.html template.
+
+  The confirmation.html will display to the user that the
+  transaction was successful and then it will redirect to the
+  vendor's redirect url, passing it the transaction_uuid (txid) 
+  and the vendor's id (vid).
+  
+  These 2 params should be used by the vendor to validate the
   transaction was successfully completed (see gradient.js).
   '''
 
   data = request.form
+  card_id = data['card_id']
   transaction_id = data['txid']
   transaction = Transaction.query \
                            .filter_by(id=transaction_id) \
@@ -201,41 +219,37 @@ def pay():
   # TODO need to revisit this
   vendor = transaction.products[0].vendor
 
-  try:
-    if customer.stripe_id is None:
-      s_customer = stripe.Customer.create(
-          email=transaction.customer.user.email,
-          card=data['token']
-      )
-      customer.stripe_id = s_customer.id
-      db.session.add(customer)
-      db.session.commit()
-    else:
-      s_customer = stripe.Customer.retrieve(customer.stripe_id)
+  if customer.stripe_id is None:
+    msg = "Error: customer does not have a stripe id. Card must be added first"
+    print(msg)
+    return jsonify(success=False, error=msg), 400
 
-    stripe.Charge.create(
-      customer=s_customer.id,
+  try:
+    # create card 
+    stripe_charge = stripe.Charge.create(
+      customer=customer.stripe_id,
+      source=card_id,
       amount=transaction.total,
       currency='usd',
-      description='Gradient transaction for {}'.format(vendor.slug)
+      description='Gradient transaction for {}'.format(vendor.slug),
+      metadata={'transaction_id': transaction.id}
     )
 
+    # update db with transaction status & stripe charge id
     transaction.status = Transaction.Status.SUCCESS
+    transaction.stripe_id = stripe_charge.id
+
     db.session.add(transaction)
     db.session.commit()
+
   except (CardError, InvalidRequestError) as e:
     print("Exception: called 'pay'")
     return jsonify(success=False, error=e._message), 400
 
-  # TODO validate that these are external urls in vendor form
-  # TODO is it ok to include url params like this? - NOT OKAY
-
-  url = vendor.redirect_url
-  url = set_query_parameter(url, 'txid', transaction.uuid)
-  url = set_query_parameter(url, 'vid', vendor.id)
-  # return redirect('{}?txid={}&vid={}'.format(
-  #   vendor.redirect_url, transaction.uuid, vendor.id))
-  return redirect(url)
+  return render_template(
+    'checkout/confirmation.html',
+    vendor=vendor,
+    transaction=transaction)
 
 
 @bp.route('/validate', methods=['POST'])

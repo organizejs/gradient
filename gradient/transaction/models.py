@@ -39,6 +39,8 @@ class TransactionPropertiesMixin():
   status        = db.Column(db.Enum(TransactionStatus), 
                          default=TransactionStatus.OPEN, 
                          nullable=False)
+  stripe_id     = db.Column(db.String()) # the stripe 'Charge' id
+
   @declared_attr
   def customer_id(self):
     return db.Column(db.Integer(), db.ForeignKey('customer.id'))
@@ -86,6 +88,8 @@ class Transaction(db.Model, TransactionPropertiesMixin, AuditableMixin):
 
   def add_product(self, sku, quantity, vendor):
     '''
+    Checks if product exist
+    If so, create a GradientPrice if it dne
     return true if success, false otherwise
     '''
     # check that product exists
@@ -99,6 +103,7 @@ class Transaction(db.Model, TransactionPropertiesMixin, AuditableMixin):
       return False
 
     gradient_price = GradientPrice.query.filter_by(product=product, transaction=self)
+
     # check if gradient price for transaction already exists
     if gradient_price is None:
       pass

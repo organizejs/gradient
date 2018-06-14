@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% include "modules/_navigation.html" %}
+
+<div id="confirmation-container" class="contain">
+  Transaction was success!		
+  <br>
+  Redirecting you back to {{ vendor.company_name }}...
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  console.log('redirecting...')
+
+  function buildRedirectUrl(base, txid, vid) {
+    return `${base}?txid=${txid}&vid=${vid}`
+  }
+
+  // wait 2 seconds and then redirect...
+  setTimeout(function() {
+    window.location.href = buildRedirectUrl(
+        `{{ vendor.redirect_url }}`, 
+        `{{ transaction.uuid }}`, 
+        `{{ vendor.id }}`)
+  }, 2000);
+
+</script>
+{% endblock %}

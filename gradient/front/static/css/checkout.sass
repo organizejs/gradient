@@ -1,8 +1,11 @@
 body.checkout
+
+  background-color: $light-gray
+
   #checkout-container
     display: grid
     @include desktop
-      grid-template-columns: 3fr 1fr
+      grid-template-columns: 1fr 1fr
       grid-template-rows: auto auto
       grid-template-areas: "header header" "cart form"
     @include phone
@@ -34,7 +37,7 @@ body.checkout
             left: 50%
             transform: translateY(-50%) translateX(-50%)
         .cart-item-meta
-          padding: 0 1.5em
+          padding: 0.5em 1.5em
           .cart-item-title,
           .cart-item-price
             margin: 0 0 1em 0
@@ -42,19 +45,45 @@ body.checkout
             
     #checkout-form
       grid-area: form
-      @include desktop
-        text-align: right
-      @include phone
-        text-align: center
-      button
-        width: 10rem
-      .checkout-pay
-        width: 10em
-      .checkout-info
-        margin: 0 0 1em 0
-      .checkout-total
-        font-size: 1.6em
-        margin: 0.2em 0 0 0
-        border-bottom: 1px solid $black
-        display: inline-block
-        padding-bottom: 0.1em
+      text-align: center
+      .module 
+        @include desktop
+          max-width: 20em
+          float: right
+        @include phone
+          width: 100%
+        .checkout-info
+          margin: 0 0 1em 0
+        .checkout-total
+          font-size: 1.6em
+          margin: 0.2em 0 0 0
+          border-bottom: 1px solid $black
+          display: inline-block
+          padding-bottom: 0.1em
+        .checkout-card-grid
+          display: grid
+          grid-template-columns: 1fr auto
+          grid-template-rows: auto auto 
+          grid-template-areas: "label label" "selector add-card"
+          grid-row-gap: 0.5em
+          grid-column-gap: 0.5em
+          #checkout-card-label
+            grid-area: label
+          #select-card
+            grid-area: selector
+            height: 2.5em
+            line-height: 2.5em
+            padding: 0em 0.5em
+            font-size: 0.9em
+            -webkit-appearance: menulist
+          #checkout-add-card
+            cursor: pointer
+            grid-area: add-card
+            color: $blue
+            font-size: 2.0em
+        #checkout-pay-button
+          text-align: center
+          #checkout-pay
+            width: 100%
+
+

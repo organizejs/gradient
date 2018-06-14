@@ -1,11 +1,13 @@
+import stripe
 from functools import wraps
 from flask import (
   Blueprint, jsonify, redirect, render_template, 
-  abort, url_for, flash,
+  abort, url_for, flash, request, session
 )
 from flask_security import current_user, login_user
 from flask_security.registerable import register_user
 from flask_security.decorators import anonymous_user_required
+from stripe.error import CardError, InvalidRequestError
 from .forms import (
   SignatureForm, 
   IncomeForm, 
@@ -100,6 +102,41 @@ def subscribe(subscribe):
 
   db.session.commit()
   return redirect(url_for('customer.settings'))
+
+
+@bp.route('/account/settings/add_card', methods=['POST'])
+@customer_required
+def add_card():
+  '''
+  add a card to the customer
+  if stripe_customer dne for customer, create one
+  '''
+  data = request.form
+  stripe_token = data['token']
+
+  customer = current_user.account
+
+  try:
+    if customer.stripe_id is None:
+      stripe_customer = stripe.Customer.create(
+        email=customer.user.email,
+        source=stripe_token
+      )
+      customer.stripe_id = stripe_customer.id
+      db.session.add(customer)
+      db.session.commit()
+    else:
+      stripe_customer = stripe.Customer.retrieve(customer.stripe_id)
+
+    card = stripe_customer.sources.create(source=stripe_token)
+    session['new_card_id'] = card.id
+    flash('Your card has been added')
+    return redirect(request.referrer or url_for('customer.settings'))
+
+  except (CardError, InvalidRequestError) as e:
+    print("Exception: called 'add card'")
+    return jsonify(success=False, error=e._message), 400
+
 
 
 # ===================================
