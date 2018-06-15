@@ -1,3 +1,6 @@
+{% extends 'customer/account.html' %}
+{% block account_content %}
+
 <div id="settings-module" class="content-pane">
   <div class="module">
     <div class="module-content">
@@ -49,6 +52,15 @@
         You have no cards
       {% endif %}
     </div>
+    <div class="module-content">
+      <div class="account-footer">
+        <div class="account-action">
+          <a href="{{ url_for('customer.add_card') }}">
+            <div class="account-button">Add Card</div>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="module">
@@ -91,3 +103,5 @@
     </div>
   </div>
 </div>
+
+{% endblock %}

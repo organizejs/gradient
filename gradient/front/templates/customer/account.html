@@ -40,14 +40,21 @@
     </div>
 
     <div id="account-content-pane">
-      {% include "account/customer/_notices.html" %}
-      {% if endpoint == 'customer.purchases' %}
-        {% include "account/customer/_purchases.html" %}
-      {% elif endpoint == 'customer.income' %}
-        {% include "account/customer/_income.html" %}
-      {% elif endpoint == 'customer.settings' %}
-        {% include "account/customer/_settings.html" %}
-      {% endif %}
+      {% if current_user.confirmed_at is none %}
+      <div class="notice-module">
+        Please confirm your email address at <a>{{ current_user.email }}</a>. 
+        You can also <a href="{{ url_for('security.send_confirmation') }}">resend the confirmation email.</a>
+      </div>
+      {% endif  %}
+
+      {% if (current_user.account.individual_income == None)
+         and (current_user.account.household_income == None) %}
+      <div class="notice-module">
+        <a href="{{ url_for('customer.onboarding') }}">In order for us to lower prices to fit your financial need, we need to ask some basic questions about your income.</a>
+      </div>
+      {% endif %}        
+
+      {% block account_content %}{% endblock %}
     </div>
 
   </div>

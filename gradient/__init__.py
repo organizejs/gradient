@@ -66,8 +66,7 @@ def create_app(
   static_url_path = '/assets'
   
   # =======================================
-  # setup app and get properties 
-  # from config
+  # setup app and get properties from config
   # =======================================
   app = Flask(package_name,
               static_url_path=static_url_path,

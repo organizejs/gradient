@@ -42,22 +42,21 @@
     </div>
 
     <div id="account-content-pane">
-      {% if endpoint == 'vendor.purchases' %}
-        {% include "account/vendor/_getting_started.html" %}
-        {% include "account/vendor/_purchases.html" %}
-      {% elif endpoint == 'vendor.settings' %}
-        {% include "account/vendor/_getting_started.html" %}
-        {% include "account/vendor/_settings.html" %}
-      {% elif endpoint == 'vendor.products' %}
-        {% include "account/vendor/_getting_started.html" %}
-        {% include "account/vendor/_products.html" %}
-      {% elif endpoint == 'vendor.add_product_form' %}
-        {% include "account/vendor/_add_product_form.html" %}
-      {% elif endpoint == 'vendor.edit_product_form' %}
-        {% include "account/vendor/_edit_product_form.html" %}
-      {% elif endpoint == 'vendor.product' %}
-        {% include "account/vendor/_product.html" %}
-      {% endif %}
+      {# if the user hasn't entered a redirect_url, assume that the user is not set up as a vendor #}
+      {% if not current_user.account.redirect_url or not current_user.account.stripe_pk  %}
+      <div id="getting-started-module" class="module">
+        <div class="module-content">
+          <h4>Getting Started</h4>
+          <br>
+          <p>
+            Take a look at our documentation pages to see how you get started with Gradient.
+          </p>
+          <a href="{{ url_for('main.docs') }}"><button>Read Documentation</button></a>
+        </div>
+      </div>
+      {% endif %}        
+
+      {% block account_content %}{% endblock %}
     </div>
   </div>
   

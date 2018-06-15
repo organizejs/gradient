@@ -57,7 +57,7 @@ def account():
   '''
   Render customer account page
   '''
-  return redirect(url_for('customer.purchases'))
+  return redirect(url_for('customer.settings'))
 
 
 @bp.route('/account/purchases')
@@ -66,7 +66,7 @@ def purchases():
   '''
   Render purchases in account page
   '''
-  return render_template('account/customer/account.html')
+  return render_template('customer/account/purchases.html')
 
 
 @bp.route('/account/income')
@@ -75,7 +75,7 @@ def income():
   '''
   Render income in account page
   '''
-  return render_template('account/customer/account.html')
+  return render_template('customer/account/income.html')
 
 
 @bp.route('/account/settings')
@@ -90,7 +90,9 @@ def settings():
     stripe_customer = stripe.Customer.retrieve(current_user.account.stripe_id)
     cards = stripe_customer.sources.all(object='card')
 
-  return render_template('account/customer/account.html', cards=cards)
+  return render_template( \
+    'customer/account/settings.html', \
+    cards=cards)
 
 
 @bp.route('/account/settings/subscribe/<subscribe>')
@@ -110,38 +112,47 @@ def subscribe(subscribe):
   return redirect(url_for('customer.settings'))
 
 
-@bp.route('/account/settings/add_card', methods=['POST'])
+@bp.route('/account/settings/add_card', methods=['POST', 'GET'])
 @customer_required
 def add_card():
   '''
-  add a card to the customer
-  if stripe_customer dne for customer, create one
+  POST:
+    add a card to the customer
+    if stripe_customer dne for customer, create one
+  GET:
+    return add card form
   '''
-  data = request.form
-  stripe_token = data['token']
+  # if POST
+  if request.method == 'POST':
 
-  customer = current_user.account
+    data = request.form
+    stripe_token = data['token']
 
-  try:
-    if customer.stripe_id is None:
-      stripe_customer = stripe.Customer.create(
-        email=customer.user.email,
-        source=stripe_token
-      )
-      customer.stripe_id = stripe_customer.id
-      db.session.add(customer)
-      db.session.commit()
-    else:
-      stripe_customer = stripe.Customer.retrieve(customer.stripe_id)
+    customer = current_user.account
 
-    card = stripe_customer.sources.create(source=stripe_token)
-    session['new_card_id'] = card.id
-    flash('Your card has been added')
-    return redirect(request.referrer or url_for('customer.settings'))
+    try:
+      if customer.stripe_id is None:
+        stripe_customer = stripe.Customer.create(
+          email=customer.user.email,
+          source=stripe_token
+        )
+        customer.stripe_id = stripe_customer.id
+        db.session.add(customer)
+        db.session.commit()
+      else:
+        stripe_customer = stripe.Customer.retrieve(customer.stripe_id)
 
-  except (CardError, InvalidRequestError) as e:
-    print("Exception: called 'add card'")
-    return jsonify(success=False, error=e._message), 400
+      card = stripe_customer.sources.create(source=stripe_token)
+      session['new_card_id'] = card.id
+      flash('Your card has been added')
+      return redirect(request.referrer or url_for('customer.settings'))
+
+    except (CardError, InvalidRequestError) as e:
+      print("Exception: called 'add card'")
+      return jsonify(success=False, error=e._message), 400
+
+  else:
+    return render_template('customer/account/add_card.html')
 
 
 # ===================================
