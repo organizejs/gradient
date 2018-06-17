@@ -28,7 +28,8 @@
         <div class="side-el {% if endpoint == 'customer.income' %}active{% endif %}">Income Info</div>
       </a>
       <a href="{{ url_for('customer.settings') }}">
-        <div class="side-el {% if endpoint == 'customer.settings' %}active{% endif %}">Settings</div>
+        <div class="side-el {% if (endpoint == 'customer.settings') or
+          (endpoint == 'customer.add_card') %}active{% endif %}">Settings</div>
       </a>
       <br>
       <hr>
@@ -40,21 +41,27 @@
     </div>
 
     <div id="account-content-pane">
-      {% if current_user.confirmed_at is none %}
-      <div class="notice-module">
-        Please confirm your email address at <a>{{ current_user.email }}</a>. 
-        You can also <a href="{{ url_for('security.send_confirmation') }}">resend the confirmation email.</a>
-      </div>
-      {% endif  %}
+      {# include Flash msgs #}
+      {% include "modules/_messages.html" %}
+ 
+      {# include notice if user has not validated email #}
+			{% if current_user.confirmed_at is none %}
+			<div class="notice-module">
+				Please confirm your email address at <a>{{ current_user.email }}</a>. 
+				You can also <a href="{{ url_for('security.send_confirmation') }}">resend the confirmation email.</a>
+			</div>
+			{% endif %}
 
-      {% if (current_user.account.individual_income == None)
-         and (current_user.account.household_income == None) %}
-      <div class="notice-module">
-        <a href="{{ url_for('customer.onboarding') }}">In order for us to lower prices to fit your financial need, we need to ask some basic questions about your income.</a>
-      </div>
-      {% endif %}        
+      {# include notice if user has not finished onboarding #}
+			{% if (current_user.account.individual_income == None)
+				 and (current_user.account.household_income == None) %}
+			<div class="notice-module">
+				<a href="{{ url_for('customer.onboarding') }}">In order for us to lower prices to fit your financial need, we need to ask some basic questions about your income.</a>
+			</div>
+			{% endif %} 
 
-      {% block account_content %}{% endblock %}
+      {% block account_content %}
+      {% endblock %}
     </div>
 
   </div>

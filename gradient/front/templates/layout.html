@@ -46,7 +46,6 @@
 </head>
 
 <body class="{{ request.endpoint|replace('.', ' ') }}">
-  {% include "modules/_messages.html" %}
 
   <main class="{{ request.endpoint|replace('.', ' ') }}">
     {% block content %}

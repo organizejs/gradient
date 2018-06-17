@@ -1,0 +1,90 @@
+{% macro add_card_form() %}
+<div id="add-card-body">
+  <h3>Add a new card</h3>
+  <br>
+  <form action="{{ url_for('customer.add_card') }}" method="post" id="add-card-form">
+    <label>
+      <span>Card Information</span>
+      <div id="card-element" class="field"><!-- Stripe Element will be inserted here. --></div>
+    </label>
+    <!-- Used to display Element errors. -->
+    <label>
+      <span></span>
+      <h6><div id="card-errors" class="error-field" role="alert"></div></h6>
+    </label>
+    <label>
+      <span>Name</span>
+      <input id="name" name="name" class="field" placeholder="Jane Doe" />
+    </label>
+    <div>
+      <label>
+        <span>Address</span>
+        <input id="address-line1" name="address_line1" class="field" placeholder="77 Winchester Lane" />
+      </label>
+    </div>
+    <div>
+      <label>
+        <span>Address (cont.)</span>
+        <input id="address-line2" name="address_line2" class="field" placeholder="" />
+      </label>
+    </div>
+    <div>
+      <label>
+        <span>City</span>
+        <input id="address-city" name="address_city" class="field" placeholder="Coachella" />
+      </label>
+    </div>
+    <div>
+      <label>
+        <span>State</span>
+        <input id="address-state" name="address_state" class="field" placeholder="CA" />
+      </label>
+    </div>
+    <div>
+      <label>
+        <span>ZIP</span>
+        <input id="address-zip" name="address_zip" class="field" placeholder="92236" />
+      </label>
+    </div>
+    <div>
+      <label>
+        <span>Country</span>
+        <input id="address-country" name="address_country" class="field" placeholder="United States" />
+      </label>
+    </div>
+    <br>
+    <button>Add Card</button>
+  </form> 
+</div>
+{% endmacro %}
+
+{% macro add_card_script(next_page_url) %}
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+const stripe_key = "{{ config.STRIPE_PUBLIC_KEY }}";
+const card_element_selector = "#card-element";
+const card_error_selector = "#card-errors";
+const card_form_id = "add-card-form"
+const card_details = {
+  name_id: 'name',
+  address: {
+    line_1_id: 'address-line1',
+    line_2_id: 'address-line2',
+    city_id: 'address-city',
+    state_id: 'address-state',
+    zip_id: 'address-zip',
+    country_id: 'address-country'    
+  }
+}
+const next_page_url = "{{ next_page_url }}";
+
+stripe_add_card(
+  stripe_key,
+  card_element_selector,
+  card_error_selector,
+  card_form_id,
+  card_details,
+  next_page_url);
+
+</script>
+{% endmacro %}

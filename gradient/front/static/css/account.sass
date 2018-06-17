@@ -29,15 +29,24 @@ body.vendor
     margin: 0
   .account-property
     display: grid
-    grid-row-gap: 1em
-    grid-template-columns: 1fr 1fr
     margin: 0 0 1em 0
+    @include desktop
+      grid-row-gap: 1em
+      grid-template-columns: 1fr 1fr
+      grid-template-areas: "label value"
+    @include phone
+      grid-row-gap: 0.5em
+      grid-template-columns: 1fr
+      grid-template-areas: "label" "value"
     .account-property-label
+      grid-area: label
       display: inline-block
       padding: 3px 0px
     .account-property-value-container
-      text-align: right
+      grid-area: value
       line-height: 1.25em
+      @include desktop
+        text-align: right
       .account-property-value
         color: $blue
         border-radius: 2px
@@ -101,9 +110,11 @@ body.vendor
 
     #account-content-pane
       grid-area: main
-      margin: 0 0.5em
       @include desktop
+        margin: 0 0.5em
         margin: 1em 2em
+      @include phone  
+        margin: 0 1.0em
       #getting-started-module,
       .content-pane
         border-radius: 4px 
@@ -117,6 +128,9 @@ body.vendor
         .account-content-action
           float: right
           text-align: right
+      .flashes
+        margin-bottom: 1.0em
+
           
     #purchases-module
       #purchases-content
@@ -164,11 +178,15 @@ body.customer.purchases
         font-weight: 600
       .skus
         font-size: 0.9em
+    .transaction-col
+      overflow-x: scroll
 
 body.vendor.purchases
   .transaction-cell
     display: grid
     grid-template-columns: 1fr 6fr
+    .transaction-col
+      overflow-x: scroll
     .datetime
       text-align: left  
       .month

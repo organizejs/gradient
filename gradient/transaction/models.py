@@ -33,13 +33,13 @@ class TransactionStatus(Enum):
 
 
 class TransactionPropertiesMixin():
-  uuid          = db.Column(UUID(as_uuid=True), index=True, default=uuid4)
-  requester_url = db.Column(db.String())
-  properties    = db.Column(JSON())
-  status        = db.Column(db.Enum(TransactionStatus), 
-                         default=TransactionStatus.OPEN, 
-                         nullable=False)
-  stripe_id     = db.Column(db.String()) # the stripe 'Charge' id
+  uuid             = db.Column(UUID(as_uuid=True), index=True, default=uuid4)
+  requester_url    = db.Column(db.String())
+  properties       = db.Column(JSON())
+  status           = db.Column(db.Enum(TransactionStatus), 
+                            default=TransactionStatus.OPEN, 
+                            nullable=False)
+  stripe_charge_id = db.Column(db.String()) # the stripe 'Charge' id
 
   @declared_attr
   def customer_id(self):

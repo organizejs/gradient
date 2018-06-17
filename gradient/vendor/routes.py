@@ -341,7 +341,7 @@ def register():
     return redirect('/')
 
   # if GET
-  return render_template('account/vendor/register.html', form=form)
+  return render_template('vendor/register.html', form=form)
 
 
 @bp.route('/register/validate/user', methods=['POST'])

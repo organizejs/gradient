@@ -86,8 +86,8 @@ def settings():
   '''
   # get all cards if customer stripe id exists
   cards = None
-  if current_user.account.stripe_id:
-    stripe_customer = stripe.Customer.retrieve(current_user.account.stripe_id)
+  if current_user.account.stripe_customer_id:
+    stripe_customer = stripe.Customer.retrieve(current_user.account.stripe_customer_id)
     cards = stripe_customer.sources.all(object='card')
 
   return render_template( \
@@ -131,21 +131,28 @@ def add_card():
     customer = current_user.account
 
     try:
-      if customer.stripe_id is None:
+      if customer.stripe_customer_id is None:
         stripe_customer = stripe.Customer.create(
           email=customer.user.email,
           source=stripe_token
         )
-        customer.stripe_id = stripe_customer.id
+        customer.stripe_customer_id = stripe_customer.id
         db.session.add(customer)
         db.session.commit()
       else:
-        stripe_customer = stripe.Customer.retrieve(customer.stripe_id)
+        stripe_customer = stripe.Customer.retrieve(customer.stripe_customer_id)
 
       card = stripe_customer.sources.create(source=stripe_token)
+
+      next_page_url = None
+      if session.get('request_referrer'):
+        next_page_url = session.get('request_referrer')
+        session.pop('request_referrer', None)
+
       session['new_card_id'] = card.id
       flash('Your card has been added')
-      return redirect(request.referrer or url_for('customer.settings'))
+
+      return redirect(next_page_url or url_for('customer.settings'))
 
     except (CardError, InvalidRequestError) as e:
       print("Exception: called 'add card'")
@@ -187,7 +194,7 @@ def register():
 
   # if GET 
   return render_template(
-    'account/customer/register.html',
+    'customer/register.html',
     register_user_form=form)
 
 
@@ -270,5 +277,5 @@ def onboarding():
     return redirect('/')
 
   # if GET
-  return render_template('account/customer/onboarding.html', form=form)
+  return render_template('customer/onboarding.html', form=form)
 

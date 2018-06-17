@@ -16,14 +16,14 @@ class MaritalStatus(FormEnum):
 
 
 class CustomerPropertiesMixin():
-  individual_income = db.Column(db.Integer()) # in cents
-  household_income  = db.Column(db.Integer()) # in cents
-  marital_status    = db.Column(db.Enum(MaritalStatus), 
-                                default=MaritalStatus.NOT_MARRIED, 
-                                nullable=False)
-  dependents        = db.Column(db.Integer(), default=0)
-  signature         = db.Column(db.String())
-  stripe_id         = db.Column(db.String(255)) # created only after payment info is added
+  individual_income  = db.Column(db.Integer()) # in cents
+  household_income   = db.Column(db.Integer()) # in cents
+  marital_status     = db.Column(db.Enum(MaritalStatus), 
+                                 default=MaritalStatus.NOT_MARRIED, 
+                                 nullable=False)
+  dependents         = db.Column(db.Integer(), default=0)
+  signature          = db.Column(db.String())
+  stripe_customer_id = db.Column(db.String(255)) # created only after initial payment info is added
 
 
 class Customer(db.Model, HasUser, CustomerPropertiesMixin, AuditableMixin):

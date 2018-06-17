@@ -83,3 +83,4 @@ class GradientConfirmRegisterForm(ConfirmRegisterForm):
                                      message='Passwords must match')
                                    ])
   
+

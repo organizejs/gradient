@@ -52,15 +52,19 @@ body.checkout
           float: right
         @include phone
           width: 100%
-        .checkout-info
+        #checkout-pay-button
+          text-align: center
+          #checkout-pay
+            width: 100%
+        #checkout-info
           margin: 0 0 1em 0
-        .checkout-total
+        #checkout-total
           font-size: 1.6em
           margin: 0.2em 0 0 0
           border-bottom: 1px solid $black
           display: inline-block
           padding-bottom: 0.1em
-        .checkout-card-grid
+        #checkout-select-card-grid
           display: grid
           grid-template-columns: 1fr auto
           grid-template-rows: auto auto 
@@ -81,9 +85,9 @@ body.checkout
             grid-area: add-card
             color: $blue
             font-size: 2.0em
-        #checkout-pay-button
-          text-align: center
-          #checkout-pay
-            width: 100%
+        #checkout-add-card-container
+          #checkout-add-card
+            margin-top: 0.5em
+
 
 

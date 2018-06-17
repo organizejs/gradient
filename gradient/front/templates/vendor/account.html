@@ -42,6 +42,9 @@
     </div>
 
     <div id="account-content-pane">
+      {# include Flash msgs #}
+      {% include "modules/_messages.html" %}
+
       {# if the user hasn't entered a redirect_url, assume that the user is not set up as a vendor #}
       {% if not current_user.account.redirect_url or not current_user.account.stripe_pk  %}
       <div id="getting-started-module" class="module">
