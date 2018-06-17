@@ -1,3 +1,6 @@
+{% extends 'customer/account.html' %}
+{% block account_content %}
+
 <div id="settings-module" class="content-pane">
   <div class="module">
     <div class="module-content">
@@ -36,9 +39,33 @@
 
   <div class="module">
     <div class="module-content">
-      <div class="account-content-title"><h4>Account</h4></div>
-      <div class="account-content-options">
+      <div class="account-content-title"><h4>Manage your cards</h4></div>
+    </div>
+    <div class="module-content">
+      {% if cards.data is defined %}
+        {% for card in cards.data %}
+        <div>
+          {{ card.brand }} ({{ card.last4 }}) - {{ card.name }}
+        </div>
+        {% endfor %}
+      {% else %}
+        You have no cards
+      {% endif %}
+    </div>
+    <div class="module-content">
+      <div class="account-footer">
+        <div class="account-action">
+          <a href="{{ url_for('customer.add_card') }}">
+            <div class="account-button">Add Card</div>
+          </a>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <div class="module">
+    <div class="module-content">
+      <div class="account-content-title"><h4>Account</h4></div>
     </div>
     <div class="module-content">
       <div class="account-property">
@@ -76,3 +103,5 @@
     </div>
   </div>
 </div>
+
+{% endblock %}

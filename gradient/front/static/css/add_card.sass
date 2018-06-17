@@ -1,0 +1,35 @@
+div#add-card-body
+  max-width: 50em
+  #card-errors
+    color: red
+  #card-element
+    padding-top: 2.5px
+  label
+    font-weight: 300
+    height: 2.5em
+    line-height: 2.5em
+    margin-bottom: 0.5em
+    @include desktop
+      display: flex
+      flex-direction: row
+    @include phone
+      input
+        display: block
+        width: 100%
+        line-height: 2.5em
+    span
+      width: 15em
+    .field
+      background: transparent
+      background-color: $light-gray
+      font-weight: 300
+      border: 0
+      outline: none
+      flex: 1
+      padding-right: 10px
+      padding-left: 10px
+      cursor: text
+    .field::-webkit-input-placeholder 
+      color: $gray
+    .field::-moz-placeholder 
+      color: $gray

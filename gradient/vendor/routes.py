@@ -79,7 +79,7 @@ def purchases():
   '''
   Render purchases in account page
   '''
-  return render_template('account/vendor/account.html')
+  return render_template('vendor/account/purchases.html')
 
 
 @bp.route('/account/settings')
@@ -91,7 +91,7 @@ def settings():
   stripe_keys_form = StripeKeysForm()
   redirect_url_form = RedirectUrlForm()
   return render_template(
-           'account/vendor/account.html',
+           'vendor/account/settings.html',
            stripe_keys_form=stripe_keys_form,
            redirect_url_form=redirect_url_form)
 
@@ -104,7 +104,7 @@ def product(product_id):
   '''
   product = Product.query.filter_by(id=product_id).first()
   return render_template(
-           'account/vendor/account.html',
+           'vendor/account/product.html',
            product=product)
 
 
@@ -117,7 +117,7 @@ def products():
   products = Product.query \
     .filter_by(vendor=current_user.account, active=True).all()
   return render_template(
-           'account/vendor/account.html',
+           'vendor/account/products.html',
            products=products)
 
 
@@ -129,7 +129,7 @@ def add_product_form():
   '''
   product_form = ProductForm()
   return render_template(
-           'account/vendor/account.html',
+           'vendor/account/add_product_form.html',
            product_form=product_form)
 
 
@@ -148,7 +148,7 @@ def edit_product_form(product_id):
     min_price=product.min_price)
 
   return render_template(
-           'account/vendor/account.html',
+           'vendor/account/edit_product_form.html',
            product=product,
            product_form=product_form)
 
@@ -341,7 +341,7 @@ def register():
     return redirect('/')
 
   # if GET
-  return render_template('account/vendor/register.html', form=form)
+  return render_template('vendor/register.html', form=form)
 
 
 @bp.route('/register/validate/user', methods=['POST'])

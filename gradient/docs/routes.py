@@ -8,6 +8,6 @@ def home():
     '''
     Render the home page of the docs
     '''
-    return render_template('documentation.html')
+    return render_template('/docs/index.html')
 
 

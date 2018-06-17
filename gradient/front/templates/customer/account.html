@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+  <div class="header mobile-only">
+    <div class="user-greeting">
+      <div class="user-icon">
+        <img src="{{ url_for('static', filename='images/customer-icon.svg') }}">
+      </div>
+    </div>
+    <div class="user-nav">
+      {% include "modules/_hamburger.html" %}   
+    </div>
+  </div>
+
+  <div id="account-content">
+    {% set endpoint = request.url_rule.endpoint %}
+    <div id="account-side-pane">
+      <div class="user-greeting desktop-only">
+        <div class="user-icon">
+          <img src="{{ url_for('static', filename='images/customer-icon.svg') }}">
+        </div>
+      </div>
+
+      <a href="{{ url_for('customer.purchases') }}">
+        <div class="side-el {% if endpoint == 'customer.purchases' %}active{% endif %}">Purchases</div>
+      </a>
+      <a href="{{ url_for('customer.income') }}">
+        <div class="side-el {% if endpoint == 'customer.income' %}active{% endif %}">Income Info</div>
+      </a>
+      <a href="{{ url_for('customer.settings') }}">
+        <div class="side-el {% if (endpoint == 'customer.settings') or
+          (endpoint == 'customer.add_card') %}active{% endif %}">Settings</div>
+      </a>
+      <br>
+      <hr>
+      <br>
+      <div class="side-el">Send us feedback</div>
+      <div class="side-el">Contact</div>
+      <a href="{{ url_for('main.index') }}"><div class="side-el">Home Page</div></a>
+      <a href="{{ url_for('security.logout') }}"><div class="side-el">Logout</div></a>
+    </div>
+
+    <div id="account-content-pane">
+      {# include Flash msgs #}
+      {% include "modules/_messages.html" %}
+ 
+      {# include notice if user has not validated email #}
+			{% if current_user.confirmed_at is none %}
+			<div class="notice-module">
+				Please confirm your email address at <a>{{ current_user.email }}</a>. 
+				You can also <a href="{{ url_for('security.send_confirmation') }}">resend the confirmation email.</a>
+			</div>
+			{% endif %}
+
+      {# include notice if user has not finished onboarding #}
+			{% if (current_user.account.individual_income == None)
+				 and (current_user.account.household_income == None) %}
+			<div class="notice-module">
+				<a href="{{ url_for('customer.onboarding') }}">In order for us to lower prices to fit your financial need, we need to ask some basic questions about your income.</a>
+			</div>
+			{% endif %} 
+
+      {% block account_content %}
+      {% endblock %}
+    </div>
+
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  setup_account();
+</script>
+{% endblock %}

@@ -1,4 +1,8 @@
 {% from "modules/_form_fields.html" import render_field_with_errors, render_field %}
+
+{% extends 'vendor/account.html' %}
+{% block account_content %}
+
 <div id="settings-module" class="content-pane">
   <div class="module">
     <div class="module-content">
@@ -36,4 +40,4 @@
   </div>
 </div>
 
-
+{% endblock %}

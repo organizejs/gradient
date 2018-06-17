@@ -82,7 +82,7 @@ def initialize():
 @bp.route('/cart')
 def cart():
   '''
-  Displays the checkout page for a customer,
+  Displays the cart/checkout page for a customer,
   listing the products they are about to pay for,
   with their respective Gradient prices. 
   
@@ -122,8 +122,8 @@ def cart():
 
   # get all cards if customer stripe id exists
   cards = None
-  if transaction.customer.stripe_id:
-    stripe_customer = stripe.Customer.retrieve(transaction.customer.stripe_id)
+  if transaction.customer.stripe_customer_id:
+    stripe_customer = stripe.Customer.retrieve(transaction.customer.stripe_customer_id)
     cards = stripe_customer.sources.all(object='card')
 
   # if user added new card, keep track of card id in session
@@ -132,48 +132,27 @@ def cart():
     new_card_id = session.get('new_card_id')
     session.pop('new_card_id', None)
 
+  # set transaction id in session to use in /pay
+  session['txid'] = transaction_id
+
   # TODO - get gradient price using "price()" and update transaction
 
   return render_template(
-          'checkout/pay.html',
-          cards=cards,
-          new_card_id=new_card_id,
-          transaction=transaction,
-          logged_in=True)
+    'checkout/pay.html',
+    cards=cards,
+    new_card_id=new_card_id,
+    requester_url=request.referrer,
+    transaction=transaction)
 
 
-def validate_transaction(transaction, customer):
+@bp.route('/add_card')
+def add_card():
   '''
-  Validates a transaction for a given user
   '''
-  # check that transaction is OPEN
-  if transaction.status != Transaction.Status.OPEN:
-    return False, {'message': 'Transaction is not open', 'code': 403}
-
-  # check that authenticated user is transaction owner
-  if transaction.customer != customer:
-    return False, {'message': 'Not owner of transaction', 'code': 401}
-
-  return True, {}
-
-
-def price(user, product):
-  '''
-  calculates unique gradient price and
-  update transaction model with products
-
-  returns GradientPrice
-
-  TODO: implement real sliding scale
-        for now just return mean of min and max
-  '''
-  # min_price = product.min_price * product.max_price
-  # if user is None:
-  #   return max_price
-  # else:
-  #   m = (max_price - min_price)/(vendor.min_income - vendor.max_income)
-  #   return min_price + (m*(user.individual_income - vendor.max_income))
-  return (product.max_price + product.min_price)/2
+  # add request_referrer in case user add cards,
+  #   user will need a way to return to the page
+  session['request_referrer'] = request.referrer
+  return render_template('checkout/add_card.html')
 
 
 @bp.route('/pay', methods=['POST'])
@@ -207,9 +186,17 @@ def pay():
 
   data = request.form
   card_id = data['card_id']
-  transaction_id = data['txid']
+
+  # get transaction_id from session
+  txid = None
+  if session.get('txid'):
+    txid = session.get('txid')
+    session.pop('txid', None)
+  else:
+    return 'Cannot get txid', 400
+
   transaction = Transaction.query \
-                           .filter_by(id=transaction_id) \
+                           .filter_by(uuid=txid) \
                            .first_or_404()
 
   customer = current_user.account
@@ -224,7 +211,7 @@ def pay():
   # TODO need to revisit this
   vendor = transaction.products[0].vendor
 
-  if customer.stripe_id is None:
+  if customer.stripe_customer_id is None:
     msg = "Error: customer does not have a stripe id. Card must be added first"
     print(msg)
     return jsonify(success=False, error=msg), 400
@@ -232,7 +219,7 @@ def pay():
   try:
     # create card 
     stripe_charge = stripe.Charge.create(
-      customer=customer.stripe_id,
+      customer=customer.stripe_customer_id,
       source=card_id,
       amount=transaction.total,
       currency='usd',
@@ -242,7 +229,7 @@ def pay():
 
     # update db with transaction status & stripe charge id
     transaction.status = Transaction.Status.SUCCESS
-    transaction.stripe_id = stripe_charge.id
+    transaction.stripe_charge_id = stripe_charge.id
 
     db.session.add(transaction)
     db.session.commit()
@@ -292,4 +279,38 @@ def vendor_name():
   vendor_id = request.args.get('vendor_id')
   vendor = Vendor.query.filter_by(id=vendor_id).first_or_404()
   return vendor.company_name
+
+
+def validate_transaction(transaction, customer):
+  '''
+  Validates a transaction for a given user
+  '''
+  # check that transaction is OPEN
+  if transaction.status != Transaction.Status.OPEN:
+    return False, {'message': 'Transaction is not open', 'code': 403}
+
+  # check that authenticated user is transaction owner
+  if transaction.customer != customer:
+    return False, {'message': 'Not owner of transaction', 'code': 401}
+
+  return True, {}
+
+
+def price(user, product):
+  '''
+  calculates unique gradient price and
+  update transaction model with products
+
+  returns GradientPrice
+
+  TODO: implement real sliding scale
+        for now just return mean of min and max
+  '''
+  # min_price = product.min_price * product.max_price
+  # if user is None:
+  #   return max_price
+  # else:
+  #   m = (max_price - min_price)/(vendor.min_income - vendor.max_income)
+  #   return min_price + (m*(user.individual_income - vendor.max_income))
+  return (product.max_price + product.min_price)/2
 

@@ -1,0 +1,23 @@
+{% from "modules/_add_card.html" import add_card_form, add_card_script %}
+
+{% extends 'layout.html' %}
+{% block content %}
+
+{% include "modules/_messages.html" %}
+{% include "modules/_navigation.html" %}
+
+<div id="add-card-container" class="contain">
+  <div class="module">
+    <div class="module-content">
+      {{ add_card_form() }}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+  
+{% block scripts %}
+{{ add_card_script(url_for('checkout.pay')) }}
+{% endblock %}
+
+

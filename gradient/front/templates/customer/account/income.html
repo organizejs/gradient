@@ -1,3 +1,5 @@
+{% extends 'customer/account.html' %}
+{% block account_content %}
 <div id="income-module" class="content-pane">
   <div class="module">
     <div class="module-content">
@@ -14,7 +16,7 @@
           </div>
         </div>
         {% endif %}
-        {% if current_user.account.household_income %} 
+        {% if customer.household_income %} 
         <div class="account-property-label">Household Income:</div>
         <div class="account-property-value-container">
           <div class="account-property-value">
@@ -60,3 +62,4 @@
     </div>
   </div>
 </div>
+{% endblock %}

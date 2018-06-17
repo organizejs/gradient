@@ -246,11 +246,12 @@ label
       background: $error
 
 .module
-  width: 100%
   text-align: left
   background-color: $white
   color: $black
-  margin-bottom: 2em
+  margin-bottom: 1.0em
+  @include phone
+    width: 100%
 
 .module-content
   padding: 1.25em
@@ -271,7 +272,7 @@ label
   padding: 1.25em
   background-color: $gray
   color: $dark-gray
-  margin-bottom: 1em
+  margin-bottom: 1.0em
 
 /** 
  ** hamburger

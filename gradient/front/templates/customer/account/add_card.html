@@ -1,0 +1,23 @@
+{% from "modules/_add_card.html" import add_card_form, add_card_script %}
+
+{% extends 'customer/account.html' %}
+{% block account_content %}
+
+<div id="add-card-module" class="content-pane">
+  <div class="module">
+    <div class="module-content">
+      <div class="account-content-title">
+        <a href="{{ url_for('customer.settings') }}">back</a>
+      </div>
+    </div>
+    <div class="module-content">
+      {{ add_card_form() }}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ add_card_script() }}
+{% endblock %}

@@ -2,30 +2,7 @@ body.customer,
 body.vendor
 
   .header
-    @include desktop
-      padding-bottom: 1em
-    .user-greeting
-      @include phone
-        display: inline-block
-      .user-icon
-        display: inline-block
-        img
-          width: 36px
-          height: 36px
-          border-radius: 50%
-          background-color: $white
-          box-shadow: 3px 3px 3px $gray
-          border: 2px solid $white
-          vertical-align: top
-      .user-text
-        display: inline-block
-        vertical-align: top
-        margin-left: 1em
-        line-height: 36px 
-        #account-name
-          display: inline-block
-          color: $blue
-          text-transform: capitalize
+    margin: 1.0em
     .user-nav
       float: right
       position: relative
@@ -33,20 +10,43 @@ body.vendor
       text-align: right
       z-index: 101
 
+  .user-greeting
+    display: inline-block
+    @include desktop
+      margin-bottom: 2em
+    .user-icon
+      display: inline-block
+      img
+        width: 36px
+        height: 36px
+        border-radius: 50%
+        background-color: $white
+        box-shadow: 3px 3px 3px $gray
+        border: 2px solid $blue
+        vertical-align: top
 
   .account-property:last-of-type
     margin: 0
   .account-property
     display: grid
-    grid-row-gap: 1em
-    grid-template-columns: 1fr 1fr
     margin: 0 0 1em 0
+    @include desktop
+      grid-row-gap: 1em
+      grid-template-columns: 1fr 1fr
+      grid-template-areas: "label value"
+    @include phone
+      grid-row-gap: 0.5em
+      grid-template-columns: 1fr
+      grid-template-areas: "label" "value"
     .account-property-label
+      grid-area: label
       display: inline-block
       padding: 3px 0px
     .account-property-value-container
-      text-align: right
+      grid-area: value
       line-height: 1.25em
+      @include desktop
+        text-align: right
       .account-property-value
         color: $blue
         border-radius: 2px
@@ -68,14 +68,18 @@ body.vendor
   #account-content 
     display: grid
     @include desktop
-      grid-template-columns: 12rem 1fr
-      grid-gap: 2em
+      grid-template-columns: 12rem auto
+      grid-template-areas: "side main"
+      height: 100vh
     @include phone
       grid-template-columns: 1fr
+      grid-template-areas: "side" "main"
       width: 100%
-      margin-top: 5vw
 
     #account-side-pane
+      grid-area: side
+      background-color: $white
+      padding: 1.0em
       hr
         margin-bottom: 0.75em
         margin-top: 0
@@ -91,6 +95,7 @@ body.vendor
         color: $white 
         margin-left: 0
         padding: 4px 12px
+
     @include phone
       #account-side-pane
         display: none
@@ -104,8 +109,12 @@ body.vendor
         top: 0px
 
     #account-content-pane
-      @include phone
-        max-width: 90vw
+      grid-area: main
+      @include desktop
+        margin: 0 0.5em
+        margin: 1em 2em
+      @include phone  
+        margin: 0 1.0em
       #getting-started-module,
       .content-pane
         border-radius: 4px 
@@ -119,6 +128,9 @@ body.vendor
         .account-content-action
           float: right
           text-align: right
+      .flashes
+        margin-bottom: 1.0em
+
           
     #purchases-module
       #purchases-content
@@ -166,11 +178,15 @@ body.customer.purchases
         font-weight: 600
       .skus
         font-size: 0.9em
+    .transaction-col
+      overflow-x: scroll
 
 body.vendor.purchases
   .transaction-cell
     display: grid
-    grid-template-columns: 1fr 6fr 1fr
+    grid-template-columns: 1fr 6fr
+    .transaction-col
+      overflow-x: scroll
     .datetime
       text-align: left  
       .month
@@ -191,5 +207,3 @@ body.vendor.purchases
           background-color: $white
         div.odd
           background-color: $light-gray
-    .total-price
-      text-align: right

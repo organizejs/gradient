@@ -1,3 +1,7 @@
+
+{% extends 'vendor/account.html' %}
+{% block account_content %}
+
 <div id="purchases-module" class="content-pane active module">
   <div class="module">
     <div class="module-content">
@@ -31,8 +35,7 @@
               <div class="product-final-price {{ loop.cycle('odd', 'even') }}">{{ gp.price }}</div>
               {% endfor %}
             </div>
-          </div>
-          <div class="transaction-col total-price">
+            <br>
             <div>Total:</div>
             <div>{{ transaction.total | currencyformat('USD') }}</div>
           </div>
@@ -44,4 +47,4 @@
   </div>
 </div>
 
-
+{% endblock %}
