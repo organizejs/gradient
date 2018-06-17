@@ -315,14 +315,8 @@ def register():
     registration_data = form.to_dict()
     data = form.data
 
-    # get address for user if exists otherwise create one
-    address = None
-    if not current_user.address:
-      address = Address()
-    else:
-      address = Address.query.filter_by(id=current_user.address.id).first() #?
-
     # create address model out of form
+    address = Address()
     form.populate_obj(address)
 
     # register_user() - sends confirmation email and encrypts password
