@@ -16,7 +16,7 @@ from ..datastore import db
 bp = Blueprint('checkout', __name__, url_prefix='/checkout')
 
 
-@bp.route('/initialize', methods=['POST'])
+@bp.route('/initialize', methods=['POST', 'OPTIONS'])
 @cross_origin()
 def initialize():
   '''
