@@ -99,7 +99,7 @@ class Transaction(db.Model, TransactionPropertiesMixin, AuditableMixin):
 
     # stop process and throw error if product dne
     if product is None:
-      print("ERROR: product sku, %s, is not valid for %s" % (sku, vendor.name))
+      print("ERROR: product sku, %s, is not valid for %s" % (sku, vendor.company_name))
       return False
 
     gradient_price = GradientPrice.query.filter_by(product=product, transaction=self)
