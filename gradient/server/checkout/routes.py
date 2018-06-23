@@ -73,10 +73,10 @@ def initialize():
   db.session.commit()
 
   return jsonify(success=True,
-                 key=current_transaction.key,
-                 url=url_for('checkout.cart', 
-                             txid=current_transaction.uuid, 
-                             _external=True))
+    key=current_transaction.key,
+    url=url_for('checkout.cart', 
+      txid=current_transaction.uuid, 
+      _external=True))
 
 
 @bp.route('/cart')

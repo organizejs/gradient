@@ -6,9 +6,9 @@ from flask import (
 )
 from flask_security.decorators import anonymous_user_required
 from datetime import datetime
-from .datastore import db
 from .forms import SubscribeForm
-from .mailchimp import mc
+from ..mailchimp import mc
+from ..datastore import db
 
 bp = Blueprint('main', __name__)
 
@@ -36,7 +36,7 @@ def faq():
   '''
   Renders faq page
   '''
-  return render_template('faq.html')
+  return render_template('marketing/faq.html')
 
 
 @bp.route('/docs')
@@ -52,10 +52,7 @@ def index():
   '''
   Renders home page
   '''
-  if current_user.is_authenticated:
-    return render_template('index.html')
-  else:
-    return render_template('index.html')
+  return render_template('marketing/index.html')
 
 
 @bp.route('/account')

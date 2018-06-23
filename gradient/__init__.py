@@ -8,13 +8,11 @@ from flask_assets import Environment, Bundle
 from flask_security import SQLAlchemyUserDatastore, Security
 from flask_misaka import Misaka
 from raven.contrib.flask import Sentry
-from .routes import bp
-from .datastore import db
-from .mailchimp import mc
-from .user import User, Role
-from . import vendor, customer, checkout, docs
 from datetime import datetime
 from hashlib import md5
+
+from .server import db, mc
+from .server import vendor, customer, checkout, docs, user, marketing
 
 
 def _generate_assets(app):
@@ -56,8 +54,8 @@ def _generate_assets(app):
 
 def create_app(
     package_name=__name__,
-    static_folder='front/static',
-    template_folder='front/templates',
+    static_folder='client/static',
+    template_folder='client/templates',
     **config_overrides):
   '''
   Main function to creaet Gradient App
@@ -103,7 +101,7 @@ def create_app(
   # =======================================
   # Setup security
   # =======================================
-  app.user_db = SQLAlchemyUserDatastore(db, User, Role)
+  app.user_db = SQLAlchemyUserDatastore(db, user.User, user.Role)
   Security(app, app.user_db)
 
   app.mail = Mail(app)
@@ -144,7 +142,7 @@ def create_app(
   # =======================================
   # Register blueprints
   # =======================================
-  app.register_blueprint(bp)
+  app.register_blueprint(marketing.bp)
   app.register_blueprint(vendor.bp)
   app.register_blueprint(customer.bp)
   app.register_blueprint(checkout.bp)
