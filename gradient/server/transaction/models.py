@@ -1,3 +1,4 @@
+from typing import Dict
 from enum import Enum
 from uuid import uuid4
 from config import Config
@@ -86,30 +87,16 @@ class Transaction(db.Model, TransactionPropertiesMixin, AuditableMixin):
     '''
     return f.decrypt(key.encode('utf8')).decode('utf8') == str(self.uuid)
 
-  def add_product(self, sku, quantity, vendor):
+  def add_cart(self, cart: 'Cart'):
     '''
-    Checks if product exist
-    If so, create a GradientPrice if it dne
-    return true if success, false otherwise
+    add a cart of products to the transaction
     '''
-    # check that product exists
-    product = Product.query \
-      .filter_by(sku=sku, vendor=vendor) \
-      .first()
 
-    # stop process and throw error if product dne
-    if product is None:
-      print("ERROR: product sku, %s, is not valid for %s" % (sku, vendor.company_name))
-      return False
+    for cart_item in cart.items:
+      product = cart_item.product
+      quantity = cart_item.quantity
 
-    gradient_price = GradientPrice.query.filter_by(product=product, transaction=self)
-
-    # check if gradient price for transaction already exists
-    if gradient_price is None:
-      pass
-    
-    # if gradient price dne, then make one
-    else: 
+      # add gradient price for each product
       gradient_price = GradientPrice(transaction=self,
                                      product=product,
                                      quantity=quantity,
@@ -117,7 +104,6 @@ class Transaction(db.Model, TransactionPropertiesMixin, AuditableMixin):
                                      max_price=None,
                                      min_price=None)
 
-    return True
 
 class TransactionAudit(db.Model, AuditMixin, TransactionPropertiesMixin):
   __tablename__ = 'transaction_audit'
