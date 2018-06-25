@@ -143,6 +143,7 @@ def create_app(
   # Register blueprints
   # =======================================
   app.register_blueprint(marketing.bp)
+  app.register_blueprint(user.bp)
   app.register_blueprint(vendor.bp)
   app.register_blueprint(customer.bp)
   app.register_blueprint(checkout.bp)

@@ -4,13 +4,13 @@ from flask_cors import cross_origin
 from flask_security import login_required, current_user
 from flask import (
   Blueprint, render_template, jsonify, request, redirect, 
-  url_for, session, current_app, abort
+  url_for, session, abort
 )
 from .models import Cart
 from ..util import set_query_parameter
 from ..product import Product
 from ..vendor import Vendor
-from ..customer.routes import customer_required
+from ..customer import customer_required
 from ..transaction import Transaction
 from ..datastore import db
 
@@ -72,13 +72,14 @@ def initialize():
   db.session.commit()
 
   return jsonify(success=True,
-    key=current_transaction.key,
-    url=url_for('checkout.cart', 
-      txid=current_transaction.uuid, 
-      _external=True))
+                 key=current_transaction.key,
+                 url=url_for('checkout.cart', 
+                   txid=current_transaction.uuid, 
+                   _external=True))
 
 
 @bp.route('/cart')
+@customer_required
 def cart():
   '''
   Displays the cart/checkout page for a customer,
@@ -89,17 +90,10 @@ def cart():
   transaction and that the transaction is still OPEN.
   '''
   # get current transaction
-  transaction_id = request.args.get('txid', -1)
+  transaction_uuid = request.args.get('txid', -1) 
   transaction = Transaction.query \
-                           .filter_by(uuid=transaction_id) \
+                           .filter_by(uuid=transaction_uuid) \
                            .first_or_404()
-
-  # redirect the user if they are not authenticated
-  if not current_user.is_authenticated:
-    if '_tids' not in session:
-      session['_tids'] = []
-    session['_tids'].append(transaction_id)
-    return current_app.login_manager.unauthorized()
 
   # block if user is not of type customer
   if current_user.account_type != 'customer':
@@ -112,27 +106,27 @@ def cart():
     customer = current_user.account
     transaction.customer = customer
 
-    valid, err = validate_transaction(transaction, customer)
+    # validate transaction
+    valid, err = transaction.validate_transaction(customer)
     if not valid:
       return err['message'], err['code']
 
+    # add to db
     db.session.add(transaction)
     db.session.commit()
 
   # get all cards if customer stripe id exists
   cards = None
   if transaction.customer.stripe_customer_id:
-    stripe_customer = stripe.Customer.retrieve(transaction.customer.stripe_customer_id)
+    stripe_customer = stripe.Customer \
+      .retrieve(transaction.customer.stripe_customer_id)
     cards = stripe_customer.sources.all(object='card')
 
-  # if user added new card, keep track of card id in session
+  # if user added new card, get card id in session
   new_card_id = None
   if session.get('new_card_id'):
     new_card_id = session.get('new_card_id')
     session.pop('new_card_id', None)
-
-  # set transaction id in session to use in /pay
-  session['txid'] = transaction_id
 
   # TODO - get gradient price using "price()" and update transaction
 
@@ -185,38 +179,43 @@ def pay():
 
   data = request.form
   card_id = data['card_id']
+  txid = data['txid']
 
-  # get transaction_id from session
-  txid = None
-  if session.get('txid'):
-    txid = session.get('txid')
-    session.pop('txid', None)
-  else:
-    return 'Cannot get txid', 400
+  customer = current_user.account
 
+  # verify transaction exists
   transaction = Transaction.query \
                            .filter_by(uuid=txid) \
                            .first_or_404()
 
-  customer = current_user.account
-
   # validate transaction
-  valid, err = validate_transaction(transaction, customer)
+  valid, err = transaction.validate_transaction(customer)
   if not valid:
-    print(err)
+    print(err['message'])
     return jsonify(success=False, error=err['message']), err['code']
 
   # assume all products are from the same vendor
   # TODO need to revisit this
   vendor = transaction.products[0].vendor
 
+  # verify that customer has a stripe id (which is created when adding a card)
   if customer.stripe_customer_id is None:
     msg = "Error: customer does not have a stripe id. Card must be added first"
     print(msg)
     return jsonify(success=False, error=msg), 400
 
+  # verify that customer has card_id / that card_id is valid
+  cards = stripe.Customer \
+    .retrieve(customer.stripe_customer_id) \
+    .sources.all(limit=100, object='card') \
+    .data
+  if card_id not in [card.id for card in cards]:
+    msg = "Error: customer does not have card id '%s'."%card_id
+    print(msg)
+    return jsonify(success=False, error=msg), 400
+
   try:
-    # create card 
+    # create charge
     stripe_charge = stripe.Charge.create(
       customer=customer.stripe_customer_id,
       source=card_id,
@@ -230,6 +229,7 @@ def pay():
     transaction.status = Transaction.Status.SUCCESS
     transaction.stripe_charge_id = stripe_charge.id
 
+    # save to db
     db.session.add(transaction)
     db.session.commit()
 
@@ -278,21 +278,6 @@ def vendor_name():
   vendor_id = request.args.get('vendor_id')
   vendor = Vendor.query.filter_by(id=vendor_id).first_or_404()
   return vendor.company_name
-
-
-def validate_transaction(transaction, customer):
-  '''
-  Validates a transaction for a given user
-  '''
-  # check that transaction is OPEN
-  if transaction.status != Transaction.Status.OPEN:
-    return False, {'message': 'Transaction is not open', 'code': 403}
-
-  # check that authenticated user is transaction owner
-  if transaction.customer != customer:
-    return False, {'message': 'Not owner of transaction', 'code': 401}
-
-  return True, {}
 
 
 def price(user, product):

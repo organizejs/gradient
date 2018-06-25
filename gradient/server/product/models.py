@@ -37,21 +37,6 @@ class Product(db.Model, ProductPropertiesMixin, AuditableMixin):
   def properties_mixin(self):
     return ProductPropertiesMixin
 
-  def deactivate(self):
-    '''
-    Use as proxy for deletion
-    '''
-    self.active = False
-    db.session.commit()
-
-  def reactivate(self):
-    '''
-    Use to reactivate deactivated products
-    NOT IN USE (TODO: remove comment when in use)
-    '''
-    self.active = True
-    db.session.commit()
-
 
 class ProductAudit(db.Model, ProductPropertiesMixin, AuditMixin):
   __tablename__ = 'product_audit'

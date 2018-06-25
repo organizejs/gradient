@@ -26,7 +26,7 @@ function resize_images() {
  ** Called from templates/checkout.html
  ** Submit form to route /checkout/pay
  **/
-function stripe_checkout(pay_url, pay_selector) {
+function stripe_checkout(pay_url, pay_selector, transaction_uuid) {
 
   // pay
   $(pay_selector).on('click', function() {
@@ -39,6 +39,12 @@ function stripe_checkout(pay_url, pay_selector) {
     field.setAttribute('type', 'hidden');
     field.setAttribute('name', 'card_id');
     field.setAttribute('value', $("#select-card").val());
+    form.appendChild(field);
+
+    var field = document.createElement('input');
+    field.setAttribute('type', 'hidden');
+    field.setAttribute('name', 'txid');
+    field.setAttribute('value', transaction_uuid);
     form.appendChild(field);
 
     document.body.appendChild(form);

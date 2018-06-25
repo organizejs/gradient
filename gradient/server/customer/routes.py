@@ -2,7 +2,7 @@ import stripe
 from functools import wraps
 from flask import (
   Blueprint, jsonify, redirect, render_template, 
-  abort, url_for, flash, request, session
+  abort, url_for, flash, request, session, current_app
 )
 from flask_security import current_user, login_user
 from flask_security.registerable import register_user
@@ -29,11 +29,14 @@ def customer_required(f):
   '''
   @wraps(f)
   def decorated(*args, **kwargs):
-    if current_user.is_authenticated \
-        and current_user.account_type == 'customer':
-      return f(*args, **kwargs)
+    if current_user.is_authenticated:
+      if current_user.account_type == 'customer':
+        return f(*args, **kwargs)
+      else:
+        flash('You need to be logged into a customer account to access those pages.')
+        return redirect(url_for('main.index'))
     else:
-      return redirect(url_for('customer.index'))
+      return current_app.login_manager.unauthorized()
     abort(400)
   return decorated
 

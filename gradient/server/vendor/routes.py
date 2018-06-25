@@ -1,7 +1,7 @@
 from functools import wraps
 from flask import (
     Blueprint, abort, redirect, render_template, request, 
-    jsonify, flash, url_for,
+    jsonify, flash, url_for, current_app
 )
 from flask_security import current_user
 from flask_security.registerable import register_user
@@ -29,11 +29,14 @@ def vendor_required(f):
   '''
   @wraps(f)
   def decorated(*args, **kwargs):
-    if current_user.is_authenticated \
-        and current_user.account_type == 'vendor':
-      return f(*args, **kwargs)
+    if current_user.is_authenticated:
+      if current_user.account_type == 'vendor':
+        return f(*args, **kwargs)
+      else:
+        flash('You need to be logged into a vendor account to access those pages.')
+        return redirect(url_for('main.index'))
     else:
-      return redirect(url_for('customer.index'))
+      return current_app.login_manager.unauthorized()
     abort(400)
   return decorated
 
@@ -231,7 +234,11 @@ def delete_product(product_id):
   '''
   product = Product.query.filter_by(id=product_id).first()
   if product is not None:
-    product.deactivate()
+
+    # set to inactive
+    product.active = False
+    db.session.commit()
+
     flash('You have deleted the product: %s' % product.name)
     return redirect(url_for('vendor.products'))
   else:

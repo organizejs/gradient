@@ -86,10 +86,11 @@
 <script>
   const pay_url = '{{ url_for("checkout.pay") }}';
   const pay_selector = '#checkout-pay';
+  const transaction_uuid = '{{ transaction.uuid }}';
 
   resize_images();
 
-  stripe_checkout(pay_url, pay_selector);
+  stripe_checkout(pay_url, pay_selector, transaction_uuid);
 
 </script>
 {% endblock %}

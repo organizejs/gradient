@@ -12,13 +12,11 @@ class GradientPricePropertiesMixin():
   def transaction_id(cls):
     return db.Column(db.Integer(), 
                      db.ForeignKey('transaction.id'))
-                     # primary_key=True)
 
   @declared_attr
   def product_id(cls):
     return db.Column(db.Integer(), 
                      db.ForeignKey('product.id'))
-                     # primary_key=True) 
 
 
 class GradientPrice(db.Model, GradientPricePropertiesMixin, AuditableMixin):

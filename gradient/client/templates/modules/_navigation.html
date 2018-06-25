@@ -16,7 +16,7 @@
     <div id="nav-options-container">
       <div id="nav-options">
         {% if current_user.is_authenticated %}
-        <a href="{{ url_for('main.account') }}"><div class="nav-option">My Account</div></a>
+        <a href="{{ url_for('user.account') }}"><div class="nav-option">My Account</div></a>
         {% else %}
           {% if (request.url_rule.endpoint != 'customer.register') 
              and ('security' not in request.url_rule.endpoint)

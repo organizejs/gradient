@@ -87,6 +87,22 @@ class Transaction(db.Model, TransactionPropertiesMixin, AuditableMixin):
     '''
     return f.decrypt(key.encode('utf8')).decode('utf8') == str(self.uuid)
 
+  def validate_transaction(self, customer: 'Customer') -> (bool, dict):
+    '''
+    validate that transaction is OPEN
+    if 'customer' param is passed in, validate that customer is correct
+    '''
+    # check that transaction is OPEN
+    if self.status != self.Status.OPEN:
+      return False, { 'message': 'Transaction is not open', 'code': 403 }
+
+    # check that customer is correct
+    if customer:
+      if self.customer != customer:
+        return False, { 'message': 'Not owner of transaction', 'code': 401 }
+
+    return True, {}
+
   def add_cart(self, cart: 'Cart'):
     '''
     add a cart of products to the transaction

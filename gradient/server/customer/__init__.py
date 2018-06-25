@@ -1,2 +1,2 @@
 from .models import Customer, MaritalStatus
-from .routes import bp
+from .routes import bp, customer_required

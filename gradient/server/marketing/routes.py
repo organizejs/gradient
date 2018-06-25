@@ -1,5 +1,4 @@
 from functools import wraps
-from flask_security import login_required, current_user
 from flask import (
   g, Blueprint, render_template, jsonify, request, 
   redirect, url_for, session, current_app, flash
@@ -54,20 +53,4 @@ def index():
   '''
   return render_template('marketing/index.html')
 
-
-@bp.route('/account')
-@login_required
-def account():
-  '''
-  Redirect to 'account' page depending on user account type
-  '''
-  if current_user.account_type == 'customer':
-    if current_user.account.individual_income is None \
-        and current_user.account.household_income is None:
-      return redirect(url_for('customer.onboarding'))
-    else:
-      return redirect(url_for('customer.account'))
-
-  if current_user.account_type == 'vendor':
-    return redirect(url_for('vendor.account'))
 
