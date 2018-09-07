@@ -42,6 +42,19 @@ This page goes over how you would setup your dev environment on a Linux Centos m
     listen_addresses='*'
     port=5432
     ```
+    f. (Optional if you plan to use pgAdmin) Allow 0.0.0.0/0 so that pgAdmin can access the local server. Edit the following:
+    ```conf
+    # for Ubuntu
+    sudo vim /etc/postgresql/9.x/main/pg_hba.conf
+    
+    # for CentOS
+    sudo vim /var/lib/pgsql9/data/pg_hba.conf
+    ```
+    Add the following line:
+    ```conf
+    host all all 0.0.0.0/0 md5
+    ```
+    You will also have to make sure that port 5432 on your local machine/VM is accessible.
 
 2. Start (or restart) PostgreSQL Server
 ```sh
