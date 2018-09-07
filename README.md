@@ -33,8 +33,12 @@ This page goes over how you would setup your dev environment on a Linux Centos m
     # IPv6 local connections:
     host    all             all             ::1/128                 trust
     ```
-    e. (CentOS only) Edit postgresql.conf
+    e. Edit postgresql.conf
     ```sh
+    # Ubuntu
+    sudo vim /etc/postgresql/9.x/main/postgresql.conf
+    
+    # CentOS
     sudo vim /var/lib/pgsql9/data/postgresql.conf
     ```
     Uncomment and edit so that it looks as follows:
@@ -50,7 +54,7 @@ This page goes over how you would setup your dev environment on a Linux Centos m
     # for CentOS
     sudo vim /var/lib/pgsql9/data/pg_hba.conf
     ```
-    Add the following line:
+    Add the following line in `pg_hba.conf`
     ```conf
     host all all 0.0.0.0/0 md5
     ```
