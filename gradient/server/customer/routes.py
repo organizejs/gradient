@@ -125,33 +125,37 @@ def add_card():
   GET:
     return add card form
   '''
+
   # if POST
   if request.method == 'POST':
 
     data = request.form
     stripe_token = data['token']
+    next_page_url = data['next']
 
     customer = current_user.account
 
     try:
+      # create stripe account for customer if customer does not have one
       if customer.stripe_customer_id is None:
         stripe_customer = stripe.Customer.create(
           email=customer.user.email,
           source=stripe_token
         )
+
+        # save to db
         customer.stripe_customer_id = stripe_customer.id
         db.session.add(customer)
         db.session.commit()
+
+      # get stripe account if customer has a stripe account already
       else:
         stripe_customer = stripe.Customer.retrieve(customer.stripe_customer_id)
 
+      # create card for the stripe customer
       card = stripe_customer.sources.create(source=stripe_token)
 
-      next_page_url = None
-      if session.get('request_referrer'):
-        next_page_url = session.get('request_referrer')
-        session.pop('request_referrer', None)
-
+      # TODO maybe this should be passed in as request var
       session['new_card_id'] = card.id
       flash('Your card has been added')
 
@@ -161,8 +165,28 @@ def add_card():
       print("Exception: called 'add card'")
       return jsonify(success=False, error=e._message), 400
 
+  # if GET
   else:
     return render_template('customer/account/add_card.html')
+
+
+@bp.route('/account/settings/remove_card', methods=['POST'])
+@customer_required
+def remove_card():
+  '''
+  POST:
+    remove card from customer 
+  '''
+  data = request.form
+  card_id = data['card_id']
+
+  customer = current_user.account
+  stripe_customer = stripe.Customer.retrieve(customer.stripe_customer_id)
+  stripe_customer.sources.retrieve(card_id).delete()
+
+  flash('Your card has been removed')
+
+  return redirect(url_for('customer.settings'))
 
 
 # ===================================

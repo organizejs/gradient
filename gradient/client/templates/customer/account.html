@@ -21,26 +21,27 @@
         </div>
       </div>
 
-      <a href="{{ url_for('customer.purchases') }}">
-        <div class="side-el {% if endpoint == 'customer.purchases' %}active{% endif %}">Purchases</div>
-      </a>
-      <a href="{{ url_for('customer.income') }}">
-        <div class="side-el {% if endpoint == 'customer.income' %}active{% endif %}">Income Info</div>
-      </a>
-      <a href="{{ url_for('customer.settings') }}">
-        <div class="side-el {% if (endpoint == 'customer.settings') or
-          (endpoint == 'customer.add_card') %}active{% endif %}">Settings</div>
-      </a>
-      <br>
-      <hr>
-      <br>
-      <div class="side-el">Send us feedback</div>
-      <div class="side-el">Contact</div>
-      <a href="{{ url_for('main.index') }}"><div class="side-el">Home Page</div></a>
-      <a href="{{ url_for('security.logout') }}"><div class="side-el">Logout</div></a>
+      <div class="account-side-pane-top desktop-only">
+        <a href="{{ url_for('customer.purchases') }}">
+          <div class="side-el {% if endpoint == 'customer.purchases' %}active{% endif %}">Purchases</div>
+        </a>
+        <a href="{{ url_for('customer.income') }}">
+          <div class="side-el {% if endpoint == 'customer.income' %}active{% endif %}">Income Info</div>
+        </a>
+        <a href="{{ url_for('customer.settings') }}">
+          <div class="side-el {% if (endpoint == 'customer.settings') or
+            (endpoint == 'customer.add_card') %}active{% endif %}">Settings</div>
+        </a>
+      </div>
+      <div class="account-side-pane-bottom desktop-only">
+        <div class="side-el">Send us feedback</div>
+        <div class="side-el">Contact</div>
+        <a href="{{ url_for('main.index') }}"><div class="side-el">Home Page</div></a>
+        <a href="{{ url_for('security.logout') }}"><div class="side-el">Logout</div></a>
+      </div>
     </div>
 
-    <div id="account-content-pane">
+    <div id="account-content-pane" class="contain">
       {# include Flash msgs #}
       {% include "modules/_messages.html" %}
  

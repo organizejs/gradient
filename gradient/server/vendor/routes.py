@@ -1,3 +1,5 @@
+import requests
+import json
 from functools import wraps
 from flask import (
     Blueprint, abort, redirect, render_template, request, 
@@ -10,14 +12,14 @@ from flask_security.forms import LoginForm
 from sqlalchemy import and_
 from .forms import (
   VendorConfirmRegisterForm, VendorRegisterForm, 
-  DetailsForm, StripeKeysForm, RedirectUrlForm,
-  ProductForm,
+  DetailsForm, RedirectUrlForm, ProductForm,
 )
 from .models import Vendor
 from ..datastore import db
 from ..transaction import Transaction
 from ..user import Address
 from ..product import Product
+from ..stripe import stripe
 
 bp = Blueprint('vendor', __name__, url_prefix='/v')
 
@@ -91,11 +93,12 @@ def settings():
   '''
   Render settings in account page
   '''
-  stripe_keys_form = StripeKeysForm()
   redirect_url_form = RedirectUrlForm()
+  stripe_connect_account_link = "https://connect.stripe.com/oauth/authorize?response_type=code&client_id={}&scope=read_write".format(stripe.connect_client_id)
+
   return render_template(
            'vendor/account/settings.html',
-           stripe_keys_form=stripe_keys_form,
+           stripe_connect_account_link=stripe_connect_account_link,
            redirect_url_form=redirect_url_form)
 
 
@@ -156,39 +159,46 @@ def edit_product_form(product_id):
            product_form=product_form)
 
 
-@bp.route('/account/settings/stripe_keys', methods=['POST'])
+@bp.route('/account/stripe', methods=['GET'])
 @vendor_required
-def stripe_keys():
-  '''
-  Vendor stripe keys submit
-  '''
-  form = StripeKeysForm()
+def stripe_authentication():
+  scope = request.args.get('scope')
+  code = request.args.get('code')
+  error = request.args.get('error')
+  error_desc = request.args.get('error_description')
+  if error is None:
+    # fetch user's credentials from Stripe
+    stripe_url = "https://connect.stripe.com/oauth/token"
+    resp = requests.post(stripe_url, params={
+      "client_secret": stripe.secret_key,
+      "code": code, 
+      "grant_type": "authorization_code"
+    })
+    if resp.ok:
+      # deserialize response content 
+      response_content = resp.content.decode("utf-8")
+      response_json = json.loads(response_content)
 
-  if form.validate_on_submit():
-    data = form.data
-    vendor = current_user.account
-    vendor.stripe_sk = data.get('stripe_sk')
-    vendor.stripe_pk = data.get('stripe_pk')
-    db.session.commit()
+      # update database
+      vendor = current_user.account
+      vendor.stripe_is_authorized = True
+      vendor.stripe_account_resp = response_content
+      vendor.stripe_publishable_key = response_json['stripe_publishable_key']
+      vendor.stripe_user_id = response_json['stripe_user_id']
+      vendor.stripe_refresh_token = response_json['refresh_token']
+      vendor.stripe_access_token = response_json['access_token']
+      db.session.commit()
 
-    flash('You have successfully added your stripe keys.')
+      flash('Success! Your Stripe account has been added.')
+      return redirect(url_for('vendor.settings'))
+
+    else:
+      flash('Could not create Stripe account: {}'.format(error_desc))
+      return redirect(url_for('vendor.settings'))
+
+  else:
+    flash('Could not create Stripe account: {}'.format(error_desc))
     return redirect(url_for('vendor.settings'))
-
-  return jsonify(success=False, errors=form.errors)
-
-
-@bp.route('/account/settings/stripe_keys/reset')
-@vendor_required
-def reset_stripe_keys():
-  '''
-  Reset vendor stripe keys
-  '''
-  vendor = current_user.account
-  vendor.stripe_sk = None
-  vendor.stripe_pk = None
-  db.session.commit()
-  flash('You have successfully removed your stripe keys.')
-  return redirect(url_for('vendor.settings'))
 
 
 @bp.route('/account/settings/redirect_url', methods=['POST'])

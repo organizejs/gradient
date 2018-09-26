@@ -1,4 +1,3 @@
-import stripe
 from stripe.error import CardError, InvalidRequestError
 from flask_cors import cross_origin
 from flask_security import login_required, current_user
@@ -6,6 +5,7 @@ from flask import (
   Blueprint, render_template, jsonify, request, redirect, 
   url_for, session, abort
 )
+from ..stripe import stripe
 from .models import Cart
 from ..util import set_query_parameter
 from ..product import Product
@@ -118,7 +118,7 @@ def cart():
   # get all cards if customer stripe id exists
   cards = None
   if transaction.customer.stripe_customer_id:
-    stripe_customer = stripe.Customer \
+    stripe_customer = stripe.client.Customer \
       .retrieve(transaction.customer.stripe_customer_id)
     cards = stripe_customer.sources.all(object='card')
 
@@ -144,8 +144,8 @@ def add_card():
   '''
   # add request_referrer in case user add cards,
   #   user will need a way to return to the page
-  session['request_referrer'] = request.referrer
-  return render_template('checkout/add_card.html')
+  return render_template('checkout/add_card.html', 
+                         next=request.referrer)
 
 
 @bp.route('/pay', methods=['POST'])
@@ -205,7 +205,7 @@ def pay():
     return jsonify(success=False, error=msg), 400
 
   # verify that customer has card_id / that card_id is valid
-  cards = stripe.Customer \
+  cards = stripe.client.Customer \
     .retrieve(customer.stripe_customer_id) \
     .sources.all(limit=100, object='card') \
     .data
@@ -214,15 +214,24 @@ def pay():
     print(msg)
     return jsonify(success=False, error=msg), 400
 
+  # verify that vendor has a valid stripe account
+  if not vendor.stripe_is_authorized:
+    return jsonify(success=False, \
+      error="Vendor does not have an authorized Stripe account"), 400
+
   try:
     # create charge
-    stripe_charge = stripe.Charge.create(
+    stripe_charge = stripe.client.Charge.create(
       customer=customer.stripe_customer_id,
       source=card_id,
       amount=transaction.total,
       currency='usd',
       description='Gradient transaction for {}'.format(vendor.slug),
-      metadata={'transaction_id': transaction.id}
+      metadata={'transaction_id': transaction.id},
+      destination={
+        # "amount": 0, # fees that gradient will take
+        "account": vendor.stripe_user_id 
+      }
     )
 
     # update db with transaction status & stripe charge id
@@ -241,6 +250,9 @@ def pay():
     'checkout/confirmation.html',
     vendor=vendor,
     transaction=transaction)
+
+
+
 
 
 @bp.route('/validate', methods=['POST'])

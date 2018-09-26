@@ -96,25 +96,28 @@ body.vendor
         margin-left: 0
         padding: 4px 12px
 
-    @include phone
-      #account-side-pane
-        display: none
-        z-index: 100
-        padding: 1em
-        background-color: $white
-        width: 100vw
-        left: 0px
-        position: fixed
-        box-shadow: 3px 3px 3px $gray
-        top: 0px
+      .account-side-pane-bottom 
+        position: absolute
+        left: 1.0em
+        bottom: 1.0em
+
+      @include phone
+        #account-side-pane
+          display: none
+          z-index: 100
+          padding: 1em
+          background-color: $white
+          width: 100vw
+          left: 0px
+          position: fixed
+          box-shadow: 3px 3px 3px $gray
+          top: 0px
 
     #account-content-pane
       grid-area: main
       @include desktop
-        margin: 0 0.5em
-        margin: 1em 2em
-      @include phone  
-        margin: 0 1.0em
+        margin-top: 1em 
+        margin-bottom: 1em
       #getting-started-module,
       .content-pane
         border-radius: 4px 
@@ -178,15 +181,11 @@ body.customer.purchases
         font-weight: 600
       .skus
         font-size: 0.9em
-    .transaction-col
-      overflow-x: scroll
 
 body.vendor.purchases
   .transaction-cell
     display: grid
     grid-template-columns: 1fr 6fr
-    .transaction-col
-      overflow-x: scroll
     .datetime
       text-align: left  
       .month

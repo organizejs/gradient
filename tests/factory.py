@@ -1,11 +1,11 @@
 import random
 from flask_security.confirmable import confirm_user
 from flask_security.registerable import register_user
-from gradient.user import User, Address
-from gradient.vendor import Vendor
-from gradient.product import Product
-from gradient.customer import Customer, MaritalStatus
-from gradient.transaction import Transaction
+from gradient.server.user import User, Address
+from gradient.server.vendor import Vendor
+from gradient.server.product import Product
+from gradient.server.customer import Customer, MaritalStatus
+from gradient.server.transaction import Transaction
 
 
 def create_user(app, email=None, password='test'):

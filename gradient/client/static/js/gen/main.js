@@ -27,7 +27,8 @@ function stripe_add_card(
     card_element_selector,
     card_error_selector,
     card_form_id,
-    card_details) {
+    card_details,
+    next_page_url) {
 
   var stripe = Stripe(stripe_key);
   var elements = stripe.elements();
@@ -91,10 +92,17 @@ function stripe_add_card(
   function stripeTokenHandler(token) {
     // Insert the token ID into the form so it gets submitted to the server
     var form = document.getElementById(card_form_id);
+
     var hiddenInput = document.createElement('input');
     hiddenInput.setAttribute('type', 'hidden');
     hiddenInput.setAttribute('name', 'token');
     hiddenInput.setAttribute('value', token.id);
+    form.appendChild(hiddenInput);
+
+    hiddenInput = document.createElement('input');
+    hiddenInput.setAttribute('type', 'hidden');
+    hiddenInput.setAttribute('name', 'next');
+    hiddenInput.setAttribute('value', next_page_url);
     form.appendChild(hiddenInput);
 
     // Submit the form

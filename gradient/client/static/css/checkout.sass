@@ -12,10 +12,12 @@ body.checkout
       grid-template-columns: 1fr
       grid-template-rows: auto auto auto
       grid-template-areas: "header" "cart" "form"
+      grid-row-gap: 1.0em
     
     #checkout-header
       grid-area: header
-      margin-bottom: 2em
+      @include desktop
+        margin-bottom: 2em
     
     #checkout-cart
       grid-area: cart
@@ -24,6 +26,8 @@ body.checkout
         display: grid
         grid-template-columns: 1fr 2fr
         margin-bottom: 2rem 
+        @include phone
+          background-color: $white
         .cart-item-image
           background: $blue
           width: 14em
@@ -48,7 +52,7 @@ body.checkout
       text-align: center
       .module 
         @include desktop
-          max-width: 20em
+          min-width: 20em
           float: right
         @include phone
           width: 100%
@@ -86,6 +90,9 @@ body.checkout
             color: $blue
             font-size: 2.0em
         #checkout-add-card-container
+          font-size: 0.9em
+          @include desktop
+            max-width: 20em
           #checkout-add-card
             margin-top: 0.5em
 

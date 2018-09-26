@@ -1,3 +1,4 @@
+{% from "modules/_account_fields.html" import account_field, card_field %}
 {% extends 'customer/account.html' %}
 {% block account_content %}
 
@@ -40,26 +41,18 @@
   <div class="module">
     <div class="module-content">
       <div class="account-content-title"><h4>Manage your cards</h4></div>
+      <div class="account-content-action">
+        <a href="{{ url_for('customer.add_card') }}"><button>Add Card</button></a>
+      </div>
     </div>
     <div class="module-content">
-      {% if cards.data is defined %}
+      {% if cards.data is defined and cards.data|length > 0 %}
         {% for card in cards.data %}
-        <div>
-          {{ card.brand }} ({{ card.last4 }}) - {{ card.name }}
-        </div>
+        {{ card_field(card, loop.cycle('odd', 'even')) }}
         {% endfor %}
       {% else %}
         You have no cards
       {% endif %}
-    </div>
-    <div class="module-content">
-      <div class="account-footer">
-        <div class="account-action">
-          <a href="{{ url_for('customer.add_card') }}">
-            <div class="account-button">Add Card</div>
-          </a>
-        </div>
-      </div>
     </div>
   </div>
 

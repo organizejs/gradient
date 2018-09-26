@@ -37,7 +37,7 @@ class Cart():
 
     # stop process and throw error if product dne
     if product is None:
-      msg = "ERROR: product sku '%s' is not a valid sku for vendor '%s'" % (sku, vendor.company_name)
+      msg = "ERROR: product sku '%s' is not a valid sku for vendor '%s'" % (sku, self.vendor.company_name)
       print(msg)
 
     # add product to list of items
@@ -46,7 +46,9 @@ class Cart():
       if cart_item.product.sku == sku:
         cart_item.quantity += int(quantity)
         item_not_in_cart = False
+        break
      
     if item_not_in_cart:
       cart_item = CartItem(product, quantity)
       self.items.append(cart_item)
+

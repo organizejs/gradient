@@ -1,8 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}
 
-{% include "modules/_navigation.html" %}
 {% include "modules/_messages.html" %}
+{% include "modules/_navigation.html" %}
 
 <div id="checkout-container" class="contain">
   
@@ -35,21 +35,23 @@
   
   <div id="checkout-form">
     <div class="module">
-      {% if cards.data is defined %}
+
+      {% if cards.data is defined and cards.data|length > 0 %}
       <div class="module-content">
         <div id="checkout-pay-button">
           <button type="button" id="checkout-pay">Complete Payment</button>
         </div>
       </div>
       {% endif %}
+
       <div class="module-content">
         <div id="checkout-info">
           <h6>Your total price:</h6>
           <h1 id="checkout-total">{{ (transaction.total/100) | currencyformat('USD') }}</h1>
         </div>
-        
         <br>
-        {% if cards.data is defined %}
+
+        {% if cards.data is defined and cards.data|length > 0 %}
         <div id="checkout-select-card-grid">
           <div id="checkout-card-label">
             <h6>Select your credit card:</h6>
@@ -68,12 +70,13 @@
         </div>
         {% else %}
         <div id="checkout-add-card-container">
-          <div>You have no cards. Please add a payment method to Checkout.</div>
+          <div>You have no cards. Please add a payment method to complete your checkout.</div>
           <a href="{{ url_for('checkout.add_card') }}">
             <button id="checkout-add-card">Add a card</button>
           </a>
         </div>
         {% endif %}
+
       </div>
     </div>
   </div>

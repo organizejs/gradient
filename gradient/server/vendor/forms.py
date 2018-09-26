@@ -23,9 +23,9 @@ class ProductForm(FlaskForm):
   min_price     = IntegerField('Maximum Price', [InputRequired()])
 
 
-class StripeKeysForm(FlaskForm):
-  stripe_sk = StringField('Stripe Secret Key', [InputRequired()])
-  stripe_pk = StringField('Stripe Public Key', [InputRequired()])
+# class StripeKeysForm(FlaskForm):
+#   stripe_sk = StringField('Stripe Secret Key', [InputRequired()])
+#   stripe_pk = StringField('Stripe Public Key', [InputRequired()])
 
 
 class RedirectUrlForm(FlaskForm):

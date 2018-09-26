@@ -13,11 +13,11 @@ if __name__ == '__main__':
 
   parser = argparse.ArgumentParser()
   parser.add_argument('-u', '--username', 
-          help='prefix for customer & vendor usernames')
+    help='prefix for customer & vendor usernames')
   parser.add_argument('-r', '--randomize-username', action='store_true',
-          help='generate a random customer and vendor')
+    help='generate a random customer and vendor')
   parser.add_argument('-p', '--password', 
-          help='password for customer & vendor')
+    help='password for customer & vendor')
   args = parser.parse_args()
 
   username_prefix = args.username
@@ -34,13 +34,13 @@ if __name__ == '__main__':
     # create customer account
     email = username_prefix + '_customer@test.com'
     customer = factory.create_customer(
-        app, email=email, password=password)
+      app, email=email, password=password)
     print('created customer: {}/{}'.format(email, password))
 
     # create vendor account
     email = username_prefix + '_vendor@test.com'
     vendor = factory.create_vendor(
-        app, email=email, password=password)
+      app, email=email, password=password)
     print('created vendor: {}/{}'.format(email, password))
 
     # products = [factory.create_product(

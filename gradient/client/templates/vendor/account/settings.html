@@ -6,43 +6,17 @@
 <div id="settings-module" class="content-pane">
   <div class="module">
     <div class="module-content">
-      <div class="account-content-title"><h4>Stripe Keys</h4></div>
+      <div class="account-content-title"><h4>Stripe</h4></div>
       <div class="account-content-options">
       </div>
     </div>
     <div class="module-content">
-      {% if current_user.account.stripe_sk %} 
-      <div class="account-property">
-        <div class="account-property-label">Stripe Secret Key</div>
-        <div class="account-property-value-container">
-          <div class="account-property-value">
-            {{ current_user.account.stripe_sk }} 
-          </div>
+      {% if current_user.account.stripe_user_id and current_user.account.stripe_is_authorized %}
+        <div>
+          Looks like your Stripe account is activated. You're all set :)
         </div>
-      </div>
-      <div class="account-property">
-        <div class="account-property-label">Stripe Public Key</div>
-        <div class="account-property-value-container">
-          <div class="account-property-value">
-            {{ current_user.account.stripe_pk }} 
-          </div>
-        </div>
-      </div>
-      <div class="account-footer">
-        <div class="account-action">
-          <a href="{{ url_for('vendor.reset_stripe_keys') }}">
-            <div class="account-button">Reset Stripe Keys</div>
-          </a>
-        </div>
-      </div>
       {% else %}
-      <form action="{{ url_for('vendor.stripe_keys') }}" method="POST" name="stripe_keys_form">
-        {{ stripe_keys_form.hidden_tag() }}
-        {{ render_field_with_errors(stripe_keys_form.stripe_sk) }}
-        {{ render_field_with_errors(stripe_keys_form.stripe_pk) }}
-        <br>
-        <input type="submit" value="Submit">
-      </form>
+        <a href="{{ stripe_connect_account_link }}"><button>Connect with Stripe</button></a>
       {% endif %}
     </div>
   </div>

@@ -1,4 +1,3 @@
-import stripe
 from config import Config
 from flask import Flask
 from flask_mail import Mail
@@ -11,7 +10,7 @@ from raven.contrib.flask import Sentry
 from datetime import datetime
 from hashlib import md5
 
-from .server import db, mc
+from .server import db, mc, stripe
 from .server import vendor, customer, checkout, docs, user, marketing
 
 
@@ -74,9 +73,14 @@ def create_app(
   app.config.from_object(Config)
 
   # =======================================
+  # setup stripe client 
+  # =======================================
+  stripe.set_connect_id(app.config['STRIPE_CONNECT_CLIENT_ID'])
+
+  # =======================================
   # load stripe credentials
   # =======================================
-  stripe.api_key = app.config['STRIPE_SECRET_KEY']
+  stripe.set_secret_key(app.config['STRIPE_SECRET_KEY'])
 
   # =======================================
   # load mailchimp credentials

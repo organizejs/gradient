@@ -20,33 +20,34 @@
           <img src="{{ url_for('static', filename='images/vendor-icon.svg') }}">
         </div>
       </div>
-      <a href="{{ url_for('vendor.purchases') }}">
-        <div class="side-el {% if endpoint == 'vendor.purchases' %}active{% endif %}">Purchases</div>
-      </a>
-      <a href="{{ url_for('vendor.products') }}">
-        <div class="side-el {% if (endpoint == 'vendor.products') or 
-          (endpoint == 'vendor.add_product_form') or 
-          (endpoint == 'vendor.edit_product_form') or 
-          (endpoint == 'vendor.product') %}active{% endif %}">Products</div>
-      </a>
-      <a href="{{ url_for('vendor.settings') }}">
-        <div class="side-el {% if endpoint == 'vendor.settings' %}active{% endif %}">Settings</div>
-      </a>
-      <br>
-      <hr>
-      <br>
-      <div class="side-el">Send us feedback</div>
-      <div class="side-el">Contact</div>
-      <a href="{{ url_for('main.index') }}"><div class="side-el">Home Page</div></a>
-      <a href="{{ url_for('security.logout') }}"><div class="side-el">Logout</div></a>
+      <div class="account-side-pane-top desktop-only">
+        <a href="{{ url_for('vendor.purchases') }}">
+          <div class="side-el {% if endpoint == 'vendor.purchases' %}active{% endif %}">Purchases</div>
+        </a>
+        <a href="{{ url_for('vendor.products') }}">
+          <div class="side-el {% if (endpoint == 'vendor.products') or 
+            (endpoint == 'vendor.add_product_form') or 
+            (endpoint == 'vendor.edit_product_form') or 
+            (endpoint == 'vendor.product') %}active{% endif %}">Products</div>
+        </a>
+        <a href="{{ url_for('vendor.settings') }}">
+          <div class="side-el {% if endpoint == 'vendor.settings' %}active{% endif %}">Settings</div>
+        </a>
+      </div>
+      <div class="account-side-pane-bottom desktop-only">
+        <div class="side-el">Send us feedback</div>
+        <div class="side-el">Contact</div>
+        <a href="{{ url_for('main.index') }}"><div class="side-el">Home Page</div></a>
+        <a href="{{ url_for('security.logout') }}"><div class="side-el">Logout</div></a>
+      </div>
     </div>
 
-    <div id="account-content-pane">
+    <div id="account-content-pane" class="contain">
       {# include Flash msgs #}
       {% include "modules/_messages.html" %}
 
       {# if the user hasn't entered a redirect_url, assume that the user is not set up as a vendor #}
-      {% if not current_user.account.redirect_url or not current_user.account.stripe_pk  %}
+      {% if not current_user.account.redirect_url or not current_user.account.stripe_is_authorized %}
       <div id="getting-started-module" class="module">
         <div class="module-content">
           <h4>Getting Started</h4>
