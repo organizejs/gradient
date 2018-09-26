@@ -1,24 +1,24 @@
 # Development (Setting up your environment)
 This page goes over how you would setup your dev environment on a Linux Centos machine.
 
-## Basics
-1. Add `alias python=python3` in ~/.bashrc or ~/.bash_profile
-2. Run `source ~/.bashrc`
-
-
 ## Postgres
 1. Install and Setup postgres
 
-    a. Install posgres
+    a. Install postgres
     ```sh
+    # CentOS
     sudo yum update
     sudo yum install postgresql postgresql-server postgresql-devel postgresql-contrib postgresql-docs
+    
+    # Ubuntu
+    sudo apt-get update
+    sudo apt-get install postgresql postgresql-contrib
     ```
     b. Once the above installation completes, initialize the DB
     ```sh
     sudo service postgresql initdb
     ```
-    d. Edit pg_hba.conf
+    d. (CentOS only) Edit pg_hba.conf
     ```sh
     sudo vim /var/lib/pgsql9/data/pg_hba.conf
     ```
@@ -35,6 +35,10 @@ This page goes over how you would setup your dev environment on a Linux Centos m
     ```
     e. Edit postgresql.conf
     ```sh
+    # Ubuntu
+    sudo vim /etc/postgresql/9.x/main/postgresql.conf
+    
+    # CentOS
     sudo vim /var/lib/pgsql9/data/postgresql.conf
     ```
     Uncomment and edit so that it looks as follows:
@@ -42,6 +46,19 @@ This page goes over how you would setup your dev environment on a Linux Centos m
     listen_addresses='*'
     port=5432
     ```
+    f. (Optional if you plan to use pgAdmin) Allow 0.0.0.0/0 so that pgAdmin can access the local server. Edit the following:
+    ```conf
+    # for Ubuntu
+    sudo vim /etc/postgresql/9.x/main/pg_hba.conf
+    
+    # for CentOS
+    sudo vim /var/lib/pgsql9/data/pg_hba.conf
+    ```
+    Add the following line in `pg_hba.conf`
+    ```conf
+    host all all 0.0.0.0/0 md5
+    ```
+    You will also have to make sure that port 5432 on your local machine/VM is accessible.
 
 2. Start (or restart) PostgreSQL Server
 ```sh
@@ -54,13 +71,50 @@ sudo service postgresql restart
 sudo su - postgres
 psql -U postgres
 ```
+
 4. Change password on postgres user:
 ```
 ALTER USER postgres WITH PASSWORD 'password';
 ```
 
+5. Create your database for Gradient:
+```sh
+./run db:create #or use db:reset if that doesnt work
+```
+
 ## Flask application
-1. Install requirements
+1. Install SASS and Dependencies
+
+Ubuntu:
+```sh
+sudo apt-get install ruby-full build-essential rubygems
+sudo gem install sass
+````
+CentOS:
+```sh
+# Install deps
+yum install libyaml libyaml-devel openssl libxml2-devel bison libxslt-devel openssl-devel tcl tk libffi tcl-devel tk-devel libffi-devel
+
+# Download Ruby
+cd /usr/local/src/
+wget http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p392.tar.gz
+tar -xvzf ruby-1.9.3-p392.tar.gz
+cd ruby-1.9.3-p392
+
+# Compile Ruby from Source
+./configure
+make
+make test
+make install
+ruby -v
+
+# Install things for SASS
+gem install bundler
+gem install sass
+gem install listen
+```
+
+2. Install requirements
 ```sh
 # if pip is pip3
 pip install -r requirements.txt
@@ -68,8 +122,9 @@ pip install -r requirements.txt
 # otherwise
 python3 -m pip install -r requirements.txt
 ``` 
-2. Setup and populate a secrets/config.py file:
+3. Setup and populate a secrets/config.py file:
 ```sh
+mkdir secrets
 touch secrets/config.py
 ```
 The file should have the following:
@@ -95,50 +150,25 @@ class Config(BaseConfig):
     MAILCHIMP_REGISTERED_LIST_ID = [ex 'some_guid' - based on mailchimp]
     TX_SECRET_KEY = [ex 'some_guid']
 ```
-3. Run locally
+4. Run locally
 ```sh
 python application.py
 ```
 
-## SASS
-When developing, you need to make sure that your Sass files are able to generate CSS files for the application to consume. In order to do this, you need to install Sass. You can do this by running the following commands:
-
-```sh
-# Install deps
-yum install libyaml libyaml-devel openssl libxml2-devel bison libxslt-devel openssl-devel tcl tk libffi tcl-devel tk-devel libffi-devel
-
-# Download Ruby
-cd /usr/local/src/
-wget http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p392.tar.gz
-tar -xvzf ruby-1.9.3-p392.tar.gz
-cd ruby-1.9.3-p392
-
-# Compile Ruby from Source
-./configure
-make
-make test
-make install
-ruby -v
-
-# Install things for SASS
-gem install bundler
-gem install sass
-gem install listen
-```
-
----
-
 ## Additional References
 - [Setting up postgreSQL on AWS instance](https://www.quora.com/How-can-I-install-PostgreSQL-on-AWS-EC2-and-how-can-I-access-that)
 
+---
 
 # Deployment 
 This page goes over how you would deploy to AWS EBS. (As of 01/01/18) Gradient is deployed on AWS EBS on three environments: Production, Staging, and Devenv. 
 
 ## Deployment (to EBS)
+1. Install the EB CLI
 
-1. Download your AWS security credentials from the AWS console (this will require having an IAM user designated by the account owner) - [more information here](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html)
-2. In ~/.aws create a file titled: 'config'
+2. Download your AWS security credentials from the AWS console (this will require having an IAM user designated by the account owner) - [more information here](https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html)
+
+3. In ~/.aws create a file titled: 'config'
 ```sh
 touch ~/.aws/config
 ```
@@ -148,7 +178,7 @@ Add the following in the file:
 aws_access_key_id = your_aws_access_key_id
 aws_secret_access_key = your_aws_secret_access_key
 ```
-3. In your project directory, create the file .elasticbeanstalk/config.yml
+4. In your project directory, create the file .elasticbeanstalk/config.yml
 ```sh
 touch .elasticbeanstalk/config.yml
 ```
