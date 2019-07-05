@@ -1,0 +1,25 @@
+<div id="footer">
+  <div id="footer-content" class="contain">
+    <div id="footer-newsletter-container">
+      <h2>
+        Get Updated
+      </h2>
+      <br>
+      <p>
+        Leave us your email to stay up to date with the latest news on Gradient!
+      </p>
+      {% include newsletter_form.html %}
+    </div>
+    <div id="footer-options-container">
+      <img src="{{ url_for('static', filename='images/logo-full-white.png') }}" class="desktop-only">
+      <br>
+      <div id="footer-options">
+        <a href="/"><div>Home</div></a>
+        <a href="/faq"><div>FAQ</div></a>
+        <a href="mailto:info@gradient.care" target="_top"><div>Contact</div></a>
+      </div>
+    </div>
+    <div id="footer-bot-left">Gradient &copy; 2018</div>
+    <div id="footer-bot-right">Made with &hearts; in New York</div>
+  </div>
+</div>

@@ -113,3 +113,9 @@ ENV/
 
 # secrets
 secret
+
+# jekyll
+_site
+*.swp
+*.swo
+Gemfile.lock

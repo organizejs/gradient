@@ -1,0 +1,9 @@
+name: Gradient
+url: https://www.gradient.care
+description: Gradient Website
+twitter: 
+  username: organizejs
+  card: summary_large_image
+markdown: kramdown
+plugins:
+  - jekyll-seo-tag
