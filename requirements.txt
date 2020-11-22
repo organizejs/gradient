@@ -59,7 +59,7 @@ sass==2.3
 semantic-version==2.5.0
 six==1.10.0
 speaklater==1.3
-SQLAlchemy==1.1.11
+SQLAlchemy==1.3.0
 SQLAlchemy-Utils==0.32.16
 stripe==1.62.0
 tabulate==0.7.5
