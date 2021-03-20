@@ -37,7 +37,7 @@ Flask-SQLAlchemy==2.2
 Flask-WTF==0.14.2
 idna==2.6
 itsdangerous==0.24
-Jinja2==2.9.6
+Jinja2==2.11.3
 jmespath==0.9.3
 jsmin==2.2.2
 mailchimp3==2.0.15
