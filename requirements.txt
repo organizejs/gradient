@@ -64,7 +64,7 @@ SQLAlchemy-Utils==0.32.16
 stripe==1.62.0
 tabulate==0.7.5
 termcolor==1.1.0
-urllib3==1.22
+urllib3==1.26.5
 wcwidth==0.1.7
 webassets==0.12.1
 websocket-client==0.44.0
